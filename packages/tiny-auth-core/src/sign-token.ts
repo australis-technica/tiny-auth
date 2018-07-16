@@ -1,0 +1,1 @@
+export type SignToken = (extra: {})=> Promise<any>;

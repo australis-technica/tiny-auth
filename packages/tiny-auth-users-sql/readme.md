@@ -1,0 +1,1 @@
+implements: @australis/tiny-auth-core/users

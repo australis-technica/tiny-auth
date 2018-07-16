@@ -1,0 +1,21 @@
+{
+  "lerna": "2.5.1",
+  "packages": [    
+    "packages/token-tools",   
+    "packages/tiny-auth-core",
+    "packages/tiny-auth-crypto",
+    "packages/tiny-auth-auth",
+    "packages/tiny-auth-users-sql",
+    "packages/tiny-auth-express",
+    "packages/demo",
+    "packages/demo-ui"   
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "1.0.0",
+  "command": {
+     "init": {
+       "exact": true
+     }
+  }
+}

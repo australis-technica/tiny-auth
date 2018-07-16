@@ -1,0 +1,1 @@
+export type PasswordRulePolicyEnforcer = (password: string) => string[];
