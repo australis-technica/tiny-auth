@@ -19,11 +19,14 @@ export default function configure(app: Express) {
             }));
             app.use(helmet())
             /** Handlers */
-            app.get("/echo", (req, res) => res.send(req.query.what || "...echo!"));
+            if (process.env.NODE_ENV !== "production") {
+                app.get("/echo", (req, res) => res.send(req.query.what || "...echo!"));
+            }
+            const { authorize, requireRole } = auth.middleware;
             app.post("/login", auth.controllers.login);
-            app.get("/refresh", auth.middleware.authorize, auth.controllers.refresh)
-            app.get("/profile", auth.middleware.authorize, auth.controllers.getProfile);
-            app.post("/change-password", auth.middleware.authorize, auth.middleware.requireRole(['admin']), auth.controllers.changePassword);
+            app.get("/refresh", authorize, auth.controllers.refresh)
+            app.get("/profile", authorize, auth.controllers.getProfile);
+            app.post("/change-password", authorize, requireRole(['admin']), auth.controllers.changePassword);
             // Errors
             app.use(errorHandler);
             return resolve();

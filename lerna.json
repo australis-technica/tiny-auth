@@ -2,6 +2,7 @@
   "lerna": "2.5.1",
   "packages": [    
     "packages/token-tools",   
+    "packages/sql-json-table",
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-auth",

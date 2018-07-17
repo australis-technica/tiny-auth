@@ -4,6 +4,7 @@ import { Connection } from "tedious";
 import createDb from "./create-db";
 import config from "./connection-config";
 import Debug from "./debug";
+import settings from "./settings";
 const debug = Debug(__filename);
 /**
  * 
@@ -15,6 +16,8 @@ export default async () => {
     await createDb(config.options.database);
     connection = await connect(config);    
     await initUsers(connection);
+    await settings.db.init(connection);
+    await settings.db.defaults(connection);
     return Promise.resolve();
   } catch (error) {
     debug(error);
