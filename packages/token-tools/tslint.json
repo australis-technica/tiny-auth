@@ -1,3 +1,7 @@
 {
-    
+  "defaultSeverity": "warning",
+  "extends": [],
+  "jsRules": {},
+  "rules": {},
+  "rulesDirectory": []
 }
