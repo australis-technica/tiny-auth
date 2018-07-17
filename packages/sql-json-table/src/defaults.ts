@@ -1,12 +1,11 @@
 import { execSql } from "@australis/tiny-sql";
 import { Connection } from "tedious";
-import { Indexer } from "./types";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 
 export default function(tableName: string) {
   /** */
-  return async (connection: Connection, values: Indexer) => {
+  return async (connection: Connection, values: { [key: string]: any }) => {
     try {
       const keyValues = Object.keys(values).map(key => ({
         key,

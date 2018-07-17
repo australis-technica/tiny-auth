@@ -1,12 +1,12 @@
 import Debug from "./debug";
 import { execSql } from "@australis/tiny-sql";
 import { Connection } from "tedious";
-import connectToSqlEngine from "./connect-to-sql-engine";
+import connectToSqlEngine from "./connect-to-server";
 const debug = Debug(__filename);
 /**
  * create database if not exists
  */
-export default async function createDb(database: string) {
+export default async function createSqlDb(database: string) {
   let connection: Connection;
   try {
     // do connect to database

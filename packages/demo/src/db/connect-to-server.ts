@@ -6,5 +6,5 @@ import sqlConnectionConfig from "@australis/sql-connection-config";
  */
 export default function connectToSqlEngine(envKey = "DB"): Promise<Connection> {
   const { options, ...engineConfig } = sqlConnectionConfig(envKey);
-  return connect({ ...engineConfig, options: { encrypt: false } });
+  return connect({ ...engineConfig, options: { encrypt: !!options.encrypt } });
 }

@@ -1,16 +1,16 @@
 import { execSql as ExecSql } from "@australis/tiny-sql";
 import { Connection } from "tedious";
-import { Indexer, KeyValue } from "./types";
+import {  KeyValue } from "./types";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 /** */
-const get = (tableName: string, like: string) =>
+const find = (tableName: string, like: string) =>
     /** */
-    async (connection: Connection): Promise<Indexer> => {
+    async (connection: Connection): Promise<{ [key: string]: any }> => {
         try {
             const execSql = ExecSql(connection);
             const { values } = await execSql<KeyValue>(
-                `select top 1 [key], [value] from ${tableName} where [key] like ${like}`                
+                `select top 1 [key], [value] from ${tableName} where [key] like '${like}'`                
             );
             return values
                 .map(x => {
@@ -28,7 +28,7 @@ const get = (tableName: string, like: string) =>
                     (out, next) => {
                         return Object.assign(out, next);
                     },
-                    {} as Indexer
+                    {} as { [key: string]: any }
                 );
         } catch (error) {
             debug(error);
@@ -36,4 +36,4 @@ const get = (tableName: string, like: string) =>
         }
     };
 /** */
-export default get;
+export default find;

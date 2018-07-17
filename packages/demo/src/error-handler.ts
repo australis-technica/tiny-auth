@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response, ErrorRequestHandler } from "express-serve-static-core";
+import { ErrorRequestHandler } from "express-serve-static-core";
 import { isNumber } from "util";
-
-const errorHandler: ErrorRequestHandler = (error: Error & { code?: number }, _req: Request, res: Response, next: NextFunction) => {
+/** */
+const errorHandler: ErrorRequestHandler = (error: Error & { code?: number }, _req, res, next) => {
     console.error(error);
     if (error) {
         res.statusMessage = error.message;
@@ -9,5 +9,5 @@ const errorHandler: ErrorRequestHandler = (error: Error & { code?: number }, _re
     }
     return next();
 };
-
+/** */
 export default errorHandler;

@@ -5,6 +5,7 @@ import errorHandler from "./error-handler";
 import auth from "./auth";
 import { Express } from "express-serve-static-core";
 const debug = Debug(__filename);
+const isDev = process.env.NODE_ENV !== "production";
 /**
  * 
  * @param app 
@@ -19,7 +20,7 @@ export default function configure(app: Express) {
             }));
             app.use(helmet())
             /** Handlers */
-            if (process.env.NODE_ENV !== "production") {
+            if (isDev) {
                 app.get("/echo", (req, res) => res.send(req.query.what || "...echo!"));
             }
             const { authorize, requireRole } = auth.middleware;

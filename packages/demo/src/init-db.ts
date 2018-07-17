@@ -1,10 +1,9 @@
 import { connect } from "@australis/tiny-sql";
 import { init as initUsers } from "@australis/tiny-auth-users-sql";
 import { Connection } from "tedious";
-import createDb from "./create-db";
-import config from "./connection-config";
+import { sqlConnectionConfig, createSqlDb} from "./db";
+import { repo as settings} from "./settings"
 import Debug from "./debug";
-import settings from "./settings";
 const debug = Debug(__filename);
 /**
  * 
@@ -13,11 +12,11 @@ export default async () => {
   let connection: Connection;
   try {
     // create db if not exists, before connecting to it
-    await createDb(config.options.database);
-    connection = await connect(config);    
+    await createSqlDb(sqlConnectionConfig.options.database);
+    connection = await connect(sqlConnectionConfig);    
     await initUsers(connection);
-    await settings.db.init(connection);
-    await settings.db.defaults(connection);
+    await settings.init(connection);
+    await settings.defaults(connection,);
     return Promise.resolve();
   } catch (error) {
     debug(error);
