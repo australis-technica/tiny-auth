@@ -1,5 +1,6 @@
 import Debug from "debug";
-import { extname, basename, join } from "path";
+import { basename, extname, join } from "path";
+/** */
 const { name }  = require(join(__dirname, "../package.json"));
 /** */
 export default function createAppDebug(xName: string) {

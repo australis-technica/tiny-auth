@@ -4,7 +4,6 @@ import helmet from "helmet";
 import cors from "cors";
 import Debug from "./debug";
 import errorHandler from "./error-handler";
-import pkg from "./pkg";
 import auth from "./auth";
 import initDB from "./init-db";
 //...
@@ -40,8 +39,8 @@ app.use(errorHandler);
 initDB()
     .then(() => start(Number(process.env.PORT)))
     .then(() => {
-        debug(`${pkg.name} listening on PORT=${process.env.PORT}`);
-        debug(`${pkg.name} pid=${process.pid}`);
+        debug(`listening on PORT=${process.env.PORT}`);
+        debug(`pid=${process.pid}`);
     })
     .catch((error) => {
         debug(error);
