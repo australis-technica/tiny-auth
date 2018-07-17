@@ -1,7 +1,11 @@
 import Crypto from "../src";
+import { randomBytes } from "crypto";
+/** */
 describe("crypto", () => {
     it("works", () => {
-        const crypto = new Crypto({ password: "ABCDEF0123456789" });
+        const secret = randomBytes(10).toString("base64");
+        console.log("password: %s", secret);
+        const crypto = new Crypto({ password: secret });
         expect(crypto.decrypt(crypto.encrypt("hello"))).toBe("hello");
     })
 })
