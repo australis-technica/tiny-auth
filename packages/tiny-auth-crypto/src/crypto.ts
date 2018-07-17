@@ -4,16 +4,13 @@ import { isString } from "util";
 export interface Options {
   algorithm: string;
   password: string;
-  ivy: string;
 }
 /** */
 export const defaultOptions: Options = {
   // encryption with CTR
   algorithm: "aes-128-cbc",
   /** 0123456789ABCDEF */
-  password: "",
-  /** 1234123412341234 */
-  ivy: "1234123412341234"
+  password: ""
 };
 /** */
 export default class Crypto {
@@ -23,7 +20,7 @@ export default class Crypto {
   constructor(
     options: Partial<Options> & { password: string } = defaultOptions
   ) {
-    this.options = Object.assign(defaultOptions, options);
+    this.options = Object.assign({}, defaultOptions, options);
     if (
       !isString(this.options.password) ||
       this.options.password.trim() === ""
@@ -32,25 +29,27 @@ export default class Crypto {
     }
     if (this.options.password.length < 16) {
       throw new Error("invalid password/passphrase length (required:>=16)");
-    }
-    if (!isString(this.options.ivy) || this.options.ivy.trim() === "") {
-      throw new Error("invalid ivy (required)");
-    }
+    }   
   }
   /** */
   encrypt = (text: string) => {
-    const { algorithm, password, ivy } = this.options;
-    var cipher = crypto.createCipheriv(algorithm, password, ivy);
-    var crypted = cipher.update(text, "utf8", "hex");
-    crypted += cipher.final("hex");
-    return crypted;
+    const { algorithm, password, } = this.options;
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv(algorithm, new Buffer(password), iv);
+    const encrypted = cipher.update(text);
+    const finalBuffer = Buffer.concat([encrypted, cipher.final()]);
+    const encryptedHex =`${iv.toString('hex')}:${finalBuffer.toString('hex')}`    
+    return encryptedHex;
   };
   /** */
   decrypt = (text: string) => {
-    const { algorithm, password, ivy } = this.options;
-    var decipher = crypto.createDecipheriv(algorithm, password, ivy);
-    var dec = decipher.update(text, "hex", "utf8");
-    dec += decipher.final("utf8");
-    return dec;
+    const { algorithm, password, } = this.options;
+    const  encryptedArray = text.split(':');
+    const  iv = new Buffer(encryptedArray[0], 'hex');
+    const  encrypted = new Buffer(encryptedArray[1], 'hex');
+    const  decipher = crypto.createDecipheriv(algorithm, new Buffer(password), iv);
+    const  decrypted = decipher.update(encrypted);
+    const  clearText = Buffer.concat([decrypted, decipher.final()]).toString();
+    return clearText;
   };
 }
