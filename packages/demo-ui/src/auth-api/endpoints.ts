@@ -1,4 +1,5 @@
-export const LOGIN = process.env.REACT_APP_API_BASE + "/login";
-// export const LOGOUT = process.env.REACT_APP_API_BASE + "/logout";
-export const PROFILE = process.env.REACT_APP_API_BASE + "/profile";
-export const REFRESH = process.env.REACT_APP_API_BASE + "/refresh";
+export const LOGIN = `${process.env.REACT_APP_API_BASE}/${process.env.REACT_APP_API_AUTH_LOGIN}`;
+/** NOT USED */
+export const LOGOUT = `${process.env.REACT_APP_API_BASE}/${process.env.REACT_APP_API_AUTH_LOGOUT}`
+export const PROFILE = `${process.env.REACT_APP_API_BASE}/${process.env.REACT_APP_API_AUTH_PROFILE}`
+export const REFRESH = `${process.env.REACT_APP_API_BASE}/${process.env.REACT_APP_API_AUTH_REFRESH}`

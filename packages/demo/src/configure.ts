@@ -24,10 +24,10 @@ export default function configure(app: Express) {
                 app.get("/echo", (req, res) => res.send(req.query.what || "...echo!"));
             }
             const { authorize, requireRole } = auth.middleware;
-            app.post("/login", auth.controllers.login);
-            app.get("/refresh", authorize, auth.controllers.refresh)
-            app.get("/profile", authorize, auth.controllers.getProfile);
-            app.post("/change-password", authorize, requireRole(['admin']), auth.controllers.changePassword);
+            app.post("/auth/login", auth.controllers.login);
+            app.get("/auth/refresh", authorize, auth.controllers.refresh)
+            app.get("/auth/profile", authorize, auth.controllers.getProfile);
+            app.post("/auth/change-password", authorize, requireRole(['admin']), auth.controllers.changePassword);
             // Errors
             app.use(errorHandler);
             return resolve();
