@@ -3,7 +3,6 @@ import { execSql } from "@australis/tiny-sql";
 import connectToServer from "@australis/sql-connect-to-server";
 import { join } from "path";
 import { Connection } from "tedious";
-const config = require(join(__dirname, "../.secrets/connection-string.json"));
 describe((require(join(__dirname, "../package.json"))).name, () => {
     it("works", async () => {
         let connection: Connection;
