@@ -19,7 +19,7 @@ export default function add(
             const { iat, exp, token_id } = await decode(token);
             const r = await ExecSql(connection)(`
         insert into ${tableName} (id, iat, exp, token) values (@token_id, @iat, @exp, @token )
-    `, { token, iat, exp, token_id });
+    `, { token, iat: new Date(iat), exp, token_id });
             if (r.error) return Promise.reject(r.error);
             return Promise.resolve();
         } catch (error) {

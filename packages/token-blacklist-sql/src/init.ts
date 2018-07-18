@@ -14,7 +14,8 @@ export default function init(tableName: string) {
     (
         id VARCHAR(1024) NOT NULL UNIQUE,
         [iat] DATETIME NOT NULL,
-        [exp] DATETIME NOT NULL,
+        /* tiome in seconds to expiration */
+        [exp] int NOT NULL,
         token varchar(max) NOT NULL
     )`);
         if (r.error) { return Promise.reject(r.error) };
