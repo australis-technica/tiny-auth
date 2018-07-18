@@ -23,12 +23,14 @@
   },
   "workspaces": [    
     "packages/token-tools",   
+    "packages/sql-connect-to-server",
     "packages/sql-json-table",
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-auth",
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
+    "packages/token-blacklist-sql",
     "packages/demo",
     "packages/demo-ui"   
   ]
