@@ -3,6 +3,7 @@
   "packages": [    
     "packages/token-tools",   
     "packages/sql-connect-to-server",
+    "packages/sql-create-db",
     "packages/sql-json-table",
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
