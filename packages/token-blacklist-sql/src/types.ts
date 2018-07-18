@@ -1,0 +1,1 @@
+export type DecodeToken = (token: string) => Promise<{ iat?: number, exp?: number, token_id?: string }>;        

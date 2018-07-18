@@ -1,70 +1,38 @@
-import { connect, execSql as ExecSql } from "@australis/tiny-sql";
-import { Connection, ConnectionConfig } from "tedious";
+import "@australis/load-env";
+import { execSql } from "@australis/tiny-sql";
+import connectToServer from "@australis/sql-connect-to-server";
 import { join } from "path";
-/**
- * expects: '{
-    "server": string,
-    "port": number, //1433,
-    "userName": string,
-    "password": string,
-    "options": {
-        "database": string,
-        "encrypt": boolean
-    }
-  }'
- */
-const connectionConfig = require(join(
-  __dirname,
-  "../.secrets/connection-config"
-));
+import { Connection } from "tedious";
+import createTokenBlacklist from "../src";
+import jsonwebtoken from "jsonwebtoken";
+import connect from "@australis/sql-connection-factory";
 
-function withoutDB(connectionConfig: ConnectionConfig) {
-  const { options, ...config } = connectionConfig;
-  const { database, ...rest } = options;
-  return {
-    ...config,
-    options: rest
-  };
-}
+jest.setTimeout(10000);
 
-export default async function initTestDb() {
-  let connection: Connection;
-  try {
-    connection = await connect(withoutDB(connectionConfig));
-    const execSql = ExecSql(connection);
-    const { database } = connectionConfig.options;
-    await execSql(
-      `if(exists(select 1 from sys.databases  where name = '${database}')) drop database ${database}`
-    );
-    await execSql(`create DATABASE ${database}`);
-  } finally {
-    connection && connection.close();
-  }
-}
-
-function newConnection() {
-  return connect(connectionConfig);
-}
-
-describe("init", () => {
-
-  it("Works", async () => {
-
-    const TABLE_NAME = "?";
-
-    await initTestDb();
+describe(require(join(__dirname, "../package.json")).name, () => {
+  // ...
+  it("inits", async () => {
+    const TABLE_NAME = "token_blacklist";
+    const tokenBlacklist = createTokenBlacklist(TABLE_NAME, (token) => jsonwebtoken.decode(token) as any);
     let connection: Connection;
     try {
-      connection = await newConnection();
-      
-      // const ok = await initTable(connection);
-      // expect(ok).toBeTruthy();
-
-      /** Expect table to exists */
-      const table = await ExecSql(connection)<{ name: string }>(
-        `select top 1 name from sys.tables where name = '${TABLE_NAME}'`
-      ).then(x => x.values[0]);
-      expect(table.name).toBe("users");      
+      connection = await connectToServer();
+      await execSql(connection)(`
+        if(exists(select top 1 name from sys.databases where name = 'testdb')) drop database testdb;
+        create database testdb;
+      `)
+      connection.close();
+      connection = await connect();
+      await tokenBlacklist.init(connection);
+      const result = await execSql(connection)<{ name: string }>(
+        `use testdb;
+        select top 1 name from sys.tables where name = @name
+        `, {
+          name: TABLE_NAME
+        }
+      );
+      if (result.error) { throw result.error };
+      expect(result.values[0].name).toBe(TABLE_NAME);
     } finally {
       connection && connection.close();
     }
