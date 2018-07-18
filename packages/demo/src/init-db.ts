@@ -2,7 +2,7 @@ import { connect } from "@australis/tiny-sql";
 import { init as initUsers } from "@australis/tiny-auth-users-sql";
 import { Connection } from "tedious";
 import { sqlConnectionConfig, createSqlDb} from "./db";
-import { repo as settings} from "./settings"
+import * as settings from "./settings"
 import Debug from "./debug";
 const debug = Debug(__filename);
 /**

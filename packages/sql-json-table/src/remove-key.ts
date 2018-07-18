@@ -3,7 +3,7 @@ import { Connection } from "tedious";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 /** */
-export default function remove(tableName: string) {
+export default function removeKey(tableName: string) {
     /** */
     return async (connection: Connection, key: string): Promise<void> => {
         try {

@@ -1,15 +1,17 @@
-import get from "./get";
+import getValue from "./get-value";
 import init from "./init";
 import defaults from "./defaults";
 import add from "./add" ;
-import set from "./set";
+import setValue from "./set-value";
 import keyExists from "./key-exists";
+import removeKey from "./remove-key";
 /** */
 export default (tableName: string)=> ({
-    get: get(tableName),
-    init: init(tableName),
-    defaults: defaults(tableName),
     add: add(tableName),
-    set: set(tableName),
-    keyExists: keyExists(tableName)
+    defaults: defaults(tableName),
+    getValue: getValue(tableName),
+    init: init(tableName),
+    keyExists: keyExists(tableName),
+    setValue: setValue(tableName),
+    removeKey: removeKey(tableName)
 });
