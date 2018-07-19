@@ -13,6 +13,6 @@ export default function createTokenBlacklist(tableName: string, decode: DecodeTo
     return {
         init: init(tableName),
         add: add(tableName, decode),
-        isBlacklisted: isBlacklisted(tableName, decode)
+        isBlackListed: isBlacklisted(tableName, decode)
     }
 }

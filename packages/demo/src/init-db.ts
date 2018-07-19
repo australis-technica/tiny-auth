@@ -5,19 +5,21 @@ import { Connection } from "tedious";
 import Debug from "./debug";
 import * as settings from "./settings";
 import sqlConnectionConfig from "./sql-connection-config";
+import { init as initTokenBlacklist } from "./token-blacklist";
 const debug = Debug(__filename);
 /**
  * 
  */
-export default async () => {  
+export default async () => {
   let connection: Connection;
   try {
     // create db if not exists, before connecting to it
     await createdb(sqlConnectionConfig.options.database);
-    connection = await connect(sqlConnectionConfig);    
+    connection = await connect(sqlConnectionConfig);
     await initUsers(connection);
+    await initTokenBlacklist(connection);
     await settings.init(connection);
-    await settings.defaults(connection,);
+    await settings.defaults(connection, );
     return Promise.resolve();
   } catch (error) {
     debug(error);

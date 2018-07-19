@@ -63,8 +63,8 @@ describe(require(join(__dirname, "../package.json")).name, () => {
     try {
       connection = await connect();
       await tokenBlacklist.add(connection, blcaklisted_token);      
-      expect(await tokenBlacklist.isBlacklisted(connection, blcaklisted_token)).toBe(true);
-      expect(await tokenBlacklist.isBlacklisted(connection, other_token)).toBe(false);
+      expect(await tokenBlacklist.isBlackListed(connection, blcaklisted_token)).toBe(true);
+      expect(await tokenBlacklist.isBlackListed(connection, other_token)).toBe(false);
     }
     finally {
       connection && connection.close();
