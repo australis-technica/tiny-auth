@@ -1,4 +1,5 @@
-import { connect, execSql as ExecSql } from "@australis/tiny-sql";
+import execSql from "@australis/tiny-sql-exec-sql";
+import connect from "@australis/tiny-sql-connect";
 import { Connection, ConnectionConfig } from "tedious";
 import { init as initUsers, add, all, byId, findBy, update } from "../src";
 import { User } from "@australis/tiny-auth-core";

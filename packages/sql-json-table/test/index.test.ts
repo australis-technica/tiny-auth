@@ -1,4 +1,5 @@
-import { connect, execSql as ExecSql, execSql } from "@australis/tiny-sql";
+import ExecSql from "@australis/tiny-sql-exec-sql";
+import connect from "@australis/tiny-sql-connect";
 import { Connection } from "tedious";
 import JsonTable from "../src";
 

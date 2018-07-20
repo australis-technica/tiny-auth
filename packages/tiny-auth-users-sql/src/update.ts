@@ -1,5 +1,5 @@
 import { User } from "@australis/tiny-auth-core";
-import { execSql as ExecSql } from "@australis/tiny-sql";
+import ExecSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
 import { debugModule } from "@australis/create-debug";
 /** */

@@ -1,6 +1,6 @@
 import createdb from "@australis/sql-create-db";
 import { init as initUsers } from "@australis/tiny-auth-users-sql";
-import { connect } from "@australis/tiny-sql";
+import connect from "@australis/tiny-sql-connect";
 import { Connection } from "tedious";
 import Debug from "./debug";
 import * as settings from "./settings";

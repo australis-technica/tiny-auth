@@ -1,5 +1,5 @@
 import "@australis/load-env";
-import { execSql } from "@australis/tiny-sql";
+import execSql from "@australis/tiny-sql-exec-sql";
 import connectToServer from "@australis/sql-connect-to-server";
 import { join } from "path";
 import { Connection } from "tedious";

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd packages/demo && npm start",
     "build": "lerna --no-sort run build",
-    "clean-modules": "rimraf **/node_modules/* && rimraf **/yarn.lock && yarn",
+    "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test"
   },
   "keywords": [],
@@ -19,7 +19,7 @@
     "typescript": "2.9.2"
   },
   "dependencies": {
-    "lerna": "^2.11.0"
+    "lerna": "^2.11.0"    
   },
   "workspaces": [    
     "packages/token-tools",   

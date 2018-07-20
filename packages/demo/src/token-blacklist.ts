@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import { connect } from "@australis/tiny-sql";
+import connect from "@australis/tiny-sql-connect";
 import createTokenBlackList from "@australis/token-blacklist-sql";
 import jsonwebtoken from "jsonwebtoken";
 import { Connection } from "tedious";

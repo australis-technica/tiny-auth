@@ -1,3 +1,3 @@
-import sqlConnectionConfig from "@australis/sql-connection-config";
+import sqlConnectionConfig from "@australis/tiny-sql-connection-config";
 const config = sqlConnectionConfig();
 export default config;

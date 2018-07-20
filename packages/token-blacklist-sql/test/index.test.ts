@@ -1,11 +1,11 @@
 import "@australis/load-env";
-import { execSql } from "@australis/tiny-sql";
+import  execSql from "@australis/tiny-sql-exec-sql";
 import connectToServer from "@australis/sql-connect-to-server";
 import { join } from "path";
 import { Connection } from "tedious";
 import createTokenBlacklist from "../src";
 import jsonwebtoken from "jsonwebtoken";
-import connect from "@australis/sql-connection-factory";
+import connect from "@australis/tiny-sql-connection-factory";
 jest.setTimeout(10000);
 const TABLE_NAME = "token_blacklist";
 const tokenBlacklist = createTokenBlacklist(TABLE_NAME, (token) => {

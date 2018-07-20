@@ -1,6 +1,6 @@
-import { connect } from "@australis/tiny-sql";
+import connect from "@australis/tiny-sql-connect";
 import { Connection } from "tedious";
-import sqlConnectionConfig from "@australis/sql-connection-config";
+import sqlConnectionConfig from "@australis/tiny-sql-connection-config";
 /**
  * connect to server, not db
  */
