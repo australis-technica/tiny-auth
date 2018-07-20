@@ -18,7 +18,7 @@ const svc = new Service({
     description: SERVICE_DESCRIPTION,
     script: scriptPath,
     env:{
-        DEBUG: "blink*",
+        DEBUG: "australis*,build/*",
         NODE_ENV: "production"
     }
 });
