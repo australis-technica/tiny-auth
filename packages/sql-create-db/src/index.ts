@@ -1,4 +1,4 @@
-import { execSql } from "@australis/tiny-sql";
+import execSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
 import connectToServer from "@australis/sql-connect-to-server";
 import { debugModule } from "@australis/create-debug";

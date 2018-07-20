@@ -1,6 +1,6 @@
 import { add, all, byId, findBy, update } from "@australis/tiny-auth-users-sql";
 import { Users } from "@australis/tiny-auth-core";
-import newConnection from "@australis/sql-connection-factory";
+import newConnection from "@australis/tiny-sql-connection-factory";
 import { Connection } from "tedious";
 import Debug from "./debug";
 const debug = Debug(__filename);

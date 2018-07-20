@@ -1,12 +1,12 @@
 {
   "name": "@australis/tiny-auth",
-  "version": "1.0.102",
+  "version": "1.0.0-0",
   "description": "single token auth",  
   "private": true,
   "scripts": {
     "start": "cd packages/demo && npm start",
     "build": "lerna --no-sort run build",
-    "clean-modules": "rimraf **/node_modules/* && rimraf **/yarn.lock && yarn",
+    "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test"
   },
   "keywords": [],
@@ -19,7 +19,7 @@
     "typescript": "2.9.2"
   },
   "dependencies": {
-    "lerna": "^2.11.0"
+    "lerna": "^2.11.0"    
   },
   "workspaces": [    
     "packages/token-tools",   

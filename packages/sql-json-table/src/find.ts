@@ -1,4 +1,4 @@
-import { execSql as ExecSql } from "@australis/tiny-sql";
+import ExecSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
 import {  KeyValue } from "./types";
 import { debugModule } from "@australis/create-debug";
