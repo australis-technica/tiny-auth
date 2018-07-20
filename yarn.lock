@@ -21,62 +21,70 @@
     "@australis/create-debug" "^1.0.0-0"
     tedious "^2.3.1"
 
-"@australis/tiny-sql-batch-script@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-2.tgz#d7bba9361fbbc07593903ebc7622effcd371b58f"
+"@australis/tiny-sql-batch-script@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-3.tgz#a48afd4ef5e590a4853c403c2fefbd750395fcd5"
   dependencies:
     "@australis/create-debug" latest
 
-"@australis/tiny-sql-connection-config@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-2.tgz#0c0284867a6833434d0c700b17bb3cad59818395"
+"@australis/tiny-sql-connect@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-connect/-/tiny-sql-connect-1.0.0-3.tgz#c7ee7aad8030316e8b2260eded803947fff00aac"
+  dependencies:
+    debug "^3.1.0"
+    tedious "^2.6.3"
+
+"@australis/tiny-sql-connection-config@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-3.tgz#0a692c0f9e3206dbaf6ae4e9ab33f03e691fb1cc"
   dependencies:
     "@australis/parse-sql-connection-string" latest
 
-"@australis/tiny-sql-connection-factory@^1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-2.tgz#eed520ecd74366a1ad7dd98fa094d3b80152059d"
+"@australis/tiny-sql-connection-factory@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-3.tgz#913a979000b71288ef9ba6e666f118821e2487be"
   dependencies:
     tedious "^2.6.3"
 
-"@australis/tiny-sql-connection-string-parse@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-2.tgz#617e83a59d8b26a1c86a3ef407749dad789a3141"
+"@australis/tiny-sql-connection-string-parse@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-3.tgz#13730e67170df859a60ca99de5988f3e43e3e3c6"
   dependencies:
     "@australis/create-debug" "^1.0.0-0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-exec-sql@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-2.tgz#535192b2da857fc77308e18ba7b42ac5b2c17ec0"
+"@australis/tiny-sql-exec-sql@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-3.tgz#5a35a0d372d665737ee21d18249446d9c8dc38de"
   dependencies:
     debug "^3.1.0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-params@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-2.tgz#ff8d8ca8d48757da855a4732b8d65a7f738463a1"
+"@australis/tiny-sql-params@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-3.tgz#2b751f45b6f26303b0e806cbd520c216b34dcca3"
   dependencies:
     debug "^3.1.0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-scripts@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-2.tgz#0363e7338fd262cbd4971b52124a7fc203e02db2"
+"@australis/tiny-sql-scripts@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-3.tgz#e63ea2a9b731d749f9c4d0628514bda1cbc68bd8"
   dependencies:
     "@australis/create-debug" "^1.0.0-0"
 
-"@australis/tiny-sql@1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql/-/tiny-sql-1.0.0-2.tgz#5c72b000fc46444f3a1aeff192717570bcc50cc6"
+"@australis/tiny-sql@1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@australis/tiny-sql/-/tiny-sql-1.0.0-3.tgz#a3e7ceef34b2d7a6e4785b2eeb84c1e786aa212f"
   dependencies:
-    "@australis/tiny-sql-batch-script" "1.0.0-2"
-    "@australis/tiny-sql-connection-config" "1.0.0-2"
-    "@australis/tiny-sql-connection-factory" "^1.0.0-2"
-    "@australis/tiny-sql-connection-string-parse" "1.0.0-2"
-    "@australis/tiny-sql-exec-sql" "1.0.0-2"
-    "@australis/tiny-sql-params" "1.0.0-2"
-    "@australis/tiny-sql-scripts" "1.0.0-2"
+    "@australis/tiny-sql-batch-script" "1.0.0-3"
+    "@australis/tiny-sql-connect" "1.0.0-3"
+    "@australis/tiny-sql-connection-config" "1.0.0-3"
+    "@australis/tiny-sql-connection-factory" "1.0.0-3"
+    "@australis/tiny-sql-connection-string-parse" "1.0.0-3"
+    "@australis/tiny-sql-exec-sql" "1.0.0-3"
+    "@australis/tiny-sql-params" "1.0.0-3"
+    "@australis/tiny-sql-scripts" "1.0.0-3"
 
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.54"
