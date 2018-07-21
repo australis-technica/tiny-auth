@@ -1,5 +1,5 @@
 {
-  "name": "@australis/tiny-auth-demo-ui",
+  "name": "@local/tiny-auth-demo-ui",
   "version": "1.0.0-0",
   "private": true,
   "dependencies": {
