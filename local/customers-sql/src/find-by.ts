@@ -14,11 +14,15 @@ export default async function findBy(
 ): Promise<Customer[]> {
   try {
     const execSql = ExecSql(connection);
-    const r = await execSql<Customer>(
-        `select * from ${TABLE_NAME} 
-         where ${Object.keys(params).map(key=> ` ${key} = @${key}`).join(" AND ")}`,
-        params
-    );
+    const query = `
+    /*find-by*/
+    select * from ${TABLE_NAME} 
+    where ${Object.keys(params)
+      .map(key => ` ${key} = @${key}`)
+      .join(" AND ")};
+    /*find-by*/`;
+    debug(query);
+    const r = await execSql<Customer>(query, params);
     if (r.error) {
       return Promise.reject(r.error);
     }

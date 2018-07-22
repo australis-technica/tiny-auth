@@ -58,5 +58,8 @@ describe(require(join(__dirname, "../package.json")).name, () => {
     expect(all[0].id).toBe("x");
     const y = await withSqlConnection(connect, c=> src.update(c, { id: "x", displayName: "y"}));
     expect(y.displayName).toBe("y");
+    const r = await withSqlConnection(connect, c=>src.findBy(c, { displayName: "y"}));
+    // TODO:
+    expect(r.values[0].displayName).toBe("y");
   });
 });
