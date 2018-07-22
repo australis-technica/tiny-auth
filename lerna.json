@@ -2,6 +2,7 @@
   "lerna": "2.5.1",
   "packages": [    
     "packages/token-tools",   
+    "packages/sql-with-sql-connection",
     "packages/sql-connect-to-server",
     "packages/sql-create-db",
     "packages/sql-json-table",
@@ -11,6 +12,7 @@
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
     "packages/token-blacklist-sql",
+    "local/customers-sql",
     "local/demo",
     "local/demo-ui"   
   ],
