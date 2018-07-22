@@ -11,7 +11,7 @@ const debug = debugModule(module);
  * @param res 
  * @param next 
  */
-export default async function (connection: Connection) {    
+export default async function all(connection: Connection) {    
     try {
         const execSql = ExecSql(connection);
         const result = await execSql<Customer>(`

@@ -6,6 +6,7 @@
     "packages/sql-connect-to-server",
     "packages/sql-create-db",
     "packages/sql-json-table",
+    "packages/sql-simple-table",
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-auth",
