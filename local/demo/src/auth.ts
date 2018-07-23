@@ -5,13 +5,14 @@ import tokenBlacklist from "./token-blacklist";
 import { fromRequest } from "@australis/tiny-auth-get-token";
 import validateCredentials from "@australis/tiny-auth-validate-credentials";
 import passwordChanger from "@australis/tiny-auth-password-changer";
+import passwordPolicyEnforcer from "@australis/tiny-auth-password-policy-enforcer";
 /** */
 import users from "./users";
 import crypto from "./crypto";
 /** */
 export default {
   controllers: {
-    changePassword: changePassword(passwordChanger(users, crypto, auth.passwordRulePolicyEnforcer)),
+    changePassword: changePassword(passwordChanger(users, crypto, passwordPolicyEnforcer)),
     getProfile: getProfile(users),
     login: login(validateCredentials(crypto, users), auth.signToken),
     refresh: refresh(fromRequest, auth.signToken, tokenBlacklist),
