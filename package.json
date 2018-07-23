@@ -21,8 +21,7 @@
   "dependencies": {
     "lerna": "^2.11.0"    
   },
-  "workspaces": [    
-    "packages/tiny-auth-token-tools",       
+  "workspaces": [           
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",    
     "packages/tiny-auth-users-sql",
