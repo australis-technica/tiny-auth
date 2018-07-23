@@ -11,6 +11,7 @@
     "packages/tiny-auth-get-token",
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
+    "packages/tiny-auth-password-policy-enforcer",
     "local/demo",
     "local/demo-ui"   
   ],
