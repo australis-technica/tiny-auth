@@ -2,12 +2,16 @@
 export interface DefaultOptions {
     envKey?: string;
     secret?: string;
+    /** in seconds from NOW, as time-lapse, as in 60 Seconds */
+    timeToExpire?: number;
 }
 /** */
 const ENV_KEY = "SECRET";
 export const defaultOptions: DefaultOptions = {
     envKey: ENV_KEY,
-    secret: undefined
+    secret: undefined,
+    /** in seconds from NOW, as time-lapse, as in 60 Seconds */
+    timeToExpire: 60 * 60 // 1hr ?
 }
 /** */
 function isString(x: any): x is string {

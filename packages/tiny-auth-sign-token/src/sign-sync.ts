@@ -4,22 +4,30 @@ import { getSecret, defaultOptions, DefaultOptions } from "./options";
 import isStringNotEmpty from "./is-string-notempty";
 /** */
 export default function sign(extra: {}, options?: DefaultOptions) {
-    const secret = getSecret(Object.assign({}, defaultOptions, options))
+    //
+    const secret = getSecret(Object.assign({}, defaultOptions, options));
     if (!isStringNotEmpty(secret)) {
         throw new Error("Missing Secret from env, or options.envKey Or options.secret");
     }
-    const d = new Date();
-    const minutes = 1; // 60;
-    const expiresIn = (((d.getTime()) + (minutes * 60 * 1000)) - (d.getTime() - d.getMilliseconds()) / 1000);
-    const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
-    date.setUTCSeconds(expiresIn);    
+    //
+    const timeToExpire = options.timeToExpire;    
+    //
+    const now = Date.now();
+    const exp =  Math.floor(
+        now / 1000 // seconds from epoc
+      ) + /*timeToExpire:*/ timeToExpire; // seconds        
     /** */
     const signed = {
         token: jwt.sign( // ...
-            extra,
+            {
+                ...extra,
+                // 
+                exp,
+                iat: now
+            },
             secret,
             {
-                expiresIn
+                // expiresIn
             } as SignOptions),
     };
     return signed;
