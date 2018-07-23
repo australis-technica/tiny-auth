@@ -2,6 +2,7 @@ import init from "./init";
 import isBlacklisted from "./is-blacklisted";
 import add from "./add";
 import { DecodeToken } from "./types";
+import clear from "./clear";
 /** */
 export * from "./types";
 /**
@@ -13,6 +14,7 @@ export default function createTokenBlacklist(tableName: string, decode: DecodeTo
     return {
         init: init(tableName),
         add: add(tableName, decode),
-        isBlackListed: isBlacklisted(tableName, decode)
+        isBlackListed: isBlacklisted(tableName, decode),
+        clear: clear(tableName)
     }
 }

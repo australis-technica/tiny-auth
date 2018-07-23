@@ -16,10 +16,30 @@ export default function add(
         connection: Connection,
         token: string) => {
         try {
-            const { iat, exp, token_id } = await decode(token);
-            const r = await ExecSql(connection)(`
-        insert into ${tableName} (id, iat, exp, token) values (@token_id, @iat, @exp, @token )
-    `, { token, iat: new Date(iat), exp: new Date(exp * 1000), token_id });
+            const decoded= await decode(token);
+            // ...
+            let params = {
+                // ...
+            };
+            let query;
+            if (decoded.token_id) {
+                params = Object.assign(params, { token_id: decoded.token_id, });
+                query = `
+                /* token-blacklist-add with-id*/
+                insert into [${tableName}] (id, token, iat, exp ) values ( @token_id,  @token, @iat, @exp )
+                /* token-blacklist-add-end */
+                `;
+            } else {
+                /** id = newid() */
+                query = `
+                /* token-blacklist-add no-id*/
+                insert into [${tableName}] (token, iat, exp) values (@token, @iat, @exp )
+                /* token-blacklist-add-end */
+                `;
+            }
+            debug(query);
+            const p = { ...params, token, iat: new Date(decoded.iat), exp: new Date(decoded.exp * 1000) };
+            const r = await ExecSql(connection)(query, p);
             if (r.error) return Promise.reject(r.error);
             return Promise.resolve();
         } catch (error) {
