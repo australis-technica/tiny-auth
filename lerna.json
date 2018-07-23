@@ -14,7 +14,8 @@
     "local/demo",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
-    "local/demo-ui"   
+    "packages/tiny-auth-api",
+    "local/demo-ui"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,

@@ -1,11 +1,21 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import authApi from "./auth-api";
+import createAuthApi from "@australis/tiny-auth-api";
 import { AuthHandler } from "./auth-handler";
 import { AuthProvider, AuthRequired, withAuth } from "@australis/tiny-auth-react";
 import { bindActions, selector } from "@australis/tiny-auth-redux";
 import { LoginView } from "./auth-ui";
 import { store } from "./store";
+import * as endPoints from "./endpoints";
+/**
+ * 
+ */
+const authApi = createAuthApi({
+    loginUrl: endPoints.LOGIN,
+    logoutUrl: endPoints.LOGOUT,
+    profileUrl: endPoints.PROFILE,
+    refreshUrl: endPoints.REFRESH
+});
 /** */
 const authHandler = AuthHandler(() => selector(store.getState()), bindActions(store), authApi);
 /** */

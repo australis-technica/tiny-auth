@@ -1,7 +1,7 @@
 {
   "name": "@australis/tiny-auth",
   "version": "1.0.0-4",
-  "description": "single token auth",  
+  "description": "single token auth",
   "private": true,
   "scripts": {
     "start": "cd local/demo-ui && npm start",
@@ -19,11 +19,11 @@
     "typescript": "2.9.2"
   },
   "dependencies": {
-    "lerna": "^2.11.0"    
+    "lerna": "^2.11.0"
   },
-  "workspaces": [           
+  "workspaces": [
     "packages/tiny-auth-core",
-    "packages/tiny-auth-crypto",    
+    "packages/tiny-auth-crypto",
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
     "packages/tiny-auth-token-blacklist-sql",
@@ -31,10 +31,11 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
-    "packages/tiny-auth-sign-token",    
+    "packages/tiny-auth-sign-token",
     "local/demo",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
-    "local/demo-ui"    
+    "packages/tiny-auth-api",
+    "local/demo-ui"
   ]
 }
