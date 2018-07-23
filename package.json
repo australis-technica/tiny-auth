@@ -33,6 +33,7 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
+    "packages/tiny-auth-sign-token",
     "local/demo",
     "local/demo-ui"    
   ]

@@ -3,8 +3,7 @@
   "packages": [    
     "packages/tiny-auth-token-tools",           
     "packages/tiny-auth-core",
-    "packages/tiny-auth-crypto",
-    "packages/tiny-auth-auth",
+    "packages/tiny-auth-crypto",    
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
     "packages/tiny-auth-token-blacklist-sql",
@@ -12,6 +11,7 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
+    "packages/tiny-auth-sign-token",
     "local/demo",
     "local/demo-ui"   
   ],
