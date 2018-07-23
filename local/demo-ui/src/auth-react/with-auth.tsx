@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component, ComponentType } from "react";
 const propTypes = require("prop-types");
-import { Auth } from "../auth-core"
+import { Auth } from "@australis/tiny-auth-core";
 /** */
 export type AuthProps = { auth: Auth };
 /** */

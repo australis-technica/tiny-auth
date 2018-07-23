@@ -9,7 +9,7 @@ import { Component, KeyboardEvent, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter, Redirect } from "react-router";
 import { Dispatch } from "redux";
-import { Auth } from "../auth-core";
+import { Auth } from "@australis/tiny-auth-core";
 import selector from "./selector";
 import styles from "./styles";
 import { LoginViewProps } from "./types";

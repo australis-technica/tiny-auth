@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { Redirect, RouteComponentProps, withRouter } from "react-router";
-import { AuthState } from "../auth-core";
+import { AuthState } from "@australis/tiny-auth-core";
 
 export type AuthRequiredProps = { redirectTo: string } & AuthState & RouteComponentProps<{}>;
 

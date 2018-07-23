@@ -1,4 +1,4 @@
-import { AuthState, Auth } from "../auth-core";
+import { AuthState, Auth } from "@australis/tiny-auth-core";
 /** */
 export type LoginViewProps = {
     image?: any;

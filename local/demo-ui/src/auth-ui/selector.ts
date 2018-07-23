@@ -1,4 +1,4 @@
-import { Auth } from "../auth-core";
+import { Auth } from "@australis/tiny-auth-core";
 /**
  * WRONG : should't auth-redux
  */

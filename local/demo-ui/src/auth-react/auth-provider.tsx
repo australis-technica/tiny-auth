@@ -1,6 +1,6 @@
 import * as React from "react";
 const propTypes = require("prop-types");
-import { Auth } from "../auth-core"
+import { Auth } from "@australis/tiny-auth-core";
 import { Component } from "react";
 /** */
 export default class AuthProvider extends Component<{ auth: Auth }>{
