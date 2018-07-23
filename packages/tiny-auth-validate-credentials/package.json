@@ -1,5 +1,5 @@
 {
-  "name": "@australis/token-blacklist-sql",
+  "name": "@australis/tiny-auth-validate-credentials",
   "version": "1.0.0-2",
   "description": "",
   "private": true,
@@ -33,9 +33,7 @@
       "node"
     ]
   },
-  "dependencies": {
-    "@australis/create-debug": "latest"
-  },
+  "dependencies": {},
   "devDependencies": {
     "jest": "22.4.3",
     "rimraf": "^2.6.2",

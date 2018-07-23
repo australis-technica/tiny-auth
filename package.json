@@ -22,14 +22,16 @@
     "lerna": "^2.11.0"    
   },
   "workspaces": [    
-    "packages/token-tools",       
+    "packages/tiny-auth-token-tools",       
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-auth",
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
-    "packages/token-blacklist-sql",
+    "packages/tiny-auth-token-blacklist-sql",
+    "packages/tiny-auth-get-token",
+    "packages/tiny-auth-validate-credentials",
     "local/demo",
-    "local/demo-ui"   
+    "local/demo-ui"    
   ]
 }

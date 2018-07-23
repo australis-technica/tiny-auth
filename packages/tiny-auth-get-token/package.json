@@ -1,5 +1,5 @@
 {
-  "name": "@australis/token-tools",
+  "name": "@australis/tiny-auth-get-token",
   "version": "1.0.0-2",
   "description": "",
   "private": true,
