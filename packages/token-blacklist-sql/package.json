@@ -1,6 +1,6 @@
 {
   "name": "@australis/token-blacklist-sql",
-  "version": "1.0.0-1",
+  "version": "1.0.0-2",
   "description": "",
   "private": true,
   "main": "lib/index.js",

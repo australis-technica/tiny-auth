@@ -1,7 +1,7 @@
 {
   "name": "@local/tiny-auth-demo",
   "private": true,
-  "version": "1.0.0-1",
+  "version": "1.0.0-2",
   "description": "TODO",
   "main": "app.js",
   "keywords": [],
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@australis/load-env": "^1.0.0",
-    "@australis/tiny-sql": "1.0.0-4",
+    "@australis/tiny-sql": "1.0.0-5",
     "@sendgrid/mail": "^6.2.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",

@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-crypto",
-  "version": "1.0.0-1",
+  "version": "1.0.0-2",
   "description": "implements @australis/tiny-auth/crypto",
   "private": true,
   "main": "lib/index.js",
