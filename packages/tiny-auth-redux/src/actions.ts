@@ -55,7 +55,7 @@ const setToken = (payload: string): FluxStandardAction<string> => ({
   meta: undefined,
 });
 /** */
-const setAuthenticated = (payload: boolean)=>({
+const setAuthenticated = (payload: boolean): FluxStandardAction<boolean> =>({
   type: SET_AUTHENTICATED,
   payload,
   meta: undefined

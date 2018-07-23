@@ -33,6 +33,7 @@
     "packages/tiny-auth-password-policy-enforcer",
     "packages/tiny-auth-sign-token",
     "local/demo",
+    "packages/tiny-auth-redux",
     "local/demo-ui"    
   ]
 }

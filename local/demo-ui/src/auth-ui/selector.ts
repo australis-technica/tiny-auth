@@ -2,7 +2,7 @@ import { Auth } from "@australis/tiny-auth-core";
 /**
  * WRONG : should't auth-redux
  */
-import { selector as authState } from "../auth-redux";
+import { selector as authState } from "@australis/tiny-auth-redux";
 import { Dispatch } from "redux";
 import { LoginViewProps } from "./types";
 /** */

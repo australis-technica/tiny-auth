@@ -10,8 +10,9 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
-    "packages/tiny-auth-sign-token",
+    "packages/tiny-auth-sign-token",    
     "local/demo",
+    "packages/tiny-auth-redux",
     "local/demo-ui"   
   ],
   "npmClient": "yarn",

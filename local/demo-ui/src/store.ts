@@ -2,7 +2,7 @@ import thunk from "redux-thunk";
 import { applyMiddleware, combineReducers, createStore, Middleware, compose } from "redux";
 import createHistory from "history/createBrowserHistory";
 import root from "./root";
-import * as auth from "./auth-redux";
+import * as auth from "@australis/tiny-auth-redux";
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { routerMiddleware } from "react-router-redux";
 /** */

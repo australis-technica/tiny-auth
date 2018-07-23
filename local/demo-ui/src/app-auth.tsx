@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import authApi from "./auth-api";
 import { AuthHandler } from "./auth-handler";
 import { AuthProvider, AuthRequired, withAuth } from "./auth-react";
-import { bindActions, selector } from "./auth-redux";
+import { bindActions, selector } from "@australis/tiny-auth-redux";
 import { LoginView } from "./auth-ui";
 import { store } from "./store";
 /** */
