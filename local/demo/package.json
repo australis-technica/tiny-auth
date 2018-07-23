@@ -1,7 +1,7 @@
 {
   "name": "@local/tiny-auth-demo",
   "private": true,
-  "version": "1.0.0-2",
+  "version": "1.0.0-3",
   "description": "TODO",
   "main": "app.js",
   "keywords": [],

@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth",
-  "version": "1.0.0-2",
+  "version": "1.0.0-3",
   "description": "single token auth",  
   "private": true,
   "scripts": {
@@ -24,8 +24,7 @@
   "workspaces": [    
     "packages/tiny-auth-token-tools",       
     "packages/tiny-auth-core",
-    "packages/tiny-auth-crypto",
-    "packages/tiny-auth-auth",
+    "packages/tiny-auth-crypto",    
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
     "packages/tiny-auth-token-blacklist-sql",
