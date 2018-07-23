@@ -1,5 +1,5 @@
-import { WebApi, Auth, AuthState, User } from "@australis/tiny-auth-core";
-import { isTokenExpired, getTokenMillisecondsToExpire, getTokenPayload, isValidToken } from "../token-tools";
+import { Auth, AuthState, User, WebApi } from "@australis/tiny-auth-core";
+import { getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "@australis/tiny-auth-token-payload";
 import { MIN_TIME_TO_REFRESH } from "./constants";
 /** */
 const warn = process.env.NODE_ENV !== 'production' ? console.error.bind(console) : () => { };
@@ -38,12 +38,11 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
                 // this shoudln't happen
                 throw new Error("Can't auto-refresh: Auth busy");
             }
-            if (!isValidToken(state.token)) {
+            if (!await isValidToken(state.token)) {
                 throw new Error("Can't auto-refresh: Invalid Token");
             }
-            if (isTokenExpired(state.token)) {
+            if (await isTokenExpired(state.token)) {
                 throw new Error("Token expired");
-                return false;
             }
             if (!state.authenticated) {
                 warn("Can't auto-refresh Non authenticated state");
@@ -136,10 +135,10 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
             setBusy(true)
             const token = readToken();
             if (!isValidToken(token)) {
-                throw new Error("can't init: invalid token");                
+                throw new Error("can't init: invalid token");
             }
             if (isTokenExpired(token)) {
-                throw new Error("can't init: invalid token expired");                
+                throw new Error("can't init: invalid token expired");
             }
             loginSuccess(await refresh(token));
             autoRefresh();

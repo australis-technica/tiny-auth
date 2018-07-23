@@ -36,6 +36,8 @@
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
+    "packages/tiny-auth-token-payload",    
+    "packages/tiny-auth-handler",
     "local/demo-ui"
   ]
 }
