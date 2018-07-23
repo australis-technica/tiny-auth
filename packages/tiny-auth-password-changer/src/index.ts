@@ -1,12 +1,15 @@
-import { Users, PasswordRulePolicyEnforcer, ICrypto , PasswordChanger} from "@australis/tiny-auth-core";
+import { Users, PasswordRulePolicyEnforcer, ICrypto, PasswordChanger } from "@australis/tiny-auth-core";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
-
-export default (function (
+/** prettier-ignore */
+/**
+ * 
+ */
+export default (function passwordChanger(
     users: Users,
     crypto: ICrypto,
     passwordRulePolicyEnforcer: PasswordRulePolicyEnforcer,
-) : PasswordChanger {
+): PasswordChanger {
     /** */
     const tryDecrypt = (s: string) => {
         try {
