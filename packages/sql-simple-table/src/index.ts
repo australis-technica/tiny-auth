@@ -3,21 +3,22 @@ import ExecSql from "@australis/tiny-sql-exec-sql";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 /**
- * 
+ *
  */
 export interface BasicTable {
-   id: string | number; 
-   updatedAt: number; 
-   createdAt: number 
+  id: string | number;
+  updatedAt: number;
+  createdAt: number;
 }
 /**
  *
  * @param TABLE_NAME @type {string} @description table name
  * @param dto @type {string} @description "create table blah, blah, blah...."
  */
-export default async function SimpleTable<
-  T extends BasicTable
->(TABLE_NAME: string, dto: string) {
+export default function SimpleTable<T extends BasicTable>(
+  TABLE_NAME: string,
+  dto: string
+) {
   async function add(
     connection: Connection,
     item: Partial<T> & { id: string; displayName: string }
@@ -160,16 +161,28 @@ select * from ${TABLE_NAME}
       return byId(connection, item.id);
     } catch (error) {
       debug(error);
-      throw error;
+      return Promise.reject(error);
     }
   }
-
+  /** */
+  async function remove(connection: Connection, id: string | number) {
+    try {
+      const r = await ExecSql(connection)(`DELETE ${TABLE_NAME} where id = @id`, { id });
+      if (r.error) return Promise.reject(r.error);
+      return Promise.resolve(r);
+    } catch (error) {
+      debug(error);
+      return Promise.reject(error);
+    }
+  }
+/** */
   return {
     add,
     all,
     byId,
     findBy,
     init,
-    update
+    update,
+    remove
   };
 }

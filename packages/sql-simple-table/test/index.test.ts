@@ -32,7 +32,7 @@ describe(require(join(__dirname, "../package.json")).name, () => {
     /**
      * 
      */
-    const src = await SimpleTable<Xyz>("Xyz", `
+    const src = SimpleTable<Xyz>("Xyz", `
       create table Xyz(
         id varchar(1024) NOT NULL UNIQUE default NEWID(),
         displayName varchar(max) NOT NULL,
@@ -79,5 +79,9 @@ describe(require(join(__dirname, "../package.json")).name, () => {
     const values = await withSqlConnection(connect, c=>src.findBy(c, { displayName: "y"}));
     // TODO:
     expect(values[0].displayName).toBe("y");
+    const {affected } = await withSqlConnection(connect, c=> src.remove(c, "x"));
+    expect(affected.reduce((prev, next)=> prev+next)).toBe(1);
+    const x = await withSqlConnection(connect, src.all);
+    expect(x.length).toBe(0);
   });
 });

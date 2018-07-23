@@ -13,7 +13,6 @@
     "packages/tiny-auth-users-sql",
     "packages/tiny-auth-express",
     "packages/token-blacklist-sql",
-    "local/customers-sql",
     "local/demo",
     "local/demo-ui"   
   ],
