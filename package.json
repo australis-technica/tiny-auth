@@ -4,7 +4,7 @@
   "description": "single token auth",  
   "private": true,
   "scripts": {
-    "start": "cd australis/demo && npm start",
+    "start": "cd local/demo-ui && npm start",
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test"
