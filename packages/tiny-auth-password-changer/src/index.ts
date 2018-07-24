@@ -36,10 +36,10 @@ export default (function passwordChanger(
             return Promise.reject(new Error("can't repeat password"));
         }
         /** Enforce password policy  */
-        const errors = passwordRulePolicyEnforcer(user.password);
+        const errors = passwordRulePolicyEnforcer(newPassword);
 
         if (errors && errors.length) {
-            Promise.reject(new Error(`invalid password: ` + errors.join(",")));
+            return Promise.reject(new Error(`invalid password: ` + errors.join(",")));
         }
         return users.update({ id: user.id, password: crypto.encrypt(newPassword) });
     }

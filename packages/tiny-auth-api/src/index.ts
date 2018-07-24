@@ -99,17 +99,18 @@ export default function createAuthApi(endpoints: Endpoints) {
     /**
      * 
      */
-    async function changePassword(token: string, oldPassword: string, newPassword:  string) {
+    async function changePassword(token: string, password: string, newPassword: string) {
+        /** */        
         try {
             let r = await fetch(changePasswordUrl, {
                 method: "POST",
-                headers: {                    
+                headers: {
                     Authorization: `Bearer ${token}`,
                     // "Cache-Control": "no-cache",
-                    Contentype: "application/json",
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    oldPassword,
+                    password,
                     newPassword
                 })
             });

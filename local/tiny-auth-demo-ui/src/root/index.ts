@@ -1,11 +1,13 @@
 import { FluxStandardAction } from "flux-standard-action";
 /** */
 export type RootState = {
-    title: string
+    title: string,
+    rootUrl: string
 };
 /** */
 const defaultState: RootState = {
-    title: "Tiny-Auth/Demo"
+    title: process.env.REACT_APP_TITLE || "Tiny-Auth/Demo",
+    rootUrl: "/"
 };
 /** */
 const STORE_KEY = "root";

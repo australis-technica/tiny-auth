@@ -8,7 +8,7 @@ const styles: StyleRulesCallback = (theme) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: theme.spacing.unit * 3,
+            margin: theme.spacing.unit * 10,
             height: "calc(100VH - 56px)"
         },
         actions: {

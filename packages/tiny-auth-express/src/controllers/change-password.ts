@@ -19,7 +19,7 @@ const changePassword: (passwordChanger: PasswordChanger) => RequestHandler[] = (
         newPassword
       );
       if (!x) next(new Error("password change failed"));
-      res.send("ok");
+      res.json("ok");
     } catch (error) {
       return next(error);
     }

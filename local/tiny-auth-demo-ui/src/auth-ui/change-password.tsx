@@ -14,6 +14,10 @@ export interface ChangePasswordProps {
     api: WebApi,
     authState: AuthState;
     image?: any;
+    clearError: () => any;
+    setBusy: (busy: boolean) => any;
+    setError: (error: string | Error) => any;
+    onSuccess(): any;
 }
 /** */
 interface ChangePasswordState extends Partial<AuthState> {
@@ -24,9 +28,13 @@ interface ChangePasswordState extends Partial<AuthState> {
      * 
      */
 export class ChangePassword extends Component<ChangePasswordProps & { classes: ClassNameMap; }> {
-    state: ChangePasswordState = {
+    /**
+     * 
+     */
+    state: ChangePasswordState & { success?: boolean } = {
         oldPassword: "",
-        newPassword: ""
+        newPassword: "",
+        success: false
     };
     static getDerivedStateFromProps(props: ChangePasswordProps, state: ChangePasswordState) {
         return Object.assign(state, props.authState);
@@ -38,8 +46,17 @@ export class ChangePassword extends Component<ChangePasswordProps & { classes: C
         }
     }
     /** */
-    handleChangedPassword = () => {
-        this.props.api.changePassword(this.state.token, this.state.oldPassword, this.state.newPassword);
+    handleChangedPassword = async () => {
+        try {
+            this.props.clearError();
+            this.props.setBusy(true);
+            await this.props.api.changePassword(this.state.token, this.state.oldPassword, this.state.newPassword);
+            this.props.onSuccess();
+        } catch (error) {
+            this.props.setError(error);
+        } finally {
+            this.props.setBusy(false);
+        }
     }
     onOldPasswordChanged: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         this.setState({ oldPassword: e.target.value });
@@ -50,6 +67,8 @@ export class ChangePassword extends Component<ChangePasswordProps & { classes: C
     render() {
         const { classes, image } = this.props;
         const { busy, error, authenticated, oldPassword, newPassword } = this.state;
+        if (!authenticated) return <span style={{ color: "red" }}>You shoudln't see this, this route shoudl be protected</span>;
+        if (this.state.success) return <span style={{ color: "green" }}>sucess</span>;
         return <div className={classes.root}>
             <Card className={classes.card}>
                 {image && (
@@ -64,12 +83,12 @@ export class ChangePassword extends Component<ChangePasswordProps & { classes: C
                         className={classes.textField}
                         margin="normal"
                         onKeyUp={this.onKeyUp("Enter", this.handleChangedPassword)}
-                        disabled={busy || !!authenticated}
+                        disabled={busy}
                         value={oldPassword}
                         onChange={this.onOldPasswordChanged}
                         type={"password"}
                     />
-                    <TextField style={{ visibility: (authenticated && "hidden") || undefined }}
+                    <TextField
                         value={newPassword}
                         onChange={this.onNewPasswordChanged}
                         id="new-password"
@@ -78,7 +97,7 @@ export class ChangePassword extends Component<ChangePasswordProps & { classes: C
                         className={classes.textField}
                         margin="normal"
                         onKeyUp={this.onKeyUp("Enter", this.handleChangedPassword)}
-                        disabled={busy || authenticated}
+                        disabled={busy}
                     />
                 </CardContent>
                 <CardActions className={classes.actions}>

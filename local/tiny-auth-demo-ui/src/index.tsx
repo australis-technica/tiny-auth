@@ -10,12 +10,13 @@ import theme from "./theme";
 import Home from "./app-home";
 import { Login, Provider as AuthProvider, RequireAuth, AuthMenu, ChangePassword } from "./app-auth"
 import { ConnectedRouter } from "react-router-redux";
+import toolbarTitle from "./app-toolbar-title";
 /** */
 ReactDOM.render(
   <StoreProvider store={store}>
     <AuthProvider >
       <MuiThemeProvider theme={theme}>
-        <App rootUrl="/" toolbarMenu={<AuthMenu />}>
+        <App toolBarTitle={toolbarTitle} toolbarMenu={<AuthMenu changePassword={() => history.push("/change-password")} />}>
           <ConnectedRouter history={history} >
             <Switch >
               <Route exact path="/" render={() => <RequireAuth redirectTo="/login" children={<Home />} />} />
