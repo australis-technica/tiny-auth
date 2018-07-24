@@ -24,11 +24,9 @@ export const Login = () => {
     return <V image={undefined} />;
 }
 /** */
-export const AuthMenu = ()=>{
-    const V = withAuth(authMenu);
-    return <V onChangePasswordClick={()=>{
-        
-    }}/>;
+export const AuthMenu = () => {
+    const V: React.ComponentType<{}> = connect(state => ({ authState: selector(state) }))(withAuth(authMenu));
+    return <V />;
 };
 /** */
 export type RequireAuthProps = { children: React.ReactNode, redirectTo: string };

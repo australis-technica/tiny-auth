@@ -8,7 +8,7 @@ export type WithLocationProps = {
 /** */
 const WithLocation: React.ComponentType<WithLocationProps> = class WithLocation extends React.Component<RouterState & WithLocationProps> {
     render() {
-        return this.props.render(this.props.locationBeforeTransitions as any as Location);
+        return this.props.render(this.props.location as Location);
     }
 }
 /** */

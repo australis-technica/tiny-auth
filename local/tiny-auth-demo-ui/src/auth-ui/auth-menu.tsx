@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { IconButton, Icon, Menu, MenuItem, ListItemText } from "@material-ui/core";
 import * as React from "react";
-import { Auth } from "@australis/tiny-auth-core";
+import { Auth, AuthState } from "@australis/tiny-auth-core";
 /**
  * 
  */
@@ -10,6 +10,7 @@ interface AuthMenuState {
 }
 export interface AuthMenuProps {
     auth: Auth;
+    authState: AuthState;
     onChangePasswordClick?(): any;
 }
 /**
@@ -17,15 +18,25 @@ export interface AuthMenuProps {
  */
 export default class AuthMenu extends Component<AuthMenuProps> {
     /** */
-    state: AuthMenuState = {
+    state: Partial<AuthState> & AuthMenuState = {
         isOpen: false
     }
     /** */
+    static getDerivedStateFromProps(props: AuthMenuProps, state: Partial<AuthState> & AuthMenuState) {
+        return Object.assign(state, props.authState);
+    }
+    /** */
+    close = () => {
+        this.setState({ isOpen: false });
+    };
+    /** */
     onLogoutClick = () => {
+        this.close();
         this.props.auth.logout();
     }
     /** */
     onChangePasswordClick = () => {
+        this.close();
         this.props.onChangePasswordClick && this.props.onChangePasswordClick();
     }
     /** */
@@ -34,14 +45,16 @@ export default class AuthMenu extends Component<AuthMenuProps> {
     }
     /** */
     onMenuClose = () => {
-        this.setState({ isOpen: false });
+        this.close();
     }
     /**
      * 
      */
     anchorEl: HTMLElement;
     render() {
-        const { isOpen } = this.state;
+        const { isOpen, authenticated, busy } = this.state;
+        if (busy) { return null; }
+        if (!authenticated) return null;
         return (<React.Fragment>
             <IconButton color="inherit" onClick={this.onMenuIconClick} buttonRef={x => this.anchorEl = x}>
                 <Icon children="person" />

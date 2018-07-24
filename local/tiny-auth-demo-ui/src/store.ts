@@ -29,4 +29,4 @@ export const store = createStore(
     compose(((window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()))
 );
 // Create an enhanced history that syncs navigation events with the store
-export const history = syncHistoryWithStore(browserHistory as any, store);
+export const history = browserHistory;
