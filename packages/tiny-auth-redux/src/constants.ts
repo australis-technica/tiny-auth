@@ -14,5 +14,7 @@ export const defaultState: AuthState = {
     profile: defautlUser,
     token: "",
     error: undefined,
-    authenticated: false
+    authenticated: false,
+    passwordChanged: false,
+    passwordChanging: false
 }

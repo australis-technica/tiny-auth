@@ -6,4 +6,6 @@ export type AuthState = {
     error?: string;
     busy?: boolean;
     authenticated: boolean;
+    passwordChanged: boolean;
+    passwordChanging: boolean;
 };

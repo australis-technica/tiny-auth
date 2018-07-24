@@ -4,6 +4,7 @@ import { MIN_TIME_TO_REFRESH } from "./constants";
 /** */
 const warn = process.env.NODE_ENV !== 'production' ? console.error.bind(console) : () => { };
 const debug = process.env.NODE_ENV !== 'production' ? console.log.bind(console) : () => { };
+const delay = (n: number) => new Promise((resolve) => setTimeout(resolve, n));
 /** */
 export type AuthHandlerActions = {
     setBusy: (value: boolean) => any;
@@ -13,10 +14,12 @@ export type AuthHandlerActions = {
     setAuthenticated: (value: boolean) => any,
     clearProfile: () => any
     clearError: () => any;
+    setPasswordChanged(value: boolean): any;
+    setPasswordChanging(value: boolean): any;
 }
 /** */
 export default function AuthHandler(getState: () => AuthState, actions: AuthHandlerActions, webApi: WebApi): Auth {
-    const { setBusy, setError, setToken, setProfile, setAuthenticated, clearProfile, clearError } = actions;
+    const { setBusy, setError, setToken, setProfile, setAuthenticated, clearProfile, clearError, setPasswordChanged, setPasswordChanging } = actions;
     function readToken() {
         return localStorage.getItem("token");
     }
@@ -129,6 +132,32 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
             setBusy(false)
         }
     };
+    /**
+     * 
+     * @param password 
+     * @param newPassword 
+     */
+    async function changePassword(password: string, newPassword: string) {
+        try {
+            clearError();
+            setBusy(true);
+            setPasswordChanging(true);
+            const token = getToken();
+            await webApi.changePassword(token, password, newPassword);
+            const { id } = getState().profile;
+            await logout();
+            login(id, newPassword);
+            setPasswordChanged(true);
+            setPasswordChanging(false);
+            await delay(10000);
+            setPasswordChanged(false);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setPasswordChanging(false);
+            setBusy(false);
+        }
+    }
     // contructor ...
     async function init() {
         try {
@@ -154,5 +183,6 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
     return {
         login,
         logout,
+        changePassword
     }
 }

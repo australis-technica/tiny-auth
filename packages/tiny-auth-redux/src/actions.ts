@@ -8,16 +8,20 @@ const SET_BUSY = `${STORE_KEY}/set-busy`;
 const SET_ERROR = `${STORE_KEY}/set-error`;
 const SET_PROFILE = `${STORE_KEY}/set-profile`;
 const SET_TOKEN = `${STORE_KEY}/set-token`;
-const SET_AUTHENTICATED =`${STORE_KEY}/set-loggedin`;
+const SET_AUTHENTICATED = `${STORE_KEY}/set-loggedin`;
+const SET_PASSWORD_CHANGED = `${STORE_KEY}/set-password-changed`;
+const SET_PASSWORD_CHANGING = `${STORE_KEY}/set-password-changing`;
 /** */
 export const actionTypes = {
-    CLEAR_ERROR,
-    CLEAR_PROFILE,
-    SET_BUSY,
-    SET_ERROR,
-    SET_PROFILE,
-    SET_TOKEN,
-    SET_AUTHENTICATED,    
+  CLEAR_ERROR,
+  CLEAR_PROFILE,
+  SET_BUSY,
+  SET_ERROR,
+  SET_PROFILE,
+  SET_TOKEN,
+  SET_AUTHENTICATED,
+  SET_PASSWORD_CHANGED,
+  SET_PASSWORD_CHANGING
 }
 /** */
 /** */
@@ -55,8 +59,18 @@ const setToken = (payload: string): FluxStandardAction<string> => ({
   meta: undefined,
 });
 /** */
-const setAuthenticated = (payload: boolean): FluxStandardAction<boolean> =>({
+const setAuthenticated = (payload: boolean): FluxStandardAction<boolean> => ({
   type: SET_AUTHENTICATED,
+  payload,
+  meta: undefined
+});
+const setPasswordChanged  = (payload: boolean): FluxStandardAction<boolean> => ({
+  type: SET_PASSWORD_CHANGED,
+  payload,
+  meta: undefined
+})
+const setPasswordChanging= (payload: boolean): FluxStandardAction<boolean> => ({
+  type: SET_PASSWORD_CHANGING,
   payload,
   meta: undefined
 });
@@ -68,5 +82,7 @@ export default {
   setError,
   setProfile,
   setToken,
-  setAuthenticated
+  setAuthenticated,
+  setPasswordChanged,
+  setPasswordChanging
 };

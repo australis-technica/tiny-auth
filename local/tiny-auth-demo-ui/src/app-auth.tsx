@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import createAuthApi from "@australis/tiny-auth-api";
 import { AuthHandler } from "@australis/tiny-auth-handler";
-import { AuthProvider, AuthRequired, withAuth } from "@australis/tiny-auth-react";
+import { AuthProvider, AuthRequired, AuthRequiredProps, withAuth } from "@australis/tiny-auth-react";
 import { bindActions, selector } from "@australis/tiny-auth-redux";
 import { LoginView, AuthMenu as authMenu, ChangePassword as changePassword } from "./auth-ui";
 import { store } from "./store";
@@ -29,18 +29,10 @@ export const AuthMenu = connect(state => ({ authState: selector(state) }))(withA
 /** */
 export const ChangePassword = () => {
     const V = connect(state => ({ authState: selector(state) }))(withAuth(changePassword));
-    const { setError, clearError, setBusy } = bindActions(store);
-    const onSuccess = () => {
-        authHandler.logout();
-    }
-    return <V image={undefined} api={authApi} {...{ setError, setBusy, clearError, onSuccess }} />
+    return <V image={undefined} api={authApi} />
 }
 /** */
-export type RequireAuthProps = { children: React.ReactNode, redirectTo: string };
-export const RequireAuth = connect(selector)(
-    // ...
-    (props: RequireAuthProps) => <AuthRequired {...(props as any)} redirectTo={props.redirectTo} children={props.children} />
-);
+export const RequireAuth: React.ComponentType<Partial<AuthRequiredProps>> = connect(selector)(AuthRequired);
 /** */
 export const Provider = (props: { children: React.ReactNode }) => <AuthProvider auth={authHandler} children={props.children} />
 /** */

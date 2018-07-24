@@ -4,7 +4,7 @@ import { actionTypes } from "./actions";
 import { defaultState } from "./constants";
 import { AuthState } from "@australis/tiny-auth-core";
 /** */
-const { CLEAR_ERROR, CLEAR_PROFILE, SET_BUSY, SET_ERROR, SET_PROFILE, SET_TOKEN, SET_AUTHENTICATED } = actionTypes;
+const { CLEAR_ERROR, CLEAR_PROFILE, SET_BUSY, SET_ERROR, SET_PROFILE, SET_TOKEN, SET_AUTHENTICATED, SET_PASSWORD_CHANGED, SET_PASSWORD_CHANGING } = actionTypes;
 /** */
 const reducer = (state: AuthState = defaultState, action: FSA<any>): AuthState => {
   switch (action.type) {
@@ -43,6 +43,14 @@ const reducer = (state: AuthState = defaultState, action: FSA<any>): AuthState =
     case SET_AUTHENTICATED: {
       const authenticated = action.payload;
       return setPartial(state, { authenticated });
+    }
+    case SET_PASSWORD_CHANGED: {
+      const passwordChanged: boolean = action.payload;
+      return setPartial(state, { passwordChanged })
+    }
+    case SET_PASSWORD_CHANGING: {
+      const passwordChanging: boolean = !!action.payload;
+      return setPartial(state, { passwordChanging })
     }
     default:
       return state;

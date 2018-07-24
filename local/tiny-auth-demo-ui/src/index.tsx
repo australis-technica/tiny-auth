@@ -19,7 +19,11 @@ ReactDOM.render(
         <App toolBarTitle={toolbarTitle} toolbarMenu={<AuthMenu changePassword={() => history.push("/change-password")} />}>
           <ConnectedRouter history={history} >
             <Switch >
-              <Route exact path="/" render={() => <RequireAuth redirectTo="/login" children={<Home />} />} />
+              <Route exact path="/" render={() => {
+                return <RequireAuth redirectTo="/login" renderBusy={() => <span>.... Auth busy, please wait </span>} >
+                  <Home />
+                </RequireAuth>
+              }} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Login} />
               <Route exact path="/change-password" render={() => <RequireAuth redirectTo="/login"><ChangePassword /></RequireAuth>} />
