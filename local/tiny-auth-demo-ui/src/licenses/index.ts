@@ -1,0 +1,1 @@
+export { default as LicensesView } from "./licenses-view";
