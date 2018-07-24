@@ -8,14 +8,14 @@ import "./fonts";
 import { history, store } from "./store";
 import theme from "./theme";
 import Home from "./app-home";
-import { Login, Provider as AuthProvider, RequireAuth } from "./app-auth"
+import { Login, Provider as AuthProvider, RequireAuth , AuthMenu } from "./app-auth"
 import WithLocation from "./with-location";
 /** */
 ReactDOM.render(
   <StoreProvider store={store}>
       <AuthProvider >
         <MuiThemeProvider theme={theme}>
-          <App rootUrl="/">
+          <App rootUrl="/" toolbarMenu={<AuthMenu />}>
             <Router history={history as any} >
               <WithLocation render={(location) =>
                 <Switch location={location}>

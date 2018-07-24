@@ -30,12 +30,12 @@
     "@types/jest": "^22.2.3",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "*",
-    "@types/react": "16.4.6",
-    "@types/react-dom": "16.0.6",
-    "@types/react-redux": "^6.0.3",
-    "@types/react-router": "^4.0.27",
-    "@types/react-router-dom": "^4.2.7",
-    "@types/react-router-redux": "4.0.44",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/react-redux": "*",
+    "@types/react-router": "*",
+    "@types/react-router-dom": "*",
+    "@types/react-router-redux": "*",
     "@types/webfontloader": "^1.6.29",
     "typescript": "2.9.2"
   }

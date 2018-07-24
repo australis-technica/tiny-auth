@@ -32,12 +32,12 @@
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
     "packages/tiny-auth-sign-token",
-    "local/demo",
+    "local/tiny-auth-demo",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",    
     "packages/tiny-auth-handler",
-    "local/demo-ui"
+    "local/tiny-auth-demo-ui"
   ]
 }

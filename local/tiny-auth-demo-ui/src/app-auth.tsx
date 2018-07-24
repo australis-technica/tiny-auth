@@ -4,7 +4,7 @@ import createAuthApi from "@australis/tiny-auth-api";
 import { AuthHandler } from "@australis/tiny-auth-handler";
 import { AuthProvider, AuthRequired, withAuth } from "@australis/tiny-auth-react";
 import { bindActions, selector } from "@australis/tiny-auth-redux";
-import { LoginView } from "./auth-ui";
+import { LoginView, AuthMenu as authMenu } from "./auth-ui";
 import { store } from "./store";
 import * as endPoints from "./endpoints";
 /**
@@ -19,10 +19,17 @@ const authApi = createAuthApi({
 /** */
 const authHandler = AuthHandler(() => selector(store.getState()), bindActions(store), authApi);
 /** */
-export const Login = () => {    
+export const Login = () => {
     const V = withAuth(LoginView);
-    return <V image={undefined}/>;
+    return <V image={undefined} />;
 }
+/** */
+export const AuthMenu = ()=>{
+    const V = withAuth(authMenu);
+    return <V onChangePasswordClick={()=>{
+        
+    }}/>;
+};
 /** */
 export type RequireAuthProps = { children: React.ReactNode, redirectTo: string };
 export const RequireAuth = connect(selector)(
