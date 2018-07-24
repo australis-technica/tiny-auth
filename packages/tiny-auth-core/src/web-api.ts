@@ -4,4 +4,5 @@ export type WebApi = {
     logout: (...args: any[]) => Promise<any>;
     profile: (...args: any[]) => Promise<any>;
     refresh: (...args: any[]) => Promise<any>
+    changePassword: (...args: any[]) => Promise<any>
 }

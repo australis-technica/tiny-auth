@@ -7,10 +7,11 @@ export interface Endpoints {
     logoutUrl: string;
     profileUrl: string;
     refreshUrl: string;
+    changePasswordUrl: string;
 }
 /** */
 export default function createAuthApi(endpoints: Endpoints) {
-    const { loginUrl, logoutUrl, profileUrl, refreshUrl } = endpoints
+    const { loginUrl, logoutUrl, profileUrl, refreshUrl, changePasswordUrl } = endpoints
     /**
      * 
      * @param username 
@@ -98,10 +99,40 @@ export default function createAuthApi(endpoints: Endpoints) {
     /**
      * 
      */
+    async function changePassword(token: string, oldPassword: string, newPassword:  string) {
+        try {
+            let r = await fetch(changePasswordUrl, {
+                method: "POST",
+                headers: {                    
+                    Authorization: `Bearer ${token}`,
+                    // "Cache-Control": "no-cache",
+                    Contentype: "application/json",
+                },
+                body: JSON.stringify({
+                    oldPassword,
+                    newPassword
+                })
+            });
+            // TODO: message = await r.json()
+            //; !ok && return Promise.reject(Object.assign(new  Error(message), { status, statusText }))
+            if (!r.ok) {
+                return Promise.reject(new Error(`${r.status}:${r.statusText}`));
+            }
+            const data = await r.json();
+            return data;
+        } catch (error) {
+            warn(error);
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * 
+     */
     return {
         login,
         profile,
         refresh,
-        logout
+        logout,
+        changePassword
     };
 }

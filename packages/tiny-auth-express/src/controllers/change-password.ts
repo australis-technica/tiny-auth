@@ -4,12 +4,12 @@ import { PasswordChanger } from "@australis/tiny-auth-core";
 /**
  *   POST
  */
-const changePassword: (passwordChanger: PasswordChanger)=> RequestHandler[] = (changePassword)=> [
+const changePassword: (passwordChanger: PasswordChanger) => RequestHandler[] = (changePassword) => [
   bodyParser.json(),
   async (req, res, next) => {
-    try {      
-      const { username, password, newPassword } = req.body as {
-        username: string;
+    try {
+      const username = req.user.id;
+      const { password, newPassword } = req.body as {        
         password: string;
         newPassword: string;
       };

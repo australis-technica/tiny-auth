@@ -26,7 +26,9 @@ export default (function passwordChanger(
         if (!user) {
             return Promise.reject(new Error("User not found"));
         }
-        const decrypted = tryDecrypt(user.password);
+        /** */
+        // TODO ?  user.allowBlankPassword/allowEMptyPassword/skipPasswordRules/ passwordRues.empty ...?
+        const decrypted = user.password === "" ? user.password : tryDecrypt(user.password);
         if (decrypted !== password) {
             return Promise.reject(new Error("Invalid password"));
         }
