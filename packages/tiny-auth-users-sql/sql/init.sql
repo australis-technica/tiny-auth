@@ -3,11 +3,12 @@ from sys.tables
 where name = 'users' and type = 'U')))
 create table users
 (
-    id varchar(1024) UNIQUE,
-    displayName varchar(max) not null,
-    email varchar(1024) not null UNIQUE,
-    [password] varchar(max) not null,
-    roles varchar(max) not null,
+    id VARCHAR(1024) UNIQUE,
+    displayName VARCHAR(MAX) NOT NULL,
+    email VARCHAR(1024) NOT NULL UNIQUE,
+    [password] VARCHAR(MAX) NOT NULL,
+    roles VARCHAR(MAX) NOT NULL,
+    [disabled] BIT NOT NULL default 0,
     createdAt DATETIME NOT NULL DEFAULT GETDATE(),
     updatedAt DATETIME NOT NULL DEFAULT GETDATE()
 )
