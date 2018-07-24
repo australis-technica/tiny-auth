@@ -20,7 +20,7 @@ export default async function repo(
     } catch (error) {
       return Promise.reject(error);
     } finally {
-      con && con.close();
+      !isConnection(connect) && con && con.close();
     }
   }
   /** */
