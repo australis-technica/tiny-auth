@@ -13,36 +13,41 @@ function sameDate(date: Date, other: Date) {
  */
 describe(require(join(__dirname, "../package.json")).name, () => {
     it("works", async () => {
-        const now = Date.now();
-        const hello = "hello";
-        const { token } = await sign({
-            hello
-        });
+        const now = Date.now();        
+        const AN_HOUR_IN_SECONDS = 60 * 60;
+        const timeToExpire = 60;
+        const payload = {
+            array: [1 , 2 ],
+            nested: {
+                hello: "hello"
+            },
+            iss: "me",
+            aud: "you",
+            iat: now,
+            exp: Math.floor(now / 1000 ) + timeToExpire
+        };
+        const { token } = await sign(payload);
         // IAT
-        const iat = getIssuedAt(token);
-        const diff = now - iat;
-        // Wrong !
-        expect(diff).toBeLessThan(10);
-        expect(diff).toBeGreaterThan(-1);
-        expect(Number.isInteger(diff)).toBeTruthy();
-        expect(sameDate(new Date(now), new Date(iat))).toBe(true);
-        // Exp
+        const iat = getIssuedAt(token);        
         const exp = getTokenExpiration(token) * 1000;
-        console.log("exp: %s", new Date(exp));
+        const expirationDate = getTokenExpirationDate(token);
+        const timeToExpireFromIat = getTokenMillisecondsToExpire(token, /*from:*/ iat);
+        const timeToExpireFromNow = getTokenMillisecondsToExpire(token, /*from:*/ now);        
+        expect(sameDate(new Date(now), new Date(iat))).toBe(true);
         expect(exp).toBeGreaterThan(now);
         expect(sameDate(new Date(exp), new Date(now))).toBeTruthy();
-        const AN_HOUR_IN_SECONDSS = 60 * 60;
-        expect(Math.ceil((exp - iat) / 1000)).toBe(AN_HOUR_IN_SECONDSS);
-        const expirationDate = getTokenExpirationDate(token);
         expect(expirationDate.toString()).toBe(new Date(exp).toString())
-        // timeToExpire : WRONG!
-        const timeToExpire = getTokenMillisecondsToExpire(token, /*from:*/ iat);
-        expect(timeToExpire).toBeLessThanOrEqual(AN_HOUR_IN_SECONDSS * 1000);
-        expect(timeToExpire).toBeGreaterThan(-1);
+        // rounding diff
+        expect(now + timeToExpireFromIat - AN_HOUR_IN_SECONDS * 1000 - now).toBeLessThanOrEqual(5);        
         expect(isValidToken(token)).toBeTruthy();
         expect(isTokenExpired(token)).toBeFalsy();
-        expect(getTokenPayload(token)).toMatchObject({
-            hello
-        });
+        /**
+         * 
+         */
+        expect(getTokenPayload(token)).toMatchObject(Object.assign(payload, {
+            iat,// decoded
+            exp: exp / 1000 // decoded
+        }));
+        expect(isValidToken("")).toBeFalsy();
     })
 });
