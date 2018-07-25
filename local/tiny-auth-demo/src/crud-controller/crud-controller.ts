@@ -3,21 +3,23 @@ import { Table } from "./types";
 import fromBody from "./from-body";
 /** */
 export default function CrudController<TTable extends Table>(table: TTable) {
-  // 
+  //
   const noClean = (x: any) => x;
   /**
    *
    */
-  const get: (clean?: (x: any) => any) => RequestHandler = (clean = noClean) => async (req, res, next) => {
+  const get: (clean?: (x: any) => any) => RequestHandler = (
+    clean = noClean
+  ) => async (req, res, next) => {
     try {
       const { id } = req.params;
       let data: any = null;
       if (id) {
-        data = await table.byId(id);
+        data = clean((await table.byId(id)) || {});
       } else {
-        data = await table.all();
+        data = ((await table.all()) || []).map(clean);
       }
-      return res.json(clean(data));
+      return res.json(data);
     } catch (error) {
       return next(error);
     }
@@ -25,7 +27,9 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   /**
    *
    */
-  const dlete: (clean?: (x: any) => any) => RequestHandler = (clean = noClean) => async (req, res, next) => {
+  const dlete: (clean?: (x: any) => any) => RequestHandler = (
+    clean = noClean
+  ) => async (req, res, next) => {
     try {
       const { id } = req.params;
       const data = await table.remove(id);
@@ -37,7 +41,14 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   /**
    *
    */
-  const put: (payload?: (req: Request, res: Response) => any, clean?: (x: any) => any) => RequestHandler = (payload = fromBody, clean = noClean) => async (req, res, next) => {
+  const put: (
+    payload?: (req: Request, res: Response) => any,
+    clean?: (x: any) => any
+  ) => RequestHandler = (payload = fromBody, clean = noClean) => async (
+    req,
+    res,
+    next
+  ) => {
     try {
       const data = await table.add(payload(req, res));
       return res.json(clean(data));
@@ -48,7 +59,14 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   /**
    *
    */
-  const post: (payload?: (req: Request, res: Response) => any, clean?: (x: any) => any) => RequestHandler = (payload = fromBody, clean = noClean) => async (req, res, next) => {
+  const post: (
+    payload?: (req: Request, res: Response) => any,
+    clean?: (x: any) => any
+  ) => RequestHandler = (payload = fromBody, clean = noClean) => async (
+    req,
+    res,
+    next
+  ) => {
     try {
       const data = await table.update(payload(req, res));
       return res.json(clean(data));

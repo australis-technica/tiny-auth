@@ -1,5 +1,12 @@
 import { Express, RequestHandler } from "express-serve-static-core";
-import { CrudController, ensureID, validate, ensureBody, fromLocals } from "./crud-controller";
+import {
+  CrudController,
+  ensureID,
+  validate,
+  ensureBody,
+  fromLocals,
+  excludeKeys
+} from "./crud-controller";
 import { repo as customers } from "./customers";
 import { repo as products } from "./products";
 import { repo as licenses } from "./licenses";
@@ -18,11 +25,7 @@ export default function configureCrud(app: Express) {
     const crud = CrudController(customers);
     const endpoint = "customers";
     const route = `/api/${endpoint}/:id?`;
-    app.get(route, [
-      authorize,
-      requireRole(["admin"]),
-      crud.get()
-    ]);
+    app.get(route, [authorize, requireRole(["admin"]), crud.get()]);
     app.put(route, [
       authorize,
       requireRole(["admin"]),
@@ -44,11 +47,7 @@ export default function configureCrud(app: Express) {
     const crud = CrudController(products);
     const endpoint = "products";
     const route = `/api/${endpoint}/:id?`;
-    app.get(route, [
-      authorize,
-      requireRole(["admin"]),
-      crud.get()
-    ]);
+    app.get(route, [authorize, requireRole(["admin"]), crud.get()]);
     app.put(route, [
       authorize,
       requireRole(["admin"]),
@@ -67,19 +66,14 @@ export default function configureCrud(app: Express) {
     ]);
   }
   {
-    // Licenses 
+    // Licenses
     const crud = CrudController(licenses);
     const endpoint = "licenses";
     const route = `/api/${endpoint}/:id?`;
     app.get(route, [
       authorize,
       requireRole(["admin"]),
-      crud.get(datas => {
-        return (datas || []).map((data: { token?: any }) => {
-          const { token, ...rest } = data;
-          return rest;
-        })
-      })
+      crud.get(excludeKeys("token"))
     ]);
     app.put(route, [
       authorize,
@@ -94,32 +88,30 @@ export default function configureCrud(app: Express) {
             return ["Invalid Request"];
           }
           if (!req.body.product) {
-            validation.push("product required")
+            validation.push("product required");
           } else {
             const product = await products.byId(req.body.product);
             if (!product || !product.id) {
-              validation.push("existing product required")
+              validation.push("existing product required");
             }
           }
           // ...
           if (!req.body.customer) {
-            validation.push("customer required")
+            validation.push("customer required");
           } else {
             const customer = await customers.byId(req.body.customer);
             if (!customer || !customer.id) {
-              validation.push("existing customer required")
+              validation.push("existing customer required");
             }
           }
-          // ... Validate existing , decoding payload 
+          // ... Validate existing , decoding payload
           {
-            // ... Validate existing , decoding payload 
-            // Make it slow ..... 
+            // ... Validate existing , decoding payload
+            // Make it slow .....
           }
           return validation;
         } catch (error) {
-          return [
-            error.message
-          ];
+          return [error.message];
         }
       }),
       ((req, res, next) => {
@@ -134,10 +126,7 @@ export default function configureCrud(app: Express) {
         }
       }) as RequestHandler,
       // send to crud
-      crud.put(fromLocals, data => {
-        const { token, ...rest } = data;
-        return rest;
-      })
+      crud.put(fromLocals, excludeKeys("token"))
     ]);
     /**
      * Modify Update
