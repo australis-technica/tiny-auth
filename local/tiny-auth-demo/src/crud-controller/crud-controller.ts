@@ -1,13 +1,14 @@
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler, Request, Response } from "express-serve-static-core";
 import { Table } from "./types";
+import fromBody from "./from-body";
 /** */
 export default function CrudController<TTable extends Table>(table: TTable) {
-  // merge options
-
+  // 
+  const noClean = (x: any) => x;
   /**
    *
    */
-  const get: RequestHandler = async (req, res, next) => {
+  const get: (clean?: (x: any) => any) => RequestHandler = (clean = noClean) => async (req, res, next) => {
     try {
       const { id } = req.params;
       let data: any = null;
@@ -16,7 +17,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
       } else {
         data = await table.all();
       }
-      return res.json(data);
+      return res.json(clean(data));
     } catch (error) {
       return next(error);
     }
@@ -24,11 +25,11 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   /**
    *
    */
-  const dlete: RequestHandler = async (req, res, next) => {
+  const dlete: (clean?: (x: any) => any) => RequestHandler = (clean = noClean) => async (req, res, next) => {
     try {
       const { id } = req.params;
       const data = await table.remove(id);
-      return res.json(data);
+      return res.json(clean(data));
     } catch (error) {
       return next(error);
     }
@@ -36,21 +37,21 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   /**
    *
    */
-  const put: RequestHandler = async (req, res, next) => {
-    try {      
-      const data = await table.add(req.body);
-      return res.json(data);
-    } catch (error) {
-      return next(error);
-    }
-  };
-  /**
-   *
-   */
-  const post: RequestHandler = async (req, res, next) => {
+  const put: (payload?: (req: Request, res: Response) => any, clean?: (x: any) => any) => RequestHandler = (payload = fromBody, clean = noClean) => async (req, res, next) => {
     try {
-      const data = await table.update(req.body);
-      return res.json(data);
+      const data = await table.add(payload(req, res));
+      return res.json(clean(data));
+    } catch (error) {
+      return next(error);
+    }
+  };
+  /**
+   *
+   */
+  const post: (payload?: (req: Request, res: Response) => any, clean?: (x: any) => any) => RequestHandler = (payload = fromBody, clean = noClean) => async (req, res, next) => {
+    try {
+      const data = await table.update(payload(req, res));
+      return res.json(clean(data));
     } catch (error) {
       return next(error);
     }
