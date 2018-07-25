@@ -6,7 +6,9 @@ import { License } from "./types";/**
  */
 export default {
   add: (p: Partial<License> & { id: string; displayName: string }) =>
-    withSqlConnection(connect, c => table.add(c, p)),
+    withSqlConnection(connect, c => {
+      return table.add(c, p)
+    }),
   all: () => withSqlConnection(connect, table.all),
   byId: (id: string) => withSqlConnection(connect, c => table.byId(c, id)),
   findBy: (args: Partial<License>)=> withSqlConnection(connect, c=> table.findBy(c, args)),
