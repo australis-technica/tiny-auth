@@ -1,6 +1,7 @@
 import { RequestHandler } from "express-serve-static-core";
 import bodyParser from "body-parser";
 import { ValidateCredentials } from "@australis/tiny-auth-core";
+import os from "os";
 /** */
 function isString(x: any): x is string {
   return typeof x === "string";
@@ -21,7 +22,8 @@ const login: (
       if (!profile) {
         return next(Object.assign(new Error("Unauthorized"), { code: 401 }));
       }
-      return res.json(await sign({ profile }));
+      const iss = process.env.AUTH_ISSUER || os.hostname();
+      return res.json(await sign({ profile, iss }));
     } catch (error) {
       return next(error);
     }

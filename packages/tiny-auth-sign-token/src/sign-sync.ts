@@ -14,6 +14,7 @@ export default function sign(extra: {}, options?: DefaultOptions) {
   //
   const timeToExpire = options.timeToExpire;  
   const now = Date.now();  
+  // JWT options
   const signOptions: SignOptions = {
     // expiresIn: passed exp as payload!
   };
