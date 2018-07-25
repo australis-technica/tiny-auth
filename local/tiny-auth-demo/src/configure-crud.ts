@@ -14,6 +14,7 @@ import auth from "./auth";
 import uuid from "uuid";
 import { json } from "body-parser";
 import * as lic from "./lic";
+import RejectKeys from "./crud-controller/reject-keys";
 /**
  *
  * @param app
@@ -137,24 +138,14 @@ export default function configureCrud(app: Express) {
       ensureBody(),
       ensureID(), // reject no id
       requireRole(["admin"]),
-      // Do not modify
-      ((_req, _res, next) => {
-        if (_req.body.token) {
-          return next(new Error("Not Implemented, readonly"));
-        }
-        if (_req.body.customer) {
-          return next(new Error("Not Implemented, readonly"));
-        }
-        if (_req.body.product) {
-          return next(new Error("Not Implemented, readonly"));
-        }
-        if (_req.body.features) {
-          return next(new Error("Not Implemented, readonly"));
-        }
-        if (_req.body.createdAt) {
-          return next(new Error("Not Implemented, readonly"));
-        }
-      }) as RequestHandler,
+      RejectKeys([
+        "token",
+        "customer",
+        "product",
+        "features",
+        "createdAt",
+        "updatedAt"
+      ]),      
       crud.post()
     ]);
   }
