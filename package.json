@@ -25,6 +25,7 @@
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-users-sql",
+    "packages/tiny-auth-express-fingerprint",
     "packages/tiny-auth-express",
     "packages/tiny-auth-token-blacklist-sql",
     "packages/tiny-auth-get-token",

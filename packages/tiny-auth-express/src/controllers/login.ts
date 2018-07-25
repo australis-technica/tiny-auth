@@ -23,7 +23,9 @@ const login: (
         return next(Object.assign(new Error("Unauthorized"), { code: 401 }));
       }
       const iss = process.env.AUTH_ISSUER || os.hostname();
-      return res.json(await sign({ profile, iss }));
+      const ips = (req.ips||[]).concat([req.ip]).join(",");
+      const ua  = req.headers["user-agent"];
+      return res.json(await sign({ profile, iss, ips, ua }));
     } catch (error) {
       return next(error);
     }
