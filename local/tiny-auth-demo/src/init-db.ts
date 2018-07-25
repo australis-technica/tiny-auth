@@ -6,6 +6,9 @@ import Debug from "./debug";
 import * as settings from "./settings";
 import sqlConnectionConfig from "./sql-connection-config";
 import { init as initTokenBlacklist } from "./token-blacklist";
+import { table as customers } from "./customers";
+import { table as products } from "./products";
+import { table as licenses } from "./licenses";
 const debug = Debug(__filename);
 /**
  * 
@@ -20,6 +23,9 @@ export default async () => {
     await initTokenBlacklist(connection);
     await settings.init(connection);
     await settings.defaults(connection, );
+    await customers.init(connection);
+    await products.init(connection);
+    await licenses.init(connection);
     return Promise.resolve();
   } catch (error) {
     debug(error);
