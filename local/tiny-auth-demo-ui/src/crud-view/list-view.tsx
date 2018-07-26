@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component, Fragment, ReactNode } from "react";
 import * as React from "react";
 const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 log("list-view");
@@ -9,9 +9,11 @@ export default class ListView extends Component<{
   error: string;
   busy: boolean;
   items: any[];
-  renderItem(value: any, index: number, array: any[]): React.ReactNode;
-  render(items: any): React.ReactNode;
-  fetch?(): any;
+  renderBusy?(): ReactNode;
+  renderError?(error: any): ReactNode;
+  renderItem(value: any, index: number, array: any[]): ReactNode;
+  render(items: any): ReactNode;
+  fetch?(): any;  
 }> {
 
   async componentDidMount() {
@@ -19,10 +21,10 @@ export default class ListView extends Component<{
   }
 
   render() {
-    const { error, busy, items } = this.props;
+    const { error, busy, items} = this.props;
     return (<Fragment>
-      {error && <span style={{ color: "red" }}>{error}</span>}
-      {busy && <span>...busy</span>}
+      {error && this.props.renderError && this.props.renderError(error)}
+      {busy && this.props.renderBusy && this.props.renderBusy()}      
       {this.props.render((items || []).map(this.props.renderItem))}
     </Fragment>
     );

@@ -7,6 +7,19 @@ import { List, ListItem, ListItemText } from "@material-ui/core";
 import { Dispatch } from "redux";
 /**
  * 
+ * @param error 
+ */
+const renderError = (error: string) => {
+  return <span style={{ color: "red" }}>{error}</span>
+}
+/**
+ * 
+ */
+const renderBusy = () => {
+  return <span style={{ color: "blue" }}>Busy</span>
+}
+/**
+ * 
  * @param value 
  * @param index 
  * @param array 
@@ -32,7 +45,9 @@ const selector = (state: {}) => {
   return {
     ...s,
     render,
-    renderItem
+    renderItem,
+    renderError,
+    renderBusy
   }
 }
 /**
