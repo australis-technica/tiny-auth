@@ -6,14 +6,14 @@ import { default as reducer } from "./reducer";
  * 
  * @param viewName 
  */
-export default function(viewName: string) {
+export default function(viewName: string, defaultState = {}) {
   const storeKey = `view-store-${viewName}`;
   return {
     storeKey,
     actionTypes: actionTypes(viewName),
     actions: actions(viewName),
     persist: persist(viewName),
-    reducer: reducer(viewName),
+    reducer: reducer(viewName, defaultState ),
     selector: (state: {})=> state[storeKey]
   };
 }

@@ -6,14 +6,14 @@ import persist from "./persist";
  * @param viewName 
  * @param defaultState 
  */
-export default function (viewName: string): Reducer{
+export default function (viewName: string, defaultState = {}): Reducer{
     const { SET_STATE } = actionTypes(viewName);
     const { trySet, tryParse } = persist(viewName);
-    const defaultState = tryParse({});
+    const preloaded = tryParse(defaultState);
     /**
      * 
      */
-    return (state = defaultState, action )=>{
+    return (state = preloaded, action )=>{
         switch (action.type) {
             case SET_STATE: {
               const _newSTate = Object.assign({}, state, action.payload);
