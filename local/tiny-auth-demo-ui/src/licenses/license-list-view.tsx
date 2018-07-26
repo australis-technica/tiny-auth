@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ComponentType } from "react";
 import { connect } from "react-redux";
-import { products } from "../apis";
+import { licenses } from "../apis";
 import { ListView } from "../crud-view";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import { Dispatch } from "redux";
@@ -13,7 +13,7 @@ import { Dispatch } from "redux";
  */
 const renderItem = (value: any, index: number, array: any[]) => {
   return <ListItem key={index}>
-    <ListItemText >{index} of {array.length}  / DisplayName: {value.displayName} / Enabled: {value.enabled.toString()}</ListItemText>
+    <ListItemText >{index} of {array.length}  / {value.displayName}</ListItemText>
   </ListItem>
 }
 /**
@@ -28,7 +28,7 @@ const render = (items: any) => {
  * @param state 
  */
 const selector = (state: {}) => {
-  const s = products.selector(state);
+  const s = licenses.selector(state);
   return {
     ...s,
     render,
@@ -42,13 +42,13 @@ const selector = (state: {}) => {
 const bindActions = (dispatch: Dispatch) => {
   return {
     fetch: () => {
-      dispatch(products.actions.fetch({
+      dispatch(licenses.actions.fetch({
         method: "GET",
         resultKey: "items"
       }))
     },
     clear: () => {
-      dispatch(products.actions.setResult([], {
+      dispatch(licenses.actions.setResult([], {
         resultKey: "items"
       }))
     }

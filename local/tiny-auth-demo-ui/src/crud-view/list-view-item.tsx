@@ -3,19 +3,23 @@ import * as React from "react";
 /**
  * 
  */
-export interface ListViewItemProps {
+export default class ListViewItem extends Component<{
     value: {};
-}
-/**
- * 
- */
-export default class ListViewItem extends Component<ListViewItemProps> {
-
+    fields: string[];
+}> {
+    get keyValues() {
+        const { value, fields } = this.props;
+        const keys = Object.keys(value || {});
+        const keyValues = keys
+            .filter(key =>
+                !fields || (fields || []).indexOf(key) !== -1
+            )
+            .map(key => ({ key, value: value[key] }));
+        return keyValues;
+    }
     render() {
-        const { value } = this.props;
-        const fields = Object.keys(value || {}).map(key => ({ key, value: value[key] }));
         return <div style={{ margin: "1rem", display: "flex", flexDirection: "row" }}>
-            {fields.map((field,i) => <div key={`field:${i}`} style={{ margin: "1rem" }}><span>{field.key}</span>:<span>{field.value}</span></div>)}
+            {this.keyValues.map((field, i) => <div key={`field:${i}`} style={{ margin: "1rem" }}><span>{field.key}</span>:<span>{field.value}</span></div>)}
         </div>
     }
 }
