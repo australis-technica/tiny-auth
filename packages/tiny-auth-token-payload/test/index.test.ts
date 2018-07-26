@@ -1,7 +1,7 @@
 import "@australis/load-env";
 import { join } from "path";
 import { getIssuedAt, getTokenExpiration, getTokenExpirationDate, getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "../src";
-import sign from "@australis/tiny-auth-sign-token";
+import sign from "@australis/tiny-auth-token-sign";
 /** */
 function sameDate(date: Date, other: Date) {
     return date.getFullYear() == other.getFullYear()

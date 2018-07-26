@@ -7,9 +7,9 @@ const debug = debugModule(module);
 /** */
 export default function authorize(getToken: GetToken): RequestHandler {
   /** */
-  return async (req, res, next) => {
+  return async (req, _res, next) => {
     try {
-      const { profile, token, iss, ips, ua } = jwt.verify(
+      const { profile, iss, ips, ua } = jwt.verify(
         await getToken(req),
         process.env.SECRET
       ) as { profile: {}; token: any , iss: any , ips: any, ua: any};
@@ -29,7 +29,6 @@ export default function authorize(getToken: GetToken): RequestHandler {
         debug("jwt:error: %s", found);
         return next(Object.assign(new Error("jwt: ua, no match"), { code: 401}))
       }
-      res.locals.token = token;
       req.user = profile;
       return next();
     } catch (error) {

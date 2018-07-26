@@ -5,7 +5,7 @@ import { fromRequest } from "@australis/tiny-auth-get-token";
 import validateCredentials from "@australis/tiny-auth-validate-credentials";
 import passwordChanger from "@australis/tiny-auth-password-changer";
 import passwordPolicyEnforcer from "@australis/tiny-auth-password-policy-enforcer";
-import signToken from "@australis/tiny-auth-sign-token";
+import signToken from "@australis/tiny-auth-token-sign";
 /** */
 import users from "./users";
 import crypto from "./crypto";
