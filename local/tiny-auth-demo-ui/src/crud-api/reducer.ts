@@ -4,7 +4,7 @@ import actionTypes from "./action-types";
  * 
  * @param endpoint 
  */
-export default function (endpoint: string, defaultState = {}): Reducer {
+export default function (endpoint: string, defaultState: {}): Reducer {
     const { BUSY, ERROR, FETCH, RESULT } = actionTypes(endpoint);
     /**
      * 

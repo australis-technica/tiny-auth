@@ -13,13 +13,13 @@ export default function (endpoint: string): Middleware {
     /**
      * Middleware
      */
-    return (store) => {
+    return function (store) {
 
         const api = crudApi(() => selector(store.getState()), endpoint);
 
-        return (next) => {
+        return function (next) {
 
-            return async <A extends Action & { payload: any, meta?: any, error?: Error | string }>(action: A) => {
+            return async function <A extends Action & { payload: any, meta?: any, error?: Error | string }>(action: A) {
 
                 if (action.type === FETCH) {
                     const { payload, error } = action;
