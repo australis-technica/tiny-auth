@@ -6,7 +6,7 @@ import { Connection } from "tedious";
 import createTokenBlacklist from "../src";
 import jsonwebtoken from "jsonwebtoken";
 import connect from "@australis/tiny-sql-connection-factory";
-import sign from "@australis/tiny-auth-token-sign";
+import { signToken as sign} from "@australis/tiny-auth-token-sign";
 
 beforeAll(async () => {
   let connection: Connection;

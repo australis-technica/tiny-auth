@@ -1,16 +1,16 @@
-import { RequestHandler } from "express-serve-static-core";
-import bodyParser from "body-parser";
 import { ValidateCredentials } from "@australis/tiny-auth-core";
-import os from "os";
+import { fingerPrint } from "@australis/tiny-auth-express-fingerprint";
+import { signToken } from "@australis/tiny-auth-token-sign";
+import bodyParser from "body-parser";
+import { RequestHandler } from "express-serve-static-core";
 /** */
 function isString(x: any): x is string {
   return typeof x === "string";
 }
 /** HANDLER */
 const login: (
-  validateCredentials: ValidateCredentials,
-  sign: (extra?: {}) => Promise<{}>
-) => RequestHandler[] = (validate, sign) => [
+  validateCredentials: ValidateCredentials
+) => RequestHandler[] = validate => [
   bodyParser.json(),
   async (req, res, next) => {
     try {
@@ -22,10 +22,8 @@ const login: (
       if (!profile) {
         return next(Object.assign(new Error("Unauthorized"), { code: 401 }));
       }
-      const iss = process.env.AUTH_ISSUER || os.hostname();
-      const ips = (req.ips||[]).concat([req.ip]).join(",");
-      const ua  = req.headers["user-agent"];
-      return res.json(await sign({ profile, iss, ips, ua }));
+      const fingerprint = fingerPrint(res);
+      return res.json(await signToken({ profile, fingerprint }));
     } catch (error) {
       return next(error);
     }

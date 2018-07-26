@@ -1,21 +1,24 @@
 import { Request, RequestHandler } from "express-serve-static-core";
-import crypto from "crypto";
 /**
  *
  * @param req
  */
-function createHash(req: Request) {
+function createHash(req: Request): string {
+  // TODO: hash
   const ua = req.headers["user-agent"];
-  return crypto
-    .createHash("md5")
-    .update([ua, req.ip].concat(req.ips).join("|"));
+  return new Buffer([ua, req.ip].concat(req.ips).join("|")).toString("hex") ;
 }
 /**
  *
  */
-export function fingerPrint(res: { locals: { [key: string]: any } }) {
-  return res && res.locals && typeof res.locals.fingerPrint  === "string" && 
-    (res.locals.fingerPrint) || "";
+export function fingerPrint(res: { locals?: { [key: string]: any } }) {
+  return (
+    (res &&
+      res.locals &&
+      typeof res.locals.fingerPrint === "string" &&
+      res.locals.fingerPrint) ||
+    ""
+  );
 }
 /* prettier-ignore */
 /**

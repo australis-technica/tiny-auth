@@ -145,7 +145,7 @@ export default function configureCrud(app: Express) {
         "features",
         "createdAt",
         "updatedAt"
-      ]),      
+      ]),
       crud.post()
     ]);
   }

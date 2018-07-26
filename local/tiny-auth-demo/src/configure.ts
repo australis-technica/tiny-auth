@@ -5,6 +5,7 @@ import errorHandler from "./error-handler";
 import auth from "./auth";
 import { Express } from "express-serve-static-core";
 import configureCrud from "./configure-crud";
+import fingerPrint from "@australis/tiny-auth-express-fingerprint";
 const debug = Debug(__filename);
 const isDev = process.env.NODE_ENV !== "production";
 /**
@@ -20,6 +21,7 @@ export default function configure(app: Express) {
                 origin: process.env.CORS_ORIGIN || "*"
             }));
             app.use(helmet())
+            app.use(fingerPrint);
             /** Handlers */
             if (isDev) {
                 app.get("/echo", (req, res) => res.send(req.query.what || "...echo!"));

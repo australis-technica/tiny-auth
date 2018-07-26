@@ -1,20 +1,14 @@
 import isStringNotEmpty from "./is-string-notempty";
-/** */
-export interface DefaultOptions {
-    envKey?: string;
-    secret?: string;
-    /** in seconds from NOW, as time-lapse, as in 60 Seconds */
-    timeToExpire?: number;
-    iss?: string;
-    aud?: string;
-}
+import { DefaultOptions } from "./types";
+import os from "os";
 /** */
 const ENV_KEY = "SECRET";
 export const defaultOptions: DefaultOptions = {
     envKey: ENV_KEY,
     secret: undefined,
     /** in seconds from NOW, as time-lapse, as in 60 Seconds */
-    timeToExpire: 60 * 60 // 1hr ?
+    timeToExpire: 60 * 60, // 1hr ?
+    iss: process.env.AUITH_ISS || os.hostname()
 }
 /** */
 export function getSecret (options: DefaultOptions){
