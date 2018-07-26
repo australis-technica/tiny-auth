@@ -7,13 +7,19 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { customers, products, licenses } from "./apis";
 /** */
 const promiseMiddleware = (require("redux-promise").default) as Middleware;
-/**
- * 
- * ((window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__())
- */
+
 const actionContext = {};
 const browserHistory = createBrowserHistory();
+/**
+ * dev-tools
+ */
+const composeEnhancers = process.env.NODE_ENV === "production" ? compose :
+    typeof window === 'object' &&
+        (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+            // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+        }) : compose;
+
 /** */
 export const store = createStore(
     combineReducers({
@@ -24,15 +30,18 @@ export const store = createStore(
         [products.storeKey]: products.reducer,
         [licenses.storeKey]: licenses.reducer
     }),
-    applyMiddleware(
-        thunk.withExtraArgument(actionContext),
-        promiseMiddleware,
-        routerMiddleware(browserHistory as any),
-        customers.middleware,
-        products.middleware,
-        licenses.middleware
-    ) as any,
-    compose(((window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()))
+    composeEnhancers(
+        applyMiddleware(
+            thunk.withExtraArgument(actionContext),
+            promiseMiddleware,
+            routerMiddleware(browserHistory as any),
+            customers.middleware,
+            products.middleware,
+            licenses.middleware
+        ) as any
+    )
 );
-
+/**
+ * 
+ */
 export const history = browserHistory;
