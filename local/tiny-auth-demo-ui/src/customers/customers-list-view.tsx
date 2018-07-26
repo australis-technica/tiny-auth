@@ -1,20 +1,20 @@
 import { connect } from "react-redux";
-import { products } from "../apis";
+import { customers } from "../apis";
 import { ComponentType } from "react";
 import { ListView } from "../crud-view";
 /**
  * 
  */
-const ProductListView = connect(products.selector, (dispatch) => {
+const ConstomerListView = connect(customers.selector, (dispatch) => {
   return {
     fetch: () => {
-      dispatch(products.actions.fetch({
+      dispatch(customers.actions.fetch({
         method: "GET",
         resultKey: "items"
       }))
     },
     clear: () => {
-      dispatch(products.actions.setResult([], {
+      dispatch(customers.actions.setResult([], {
         resultKey: "items"
       }))
     }
@@ -23,4 +23,4 @@ const ProductListView = connect(products.selector, (dispatch) => {
 /**
  * 
  */
-export default ProductListView;
+export default ConstomerListView;

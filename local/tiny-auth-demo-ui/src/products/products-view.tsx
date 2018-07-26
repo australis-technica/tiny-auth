@@ -1,14 +1,17 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import ProductList from "./products-list";
 import ProductAdd from "./product-add";
-
+import ProductListView from "./products-list";
+/**
+ * 
+ */
 export default class ProductsView extends Component<{}>{
     /** */
     state = {
         tabIndex: 0
     }
+
     setTabIndex = (tabIndex: number) => {
         return () => this.setState({ tabIndex });
     }
@@ -18,7 +21,7 @@ export default class ProductsView extends Component<{}>{
     Switch = (tabIndex: number) => {
         switch (tabIndex) {
             case 0: {
-                return <ProductList />
+                return <ProductListView />
             }
             case 1: {
                 return <ProductAdd />

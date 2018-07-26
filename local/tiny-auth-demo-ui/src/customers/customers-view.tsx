@@ -1,8 +1,8 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import ListView from "./list-view";
 import CustomerAdd from "./customer-add";
+import ConstomerListView from "./customers-list-view";
 
 export default class CustomersView extends Component<{}>{
     /** */
@@ -18,7 +18,7 @@ export default class CustomersView extends Component<{}>{
     content = (tabIndex: number) => {
         switch (tabIndex) {
             case 0: {
-                return <ListView />
+                return <ConstomerListView />
             }
             case 1: {
                 return <CustomerAdd />
