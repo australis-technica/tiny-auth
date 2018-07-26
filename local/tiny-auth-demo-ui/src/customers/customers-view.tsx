@@ -6,6 +6,10 @@ import ConstomerListView from "./customers-list-view";
 import { connect } from "react-redux";
 import adapter from "./store-adapter";
 import { Dispatch } from "redux";
+import withStyles, {
+  ClassNameMap,
+  StyleRulesCallback
+} from "@material-ui/core/styles/withStyles";
 /**
  *
  */
@@ -13,10 +17,18 @@ interface CustomersViewProps {
   tabIndex: number;
   setState(payload: Partial<CustomersViewProps>): any;
 }
+const styles: StyleRulesCallback = theme => ({
+  tabs: {
+    flex: "1 0",
+    width: "100%"
+  }
+});
 /**
  *
  */
-class CustomersView extends Component<CustomersViewProps> {
+class CustomersView extends Component<
+  CustomersViewProps & { classes: ClassNameMap }
+> {
   /** */
 
   setTabIndex = (tabIndex: number) => {
@@ -40,10 +52,15 @@ class CustomersView extends Component<CustomersViewProps> {
   };
   /** */
   render() {
-    const { tabIndex } = this.props;
+    const { tabIndex, classes } = this.props;
     return (
       <Fragment>
-        <Tabs value={tabIndex} fullWidth={true}>
+        <Tabs
+          value={tabIndex}
+          fullWidth={true}
+          centered={true}
+          className={classes.tabs}
+        >
           <Tab value={0} label={"List"} onClick={this.setTabIndex(0)} />
           <Tab value={1} label={"Add"} onClick={this.setTabIndex(1)} />
         </Tabs>
@@ -81,4 +98,4 @@ const bindActions = (dispatch: Dispatch, _props: CustomersViewProps) => {
 export default connect(
   selector,
   bindActions
-)(CustomersView) as React.ComponentType<{}>;
+)(withStyles(styles)(CustomersView)) as React.ComponentType<{}>;

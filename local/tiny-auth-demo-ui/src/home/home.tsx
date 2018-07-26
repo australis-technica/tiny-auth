@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Component } from "react";
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab, StyleRulesCallback, withStyles } from "@material-ui/core";
 import { CustomersView } from "../customers";
 import { ProductsView } from "../products";
 import { LicensesView } from "../licenses";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import adapter from "./adapter";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 /**
  *
  */
@@ -23,11 +24,20 @@ export interface HomeProps {}
 interface HomeActions {
   setState(payload: Partial<HomeState>): any;
 }
+/** */
+const styles: StyleRulesCallback = theme => ({
+  tabs: {
+    flex: "1 0",
+    width: "100%"
+  }
+});
 /**
  *
  */
 /** */
-class Home extends Component<HomeProps & HomeState & HomeActions> {
+class Home extends Component<
+  HomeProps & HomeState & HomeActions & { classes: ClassNameMap }
+> {
   /**
    *
    */
@@ -65,10 +75,14 @@ class Home extends Component<HomeProps & HomeState & HomeActions> {
    *
    */
   render() {
-    const { tabIndex } = this.props;
+    const { tabIndex, classes } = this.props;
     return (
       <React.Fragment>
-        <Tabs title="Tabs" value={tabIndex} fullWidth>
+        <Tabs title="Tabs" 
+          value={tabIndex} 
+          fullWidth 
+          centered={true}
+          className={classes.tabs}>
           <Tab
             tabIndex={0}
             title="Customers"
@@ -115,4 +129,4 @@ const bindActions = (dispatch: Dispatch) => {
 export default connect(
   selector,
   bindActions
-)(Home) as React.ComponentType;
+)(withStyles(styles)(Home)) as React.ComponentType;
