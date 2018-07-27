@@ -1,6 +1,6 @@
 import { Component, ComponentType, Fragment } from "react";
 import * as React from "react";
-import { AddView, AddViewProps, actionBinder, AllProps } from "../crud-view";
+import { AddView, CrudViewParams, actionBinder, CrudViewProps } from "../crud-view";
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
 import { MenuItem, ListItemText, TextField } from "@material-ui/core";
@@ -9,7 +9,7 @@ import { ConfirmAction } from "../confirm-action";
 
 const selector = createSelector(adapter.selector, state => ({ ...state }));
 
-const View: ComponentType<AddViewProps> = connect(selector, actionBinder(adapter.actions.setState))(AddView)
+const View: ComponentType<CrudViewParams> = connect(selector, actionBinder(adapter.actions.setState))(AddView)
 /**
  * 
  */
@@ -17,7 +17,7 @@ export default class ProductAdd extends Component<{}>{
     /**
      * 
      */
-    renderForm = (props: AllProps) => {
+    renderForm = (props: CrudViewProps) => {
         const { classes, busy, setBusy, delay, setSuccess, setError, confirmAction } = props;
         const actionx = async () => {
             try {
@@ -55,7 +55,7 @@ export default class ProductAdd extends Component<{}>{
     /**
      * 
      */
-    renderMenuItems = (props: AllProps) => {
+    renderMenuItems = (props: CrudViewProps) => {
         // ...
         return [
             <MenuItem key="menu-item-001"

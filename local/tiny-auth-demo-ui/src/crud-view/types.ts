@@ -1,14 +1,13 @@
 import { Message } from "../messages";
 /** */
-export interface AddViewState {
+export interface CrudViewState {
     busy: boolean;
     isMenuOpen: boolean;
-    tabIndex: number;
     confirmAction?: string;
     error?: string;
 }
-export interface AddViewActions {
-    setState(payload: Partial<AddViewState>): any;
+export interface CrudViewActions {
+    setState(payload: Partial<CrudViewState>): any;
     setMessage(message: Message): any;
     clearMessage(): any;
     setConfirmAction(confirmAction: string): any;

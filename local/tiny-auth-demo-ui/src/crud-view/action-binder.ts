@@ -1,11 +1,11 @@
 import { Dispatch } from "redux";
 import messages, { Message } from "../messages";
 import getErrorMessage from "./get-error-message";
-import { AddViewState } from "./types";
+import { CrudViewState } from "./types";
 import { actionBinder as confirmActionBinder } from "../confirm-action";
 import { actionBinder as menuActionBinder } from "../menu";
 /** */
-const actionBinder = (setState: (payload: Partial<AddViewState>) => any) => {
+const actionBinder = (setState: (payload: Partial<CrudViewState>) => any) => {
   /** */
   const bindActions = (dispatch: Dispatch) => {
     const setBusy = (busy: boolean) => {
@@ -40,7 +40,7 @@ const actionBinder = (setState: (payload: Partial<AddViewState>) => any) => {
     const menuActions = menuActionBinder(setState, "isMenuOpen")(dispatch);
 
     return {
-      setState: (payload: Partial<AddViewState>) => {
+      setState: (payload: Partial<CrudViewState>) => {
         dispatch(setState(payload));
       },
       setMessage,

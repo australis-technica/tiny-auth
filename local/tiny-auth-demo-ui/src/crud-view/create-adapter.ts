@@ -1,5 +1,5 @@
 import viewStore from "../view-store";
-import { AddViewState } from "./types";
+import { CrudViewState } from "./types";
 /**
  * 
  */
@@ -7,10 +7,9 @@ export default function (viewName: string) {
     /**
      *
      */
-    const defaultState: AddViewState = {
+    const defaultState: CrudViewState = {
         busy: false,
         isMenuOpen: false,
-        tabIndex: 0,
         confirmAction: undefined,
     };
     /**
@@ -19,7 +18,7 @@ export default function (viewName: string) {
     const storeAdapter = viewStore(viewName, defaultState, {
         persist: {
             transform: {
-                onLoad: (state: Partial<AddViewState>) => {
+                onLoad: (state: Partial<CrudViewState>) => {
                     const {
                         busy,
                         isMenuOpen,
@@ -28,7 +27,7 @@ export default function (viewName: string) {
                     } = state;
                     return value;
                 },
-                onSave: (state: Partial<AddViewState>) => {
+                onSave: (state: Partial<CrudViewState>) => {
                     const {
                         busy,
                         isMenuOpen,
