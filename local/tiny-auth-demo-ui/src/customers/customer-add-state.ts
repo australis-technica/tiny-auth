@@ -6,7 +6,7 @@ export interface ViewState {
   busy: boolean;
   isMenuOpen: boolean;
   tabIndex: number;
-  actionToConfirm?: string;
+  confirmAction?: string;
   error?: string;
 }
 /**
@@ -16,7 +16,7 @@ const defaultState: ViewState = {
   busy: false,
   isMenuOpen: false,
   tabIndex: 0,
-  actionToConfirm: undefined,
+  confirmAction: undefined,
 };
 /**
  *
@@ -28,7 +28,7 @@ const storeAdapter = viewStore("customers-add", defaultState, {
         const {
           busy,
           isMenuOpen,
-          actionToConfirm,
+          confirmAction,
           ...value
         } = state;
         return value;
@@ -37,7 +37,7 @@ const storeAdapter = viewStore("customers-add", defaultState, {
         const {
           busy,
           isMenuOpen,
-          actionToConfirm,          
+          confirmAction,          
           ...value
         } = state;
         return value;

@@ -99,27 +99,34 @@ const Connected: ComponentType<ViewProps> = connect(
         this.props.setState({ busy });
       }
       /** */
-      confirmAction = (actionToConfirm: string) => {
+      confirmAction = (confirmAction: string) => {
+        if (!confirmAction) {
+          throw new Error("Nothing to Confirm");
+        }
         return () => this.props.setState({
-          actionToConfirm,
+          confirmAction,
         });
       };
       /** */
       removeActionToConfirm = () => {
         this.props.setState({
-          actionToConfirm: undefined,
+          confirmAction: undefined,
         })
       }
       /** */
-      handleActionToConfirm = (callback?: (actionType?: string) => any) => {
-        return (actionType: string) => {
+      handleActionToConfirm = (onOk?: () => any, onCancel?: () => any, ) => {
+        return (ok: boolean) => {
           this.removeActionToConfirm();
-          typeof callback === "function" && callback(actionType);
+          if (ok) {
+            onOk && onOk();
+          } else {
+            onCancel && onCancel();
+          }
         }
       }
       delay = (n: number) => new Promise(resolve => setTimeout(resolve, n));
       /** */
-      action1 = async (actionType: string) => {
+      action1 = async () => {
         try {
           this.setBusy(true);
           await this.delay(1500);
@@ -131,7 +138,7 @@ const Connected: ComponentType<ViewProps> = connect(
         }
       }
       /** */
-      action2 = async (actionType: string) => {
+      action2 = async () => {
         try {
           this.setBusy(true);
           await this.delay(1500);
@@ -168,6 +175,7 @@ const Connected: ComponentType<ViewProps> = connect(
                   <IconButton
                     onClick={this.openMenu}
                     buttonRef={x => (this.menuButton = x)}
+                    disabled={!!this.props.busy}
                   >
                     <Icon children="more_vert" />
                   </IconButton>
@@ -216,27 +224,17 @@ const Connected: ComponentType<ViewProps> = connect(
             </Paper>
             <ConfirmAction
               classes={classes}
-              isOpen={actionType => actionType === "action1"}
-              actionType={this.props.actionToConfirm}
-              actionTittle={"Confirm Action:1"}
-              actionMessage={"Really do Action:1?"}
-              acceptAction={this.handleActionToConfirm(this.action1)}
-              cancelAction={this.handleActionToConfirm(() => {
-                this.props.setMessage({
-                  message: "Action:1 Cancelled", status: "error"
-                })
-              })}
+              isOpen={this.props.confirmAction === "action1"}
+              actionTittle={"Confirm Action1"}
+              actionMessage={"Really do Action1"}
+              acceptAction={this.handleActionToConfirm(this.action1, ()=> this.setError("Action 1 Cancelled"))}
             />
             <ConfirmAction
               classes={classes}
-              isOpen={actionType => actionType === "action2"}
-              actionType={this.props.actionToConfirm}
-              actionTittle={"Confirm Action:2"}
-              actionMessage={"Really do Action:2?"}
-              acceptAction={this.handleActionToConfirm(this.action2)}
-              cancelAction={this.handleActionToConfirm(() => {
-                this.setError("Action:2 Cancelled");
-              })}
+              isOpen={this.props.confirmAction === "action2"}
+              actionTittle={"Confirm Action2"}
+              actionMessage={"Really do Action2"}
+              acceptAction={this.handleActionToConfirm(this.action1, ()=> this.setError("Action 2 Cancelled"))}
             />
           </Fragment>
         );

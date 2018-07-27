@@ -12,9 +12,8 @@ import * as React from "react";
 /**
  *
  */
-interface ConfirmActionState {  
-  isOpen?(actionType?: string):boolean;
-  actionType?: string;
+interface ConfirmActionState {
+  isOpen: boolean;
   actionTittle?: string;
   actionMessage?: string;
 }
@@ -24,58 +23,42 @@ interface ConfirmActionState {
  */
 const ConfirmAction: StatelessComponent<
   ConfirmActionState & {
-    acceptAction(actionType?: string): any;
-    cancelAction(actionType?: string): any;
+    acceptAction(ok: boolean): any;
   } & {
     classes: ClassNameMap;
   }
-> = props => {
-  const { actionType, actionTittle, actionMessage, classes } = props;
-  /**
-   *
-   * @param accept
-   */
-  function handle(accept: boolean) {
-    return () => {
-      if (!!accept) {
-        props.acceptAction(props.actionType);
-      } else {
-        props.cancelAction(props.actionType);
-      }
-    };
-  }
-  function isOpen(){
-    if(props.isOpen) {
-      return props.isOpen(actionType);
+  > = props => {
+    const { actionTittle, actionMessage, classes } = props;
+    /** */
+    function handle(ok: boolean) {
+      return () => props.acceptAction(ok);
     }
-    return !!actionType;
-  }
-  return (
-    <Dialog open={isOpen()}>
-      <DialogTitle>
-        {actionTittle || `Confirm Action ${actionType}`}
-      </DialogTitle>
-      <DialogContent>
-        <Typography>{actionMessage}</Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={handle(false)}
-          className={classes.button}
-          variant="raised"
-        >
-          Cancel
+    return (
+      <Dialog open={props.isOpen}>
+        <DialogTitle>
+          {actionTittle || `Confirm Action`}
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{actionMessage}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handle(false)}
+            className={classes.button}
+            variant="raised"
+          >
+            Cancel
         </Button>
-        <Button
-          onClick={handle(true)}
-          className={classes.button}
-          variant="raised"
-          color="primary"
-        >
-          OK
+          <Button
+            onClick={handle(true)}
+            className={classes.button}
+            variant="raised"
+            color="primary"
+          >
+            OK
         </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+        </DialogActions>
+      </Dialog>
+    );
+  };
 export default ConfirmAction;
