@@ -13,6 +13,7 @@ import * as React from "react";
  *
  */
 interface ConfirmActionState {  
+  isOpen?(actionType?: string):boolean;
   actionType?: string;
   actionTittle?: string;
   actionMessage?: string;
@@ -43,8 +44,14 @@ const ConfirmAction: StatelessComponent<
       }
     };
   }
+  function isOpen(){
+    if(props.isOpen) {
+      return props.isOpen(actionType);
+    }
+    return !!actionType;
+  }
   return (
-    <Dialog open={!!actionType}>
+    <Dialog open={isOpen()}>
       <DialogTitle>
         {actionTittle || `Confirm Action ${actionType}`}
       </DialogTitle>

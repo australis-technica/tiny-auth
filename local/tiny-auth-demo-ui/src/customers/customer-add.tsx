@@ -1,26 +1,12 @@
-import {
-  Button,
-  Icon,
-  IconButton,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  TextField,
-  Toolbar,
-  Typography,
-  withStyles
-} from "@material-ui/core";
-import {
-  ClassNameMap,
-  StyleRulesCallback
-} from "@material-ui/core/styles/withStyles";
+import { Button, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Snackbar, TextField, Toolbar, Typography, withStyles } from "@material-ui/core";
+import { ClassNameMap, StyleRulesCallback } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { createSelector } from "reselect";
-import ConfirmAction from "./confirm-action";
+import { ConfirmAction } from "../confirm-action";
+import { SnackbarContentWithSatus, MessageStatus } from "../snackbar-content-with-satus";
 import adapter, { ViewState } from "./customer-add-state";
 /**
  *
@@ -76,6 +62,10 @@ const bindActions = (dispatch: Dispatch) => {
   };
 };
 /** */
+function getErrorMessage(error?: string | Error | undefined): string | undefined {
+  return !error ? undefined : typeof error === "string" ? error : error.message ? error.message : error.toString();
+}
+/** */
 const Connected: ComponentType<ViewProps> = connect(
   selector,
   bindActions
@@ -85,7 +75,77 @@ const Connected: ComponentType<ViewProps> = connect(
     //** */
     class extends Component<
       ViewState & ViewActions & { classes: ClassNameMap }
-    > {
+      > {
+      setError = (error?: Error | string) => {
+        this.props.setState({ actionToConfirmResult: getErrorMessage(error) });
+      }
+      setBusy = (busy: boolean) => {
+        this.props.setState({ busy });
+      }
+      confirmAction = (actionToConfirm: string) => {
+        return () => this.props.setState({
+          actionToConfirm,
+        });
+      };
+      /** */
+      removeActionToConfirm = () => {
+        this.props.setState({
+          actionToConfirm: undefined,
+        })
+      }
+      /**
+       * 
+       */
+      handleActionToConfirm = (callback?: (actionType?: string) => any) => {
+        return (actionType: string) => {
+          this.removeActionToConfirm();
+          typeof callback === "function" && callback(actionType);
+        }
+      }
+      /**
+       * 
+       */
+      setActionToConfirmResult = (message: string | undefined, status: MessageStatus | undefined) => {
+        this.props.setState({
+          actionToConfirmResult: message,
+          actionToConfirmResultStatus: status
+        })
+      }
+      /**
+       * 
+       */
+      actionToConfirmResultClear = () => {
+        this.props.setState({
+          actionToConfirmResult: undefined,
+          actionToConfirmResultStatus: undefined
+        })
+      }
+      delay = (n: number) => new Promise(resolve => setTimeout(resolve, n));
+      /** */
+      action1 = async (actionType: string) => {
+        try {
+          this.setBusy(true);
+          await this.delay(1500);
+          this.setActionToConfirmResult("Done", "success");
+        } catch (error) {
+          this.setActionToConfirmResult(error, "error");
+        } finally {
+          this.setBusy(false);
+        }
+      }
+      /** */
+      action2 = async (actionType: string) => {
+        try {
+          this.setBusy(true);
+          await this.delay(1500);
+          this.setActionToConfirmResult("Action2: Completed", "success");
+        } catch (error) {
+          this.setActionToConfirmResult(getErrorMessage(error), "error");
+        } finally {
+          this.setBusy(false);
+        }
+      }
+
       menuButton: any;
       /** */
       openMenu = () => this.props.setState({ isMenuOpen: true });
@@ -120,17 +180,13 @@ const Connected: ComponentType<ViewProps> = connect(
                     anchorEl={this.menuButton}
                   >
                     <MenuItem
-                      onClick={this.handleMenuAction(() => {
-                        this.props.setState({
-                          actionToConfirm: "Action:1",
-                          actionToConfirmTitle: "Confirm Action:!",
-                          actionToConfirmMessage: "Really do Action:1?"
-                        });
-                      })}
+                      onClick={this.handleMenuAction(this.confirmAction("action1"))}
                     >
                       <ListItemText children="Action:1" />
                     </MenuItem>
-                    <MenuItem onClick={this.handleMenuAction(() => {})}>
+                    <MenuItem
+                      onClick={this.handleMenuAction(this.confirmAction("action2"))}
+                    >
                       <ListItemText children="Action:2" />
                     </MenuItem>
                   </Menu>
@@ -163,33 +219,44 @@ const Connected: ComponentType<ViewProps> = connect(
             </Paper>
             <ConfirmAction
               classes={classes}
+              isOpen={actionType => actionType === "action1"}
               actionType={this.props.actionToConfirm}
-              actionMessage={this.props.actionToConfirmMessage}
-              actionTittle={this.props.actionToConfirmTitle}
-              acceptAction={actionType => {
-                this.props.setState({
-                  actionToConfirm: undefined,
-                  actionToConfirmTitle: undefined,
-                  actionToConfirmMessage: undefined
-                });
-                alert(actionType + " done");
-              }}
-              cancelAction={actionType => {
-                this.props.setState({
-                  actionToConfirm: undefined,
-                  actionToConfirmTitle: undefined,
-                  actionToConfirmMessage: undefined
-                });
-                alert(actionType + " cancelled");
-              }}
+              actionTittle={"Confirm Action:1"}
+              actionMessage={"Really do Action:1?"}
+              acceptAction={this.handleActionToConfirm(this.action1)}
+              cancelAction={this.handleActionToConfirm(() => {
+                this.setActionToConfirmResult("Action:1 Cancelled", "error")
+              })}
             />
+            <ConfirmAction
+              classes={classes}
+              isOpen={actionType => actionType === "action2"}
+              actionType={this.props.actionToConfirm}
+              actionTittle={"Confirm Action:2"}
+              actionMessage={"Really do Action:2?"}
+              acceptAction={this.handleActionToConfirm(this.action2)}
+              cancelAction={this.handleActionToConfirm(() => {
+                this.setActionToConfirmResult("Action:2 Cancelled", "error")
+              })}
+            />
+            <Snackbar
+              open={!!this.props.actionToConfirmResult}
+              onClose={this.actionToConfirmResultClear}
+            >
+              <SnackbarContentWithSatus
+                variant={this.props.actionToConfirmResultStatus || "info"}
+                message={this.props.actionToConfirmResult}
+                onClose={this.actionToConfirmResultClear} />
+            </Snackbar>
           </Fragment>
         );
-      }
+      } // render    
     }
   )
 );
-
+/**
+ * 
+ */
 export default class CustomerList extends Component<{}> {
   render() {
     return <Connected />;

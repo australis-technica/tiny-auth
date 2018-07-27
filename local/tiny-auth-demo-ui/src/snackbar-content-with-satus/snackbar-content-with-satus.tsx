@@ -45,17 +45,18 @@ const snackbarContentWithStatusStyle: StyleRulesCallback = theme => ({
         alignItems: "center",
     },
 });
+export type MessageStatus = 'success' | 'warning' | 'error' | 'info';
 /** */
 interface SnackbarContentWithStatusProps {
     className?: string,
     message: ReactNode,
     onClose?(...args: any[]): any,
-    variant: 'success' | 'warning' | 'error' | 'info'
+    variant: MessageStatus
 }
 /** */
 function SnackbarContentWithStatus(props: { classes: ClassNameMap, } & SnackbarContentWithStatusProps
 ) {
-    const { classes, className, message, onClose, variant, ...other } = props;
+    const { classes, className, message, onClose, variant } = props;
     const Icon = variantIcon[variant];
 
     return (
@@ -78,8 +79,7 @@ function SnackbarContentWithStatus(props: { classes: ClassNameMap, } & SnackbarC
                 >
                     <CloseIcon className={classes.icon} />
                 </IconButton>,
-            ] as any}
-            {...other}
+            ] as any}            
         />
     );
 }
