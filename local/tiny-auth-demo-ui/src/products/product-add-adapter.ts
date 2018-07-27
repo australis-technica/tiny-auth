@@ -1,3 +1,3 @@
 import { createAddViewAdapter } from "../crud-view-add";
-const adapter = createAddViewAdapter("crud-view-add-product");
+const adapter = createAddViewAdapter("product-add");
 export default adapter;

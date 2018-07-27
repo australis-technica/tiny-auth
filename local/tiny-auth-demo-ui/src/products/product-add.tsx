@@ -73,7 +73,7 @@ export default class ProductAdd extends Component<{}>{
     }
     render() {
         // ...
-        return <View header="" renderMenuItems={this.renderMenuItems}
+        return <View header="New Product" renderMenuItems={this.renderMenuItems}
             renderForm={this.renderForm}
         />
     }
