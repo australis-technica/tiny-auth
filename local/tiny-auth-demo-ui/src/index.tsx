@@ -14,7 +14,7 @@ import {
   RequireAuth,
   AuthMenu,
   ChangePassword
-} from "./app-auth";
+} from "./auth";
 import { ConnectedRouter } from "react-router-redux";
 /** */
 ReactDOM.render(
