@@ -1,26 +1,27 @@
 import {
   Button,
+  Icon,
+  IconButton,
+  ListItemText,
+  Menu,
+  MenuItem,
   Paper,
   TextField,
   Toolbar,
   Typography,
-  withStyles,
-  IconButton,
-  Icon,
-  Menu,
-  MenuItem,
-  ListItemText
+  withStyles
 } from "@material-ui/core";
-import * as React from "react";
-import { Component, Fragment, ComponentType } from "react";
-import { connect } from "react-redux";
-import { createSelector } from "reselect";
-import adapter, { ViewState } from "./customer-add-state";
 import {
   ClassNameMap,
   StyleRulesCallback
 } from "@material-ui/core/styles/withStyles";
+import * as React from "react";
+import { Component, ComponentType, Fragment } from "react";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { createSelector } from "reselect";
+import ConfirmAction from "./confirm-action";
+import adapter, { ViewState } from "./customer-add-state";
 /**
  *
  */
@@ -114,12 +115,23 @@ const Connected: ComponentType<ViewProps> = connect(
                     <Icon children="more_vert" />
                   </IconButton>
                   <Menu
-                    open={isMenuOpen}
+                    open={!!isMenuOpen}
                     onClose={this.closeMenu}
                     anchorEl={this.menuButton}
                   >
-                    <MenuItem onClick={this.handleMenuAction(() => {})}>
+                    <MenuItem
+                      onClick={this.handleMenuAction(() => {
+                        this.props.setState({
+                          actionToConfirm: "Action:1",
+                          actionToConfirmTitle: "Confirm Action:!",
+                          actionToConfirmMessage: "Really do Action:1?"
+                        });
+                      })}
+                    >
                       <ListItemText children="Action:1" />
+                    </MenuItem>
+                    <MenuItem onClick={this.handleMenuAction(() => {})}>
+                      <ListItemText children="Action:2" />
                     </MenuItem>
                   </Menu>
                 </Fragment>
@@ -149,6 +161,28 @@ const Connected: ComponentType<ViewProps> = connect(
                 </Button>
               </div>
             </Paper>
+            <ConfirmAction
+              classes={classes}
+              actionType={this.props.actionToConfirm}
+              actionMessage={this.props.actionToConfirmMessage}
+              actionTittle={this.props.actionToConfirmTitle}
+              acceptAction={actionType => {
+                this.props.setState({
+                  actionToConfirm: undefined,
+                  actionToConfirmTitle: undefined,
+                  actionToConfirmMessage: undefined
+                });
+                alert(actionType + " done");
+              }}
+              cancelAction={actionType => {
+                this.props.setState({
+                  actionToConfirm: undefined,
+                  actionToConfirmTitle: undefined,
+                  actionToConfirmMessage: undefined
+                });
+                alert(actionType + " cancelled");
+              }}
+            />
           </Fragment>
         );
       }
