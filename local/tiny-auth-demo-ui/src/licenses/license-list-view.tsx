@@ -2,7 +2,7 @@ import * as React from "react";
 import { ComponentType, Fragment, Component } from "react";
 import { connect } from "react-redux";
 import { licenses } from "../apis";
-import { ListView } from "../crud-view";
+import { DataView } from "../crud-view";
 import { List, ListItem, ListItemText, IconButton, Icon, Menu, MenuItem } from "@material-ui/core";
 import { Dispatch } from "redux";
 import { Toolbar, Typography } from "@material-ui/core";
@@ -64,16 +64,14 @@ const bindActions = (dispatch: Dispatch) => {
       }))
     },
     clear: () => {
-      dispatch(licenses.actions.setResult([], {
-        resultKey: "items"
-      }))
+      dispatch(licenses.actions.setResult([]))
     }
   }
 };
 /**
  * 
  */
-const LicenseListView = connect(selector, bindActions)(ListView) as ComponentType<{}>;
+const LicenseListView = connect(selector, bindActions)(DataView) as ComponentType<{}>;
 /**
  * 
  */

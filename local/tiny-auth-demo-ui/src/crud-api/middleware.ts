@@ -35,7 +35,7 @@ export default function (endpoint: string): Middleware {
                         next(setBusy(true));
                         if (isDev) await delay(FETCH_DELAY);
                         const x = await api(payload);
-                        return next(setResult(x, payload));
+                        return next(setResult(x));
                     } catch (error) {
                         return next(setError(error));
                     } finally {
