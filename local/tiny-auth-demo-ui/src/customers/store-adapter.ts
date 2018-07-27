@@ -1,3 +1,8 @@
-import viewStore from "../view-store";
-const storeAdapter = viewStore("customers");
-export default storeAdapter;
+export {
+  default as customersViewState,
+  ViewState as CustomersViewState
+} from "./customers-view-state";
+export {
+    default as customerAddState,
+    ViewState as CustomerAddState,
+} from "./customer-add-state";

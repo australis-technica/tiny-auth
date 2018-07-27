@@ -4,19 +4,21 @@ import * as React from "react";
 import CustomerAdd from "./customer-add";
 import ConstomerListView from "./customers-list-view";
 import { connect } from "react-redux";
-import adapter from "./store-adapter";
+import { CustomersViewState, customersViewState} from "./store-adapter";
 import { Dispatch } from "redux";
 import withStyles, {
   ClassNameMap,
   StyleRulesCallback
 } from "@material-ui/core/styles/withStyles";
 /**
+ * 
+ */
+interface ViewActions {
+  setState(payload: Partial<CustomersViewState>): any;
+}
+/**
  *
  */
-interface CustomersViewProps {
-  tabIndex: number;
-  setState(payload: Partial<CustomersViewProps>): any;
-}
 const styles: StyleRulesCallback = theme => ({
   tabs: {
     flex: "1 0",
@@ -24,10 +26,16 @@ const styles: StyleRulesCallback = theme => ({
   }
 });
 /**
+ * parameters
+ */
+interface ViewProps {
+  // ...
+}
+/**
  *
  */
 class CustomersView extends Component<
-  CustomersViewProps & { classes: ClassNameMap }
+  ViewProps & CustomersViewState & ViewActions & { classes: ClassNameMap }
 > {
   /** */
 
@@ -74,7 +82,7 @@ class CustomersView extends Component<
  * @param state
  */
 const selector = (state: {}) => {
-  const s: CustomersViewProps = adapter.selector(state);
+  const s: CustomersViewState = customersViewState.selector(state);
   s.tabIndex = s.tabIndex || 0;
   return {
     ...s
@@ -85,10 +93,10 @@ const selector = (state: {}) => {
  * @param dispatch
  * @param props
  */
-const bindActions = (dispatch: Dispatch, _props: CustomersViewProps) => {
+const bindActions = (dispatch: Dispatch, _props: CustomersViewState) => {
   return {
-    setState: (payload: Partial<CustomersViewProps>) => {
-      dispatch(adapter.actions.setState(payload));
+    setState: (payload: Partial<ViewActions>) => {
+      dispatch(customersViewState.actions.setState(payload));
     }
   };
 };
@@ -98,4 +106,4 @@ const bindActions = (dispatch: Dispatch, _props: CustomersViewProps) => {
 export default connect(
   selector,
   bindActions
-)(withStyles(styles)(CustomersView)) as React.ComponentType<{}>;
+)(withStyles(styles)(CustomersView)) as React.ComponentType<ViewProps>;
