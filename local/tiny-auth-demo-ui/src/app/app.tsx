@@ -4,17 +4,18 @@ import { withStyles } from "@material-ui/core/styles";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
-import { Component, ComponentType } from "react";
+import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
 import adapter from "./adapter";
 import styles from "./styles";
 import { History } from "history";
+import { Connected as Messages } from "../messages";
 /**
  *
  */
 interface AppState {
   rootUrl: string;
-  title: string;  
+  title: string;
 }
 /** */
 export type AppProps = {
@@ -26,7 +27,8 @@ class App extends Component<AppProps & AppState & { classes: ClassNameMap }> {
   /** */
   render() {
     const { classes, toolbarMenu, rootUrl, title } = this.props;
-    return (
+    return (<Fragment>
+      <Messages />
       <div className={classes.app}>
         <AppBar>
           <Toolbar>
@@ -44,6 +46,8 @@ class App extends Component<AppProps & AppState & { classes: ClassNameMap }> {
         </AppBar>
         <div className={classes.content}>{this.props.children}</div>
       </div>
+    </Fragment>
+
     );
   }
 }
@@ -60,4 +64,4 @@ const selector = (state: {}) => {
 /** */
 export default connect(selector)(withStyles(styles)(App)) as ComponentType<
   AppProps
->;
+  >;

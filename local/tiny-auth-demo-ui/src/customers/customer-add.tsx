@@ -1,4 +1,4 @@
-import { Button, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Snackbar, TextField, Toolbar, Typography, withStyles } from "@material-ui/core";
+import { Button, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, TextField, Toolbar, Typography, withStyles } from "@material-ui/core";
 import { ClassNameMap, StyleRulesCallback } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
-import { SnackbarContentWithSatus, MessageStatus } from "../snackbar-content-with-satus";
+import messages, { Message } from "../messages";
 import adapter, { ViewState } from "./customer-add-state";
 /**
  *
@@ -38,15 +38,13 @@ const styles: StyleRulesCallback = theme => ({
     backgroundColor: theme.palette.background.default
   }
 });
-/**
- *
- */
+/** */
 const selector = createSelector(adapter.selector, state => ({ ...state }));
-/**
- *
- */
+/** */
 interface ViewActions {
   setState(payload: Partial<ViewState>): any;
+  setMessage(message: Message): any;
+  clearMessage(): any;
 }
 /**
  * parameters
@@ -58,7 +56,14 @@ const bindActions = (dispatch: Dispatch) => {
   return {
     setState: (payload: Partial<ViewState>) => {
       dispatch(adapter.actions.setState(payload));
+    },
+    setMessage: (payload: Message) => {
+      dispatch(messages.actions.setMessage(payload));
+    },
+    clearMessage() {
+      dispatch(messages.actions.clear());
     }
+
   };
 };
 /** */
@@ -72,16 +77,28 @@ const Connected: ComponentType<ViewProps> = connect(
 )(
   /** */
   withStyles(styles)(
-    //** */
+    /** */
     class extends Component<
       ViewState & ViewActions & { classes: ClassNameMap }
       > {
+      /** */
       setError = (error?: Error | string) => {
-        this.props.setState({ actionToConfirmResult: getErrorMessage(error) });
+        this.props.setMessage({
+          message: getErrorMessage(error),
+          status: "error"
+        })
       }
+      /**
+       * 
+       */
+      setSuccess = (message: string) => {
+        this.props.setMessage({ message, status: "success" });
+      }
+      /** */
       setBusy = (busy: boolean) => {
         this.props.setState({ busy });
       }
+      /** */
       confirmAction = (actionToConfirm: string) => {
         return () => this.props.setState({
           actionToConfirm,
@@ -93,32 +110,12 @@ const Connected: ComponentType<ViewProps> = connect(
           actionToConfirm: undefined,
         })
       }
-      /**
-       * 
-       */
+      /** */
       handleActionToConfirm = (callback?: (actionType?: string) => any) => {
         return (actionType: string) => {
           this.removeActionToConfirm();
           typeof callback === "function" && callback(actionType);
         }
-      }
-      /**
-       * 
-       */
-      setActionToConfirmResult = (message: string | undefined, status: MessageStatus | undefined) => {
-        this.props.setState({
-          actionToConfirmResult: message,
-          actionToConfirmResultStatus: status
-        })
-      }
-      /**
-       * 
-       */
-      actionToConfirmResultClear = () => {
-        this.props.setState({
-          actionToConfirmResult: undefined,
-          actionToConfirmResultStatus: undefined
-        })
       }
       delay = (n: number) => new Promise(resolve => setTimeout(resolve, n));
       /** */
@@ -126,9 +123,9 @@ const Connected: ComponentType<ViewProps> = connect(
         try {
           this.setBusy(true);
           await this.delay(1500);
-          this.setActionToConfirmResult("Done", "success");
+          this.setSuccess("action1 Done!");
         } catch (error) {
-          this.setActionToConfirmResult(error, "error");
+          this.setError(error);
         } finally {
           this.setBusy(false);
         }
@@ -138,9 +135,9 @@ const Connected: ComponentType<ViewProps> = connect(
         try {
           this.setBusy(true);
           await this.delay(1500);
-          this.setActionToConfirmResult("Action2: Completed", "success");
+          this.setSuccess("Action2: Completed");
         } catch (error) {
-          this.setActionToConfirmResult(getErrorMessage(error), "error");
+          this.setError(error);
         } finally {
           this.setBusy(false);
         }
@@ -225,7 +222,9 @@ const Connected: ComponentType<ViewProps> = connect(
               actionMessage={"Really do Action:1?"}
               acceptAction={this.handleActionToConfirm(this.action1)}
               cancelAction={this.handleActionToConfirm(() => {
-                this.setActionToConfirmResult("Action:1 Cancelled", "error")
+                this.props.setMessage({
+                  message: "Action:1 Cancelled", status: "error"
+                })
               })}
             />
             <ConfirmAction
@@ -236,18 +235,9 @@ const Connected: ComponentType<ViewProps> = connect(
               actionMessage={"Really do Action:2?"}
               acceptAction={this.handleActionToConfirm(this.action2)}
               cancelAction={this.handleActionToConfirm(() => {
-                this.setActionToConfirmResult("Action:2 Cancelled", "error")
+                this.setError("Action:2 Cancelled");
               })}
             />
-            <Snackbar
-              open={!!this.props.actionToConfirmResult}
-              onClose={this.actionToConfirmResultClear}
-            >
-              <SnackbarContentWithSatus
-                variant={this.props.actionToConfirmResultStatus || "info"}
-                message={this.props.actionToConfirmResult}
-                onClose={this.actionToConfirmResultClear} />
-            </Snackbar>
           </Fragment>
         );
       } // render    

@@ -1,5 +1,4 @@
 import viewStore from "../view-store";
-import { MessageStatus } from "../snackbar-content-with-satus";
 /**
  *
  */
@@ -8,8 +7,6 @@ export interface ViewState {
   isMenuOpen: boolean;
   tabIndex: number;
   actionToConfirm?: string;
-  actionToConfirmResult?: string;
-  actionToConfirmResultStatus?: MessageStatus,
   error?: string;
 }
 /**
@@ -32,8 +29,6 @@ const storeAdapter = viewStore("customers-add", defaultState, {
           busy,
           isMenuOpen,
           actionToConfirm,
-          actionToConfirmResult,
-          actionToConfirmResultStatus,
           ...value
         } = state;
         return value;
@@ -42,9 +37,7 @@ const storeAdapter = viewStore("customers-add", defaultState, {
         const {
           busy,
           isMenuOpen,
-          actionToConfirm,
-          actionToConfirmResult,
-          actionToConfirmResultStatus,
+          actionToConfirm,          
           ...value
         } = state;
         return value;
