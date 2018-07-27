@@ -2,7 +2,7 @@ import { default as actionTypes } from "./action-types";
 import { default as actions } from "./actions";
 import { default as persist } from "./persist";
 import { default as reducer } from "./reducer";
-import { PersistTransform } from "./persist-transform";
+import { DefaultOptions } from "./default-options";
 /**
  *
  * @param viewName
@@ -10,21 +10,15 @@ import { PersistTransform } from "./persist-transform";
 export default function(
   viewName: string,
   defaultState = {},
-  options?: {
-    persistOptions?: {
-      persistOff?: boolean;
-      transform?: PersistTransform;
-    };
-  }
+  options?: DefaultOptions
 ) {
   const storeKey = `view-store-${viewName}`;
-  const { persistOptions } = options || { persistOptions: undefined };
   return {
     storeKey,
     actionTypes: actionTypes(viewName),
     actions: actions(viewName),
     persist: persist(viewName),
-    reducer: reducer(viewName, defaultState, persistOptions),
+    reducer: reducer(viewName, defaultState, options),
     selector: (state: {}) => state[storeKey]
   };
 }

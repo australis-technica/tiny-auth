@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import actionTypes from "./action-types";
 import persist from "./persist";
-import { PersistTransform } from "./persist-transform";
+import defaultOptions from "./default-options";
 /**
  *
  * @param viewName
@@ -10,19 +10,16 @@ import { PersistTransform } from "./persist-transform";
 export default function(
   viewName: string,
   defaultState = {},
-  options?: {
-    persistOff?: boolean;
-    persistTransform?: PersistTransform;
-  }
+  options?: Partial<typeof defaultOptions>
 ): Reducer {
   const { SET_STATE } = actionTypes(viewName);
   /** */
-  const { persistTransform, persistOff } = options || {
-    persistTransform: undefined,
-    persistOff: false
-  };
+  options = Object.assign({}, defaultOptions, options||{});
   /** */
-  const { trySet, tryParse } = persist(viewName, persistTransform);
+  const { trySet, tryParse } = persist(
+    viewName, options.persist && options.persist.transform
+  );
+  const persistOff = options.persist && options.persist.off;
   const preloaded = persistOff ? defaultState : tryParse(defaultState);
   /**
    *
