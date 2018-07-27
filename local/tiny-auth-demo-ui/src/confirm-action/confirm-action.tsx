@@ -16,6 +16,7 @@ interface ConfirmActionState {
   isOpen: boolean;
   actionTittle?: string;
   actionMessage?: string;
+  acceptAction(ok: boolean): any;
 }
 /**
  *
@@ -23,8 +24,6 @@ interface ConfirmActionState {
  */
 const ConfirmAction: StatelessComponent<
   ConfirmActionState & {
-    acceptAction(ok: boolean): any;
-  } & {
     classes: ClassNameMap;
   }
   > = props => {

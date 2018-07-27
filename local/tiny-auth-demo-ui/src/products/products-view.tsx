@@ -1,19 +1,31 @@
-import { Component, Fragment } from "react";
+import { Component, Fragment, ComponentType } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
 import ProductAdd from "./product-add";
 import ProductListView from "./products-list";
+import { connect } from "react-redux";
+import adapter from "./products-view-state";
+import { createSelector } from "reselect";
+import { Dispatch } from "redux";
 /**
  * 
  */
-export default class ProductsView extends Component<{}>{
-    /** */
-    state = {
-        tabIndex: 0
-    }
+interface ViewState {
+    tabIndex: number;
+}
+/**
+ * 
+ */
+export interface ViewProps {
+    // ...
+}
+/**
+ * 
+ */
+class ProductsView extends Component<ViewProps & ViewState & { setState(state: Partial<ViewState>): any }>{
 
     setTabIndex = (tabIndex: number) => {
-        return () => this.setState({ tabIndex });
+        return () => this.props.setState({ tabIndex });
     }
     get name(): string {
         return (this as any).name
@@ -33,7 +45,7 @@ export default class ProductsView extends Component<{}>{
     }
     /** */
     render() {
-        const { tabIndex } = this.state;
+        const { tabIndex } = this.props;
         return <Fragment>
             <Tabs value={tabIndex} fullWidth={true}>
                 <Tab value={0} label={"List"} onClick={this.setTabIndex(0)} />
@@ -43,3 +55,17 @@ export default class ProductsView extends Component<{}>{
         </Fragment>
     }
 }
+/** */
+const selector = createSelector(adapter.selector, state => state);
+/** */
+const bindAction = (dispatch: Dispatch) => {
+    return {
+        setState: (payload: {}) => (dispatch(adapter.actions.setState(payload)))
+    }
+}
+/** */
+const Connected: ComponentType<{}> = connect(selector, bindAction)(ProductsView);
+/**
+ * 
+ */
+export default Connected;
