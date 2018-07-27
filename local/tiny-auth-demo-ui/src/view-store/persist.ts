@@ -1,8 +1,10 @@
+import { PersistTransform } from "./persist-transform";
+
 /**
  *
  * @param viewName
  */
-export default function(viewName: string) {
+export default function(viewName: string, transform?: PersistTransform) {
   const STORE_KEY = `view-store-${viewName}`;
   /**
    *
@@ -11,7 +13,11 @@ export default function(viewName: string) {
   function tryParse(defaultState: {}): {} {
     try {
       const json = localStorage.getItem(STORE_KEY);
-      return Object.assign(defaultState, JSON.parse(json || "{}"));
+      let value = Object.assign({}, defaultState, JSON.parse(json || "{}"));
+      if (transform && transform.onLoad) {
+        value = transform.onLoad(value);
+      }
+      return value;
     } catch (e) {
       log(e);
       return defaultState;
@@ -28,15 +34,29 @@ export default function(viewName: string) {
   function trySet(state: {}) {
     try {
       setTimeout(() => {
+        if (transform && transform.onSave) {
+          localStorage.setItem(
+            STORE_KEY,
+            JSON.stringify(transform.onSave(state))
+          );
+          return;
+        }
         const json = JSON.stringify(state);
         localStorage.setItem(STORE_KEY, json);
       }, 1);
     } catch (e) {
       log(e);
-    }
+    }    
+  }
+  /**
+   * 
+   */
+  function clear(){
+    localStorage.removeItem(STORE_KEY);
   }
   return {
     tryParse,
-    trySet
+    trySet,
+    clear
   };
 }
