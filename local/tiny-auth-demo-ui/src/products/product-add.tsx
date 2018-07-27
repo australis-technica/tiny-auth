@@ -1,6 +1,6 @@
 import { Component, ComponentType, Fragment } from "react";
 import * as React from "react";
-import { AddView, AddViewProps, actionBinder, AllProps } from "../crud-view-add/";
+import { AddView, AddViewProps, actionBinder, AllProps } from "../crud-view";
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
 import { MenuItem, ListItemText, TextField } from "@material-ui/core";
