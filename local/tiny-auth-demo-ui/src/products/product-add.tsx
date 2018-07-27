@@ -1,12 +1,11 @@
 import { Component, ComponentType, Fragment } from "react";
 import * as React from "react";
-import { AddView, AddViewProps, actionBinder } from "../crud-view-add/";
+import { AddView, AddViewProps, actionBinder, AllProps } from "../crud-view-add/";
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
 import { MenuItem, ListItemText, TextField } from "@material-ui/core";
 import adapter from "./product-add-adapter";
 import { ConfirmAction } from "../confirm-action";
-import { AllProps } from "../crud-view-add/view";
 
 const selector = createSelector(adapter.selector, state => ({ ...state }));
 
