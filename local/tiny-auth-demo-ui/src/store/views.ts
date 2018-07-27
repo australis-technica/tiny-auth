@@ -1,6 +1,6 @@
 import { adapter as rootAdapter } from "../app";
-import { customersViewState, customerAddState } from "../customers";
-import { productAdAdapter, productsViewState } from "../products";
+import { customersViewState, customerAddState } from "../api-customers";
+import { productAdAdapter, productsViewState } from "../api-products";
 import { adapter as home } from "../home";
 /**
  *

@@ -2,7 +2,7 @@ import { Component, Fragment, ComponentType } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
 import ProductAdd from "./product-add";
-import ProductListView from "./products-list";
+import ProductListView from "./list";
 import { connect } from "react-redux";
 import adapter from "./products-view-state";
 import { createSelector } from "reselect";

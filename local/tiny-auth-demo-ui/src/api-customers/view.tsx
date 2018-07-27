@@ -2,7 +2,7 @@ import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
 import CustomerAdd from "./customer-add";
-import ConstomerListView from "./customers-list-view";
+import List from "./list";
 import { connect } from "react-redux";
 import { CustomersViewState, customersViewState} from "./store-adapter";
 import { Dispatch } from "redux";
@@ -34,7 +34,7 @@ interface ViewProps {
 /**
  *
  */
-class CustomersView extends Component<
+class View extends Component<
   ViewProps & CustomersViewState & ViewActions & { classes: ClassNameMap }
 > {
   /** */
@@ -48,7 +48,7 @@ class CustomersView extends Component<
   content = (tabIndex: number) => {
     switch (tabIndex) {
       case 0: {
-        return <ConstomerListView />;
+        return <List />;
       }
       case 1: {
         return <CustomerAdd />;
@@ -106,4 +106,4 @@ const bindActions = (dispatch: Dispatch, _props: CustomersViewState) => {
 export default connect(
   selector,
   bindActions
-)(withStyles(styles)(CustomersView)) as React.ComponentType<ViewProps>;
+)(withStyles(styles)(View)) as React.ComponentType<ViewProps>;

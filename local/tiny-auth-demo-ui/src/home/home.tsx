@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Component } from "react";
 import { Tabs, Tab, StyleRulesCallback, withStyles } from "@material-ui/core";
-import { CustomersView } from "../customers";
-import { ProductsView } from "../products";
-import { LicensesView } from "../licenses";
+import { CustomersView } from "../api-customers";
+import { ProductsView } from "../api-products";
+import { LicensesView } from "../api-licenses";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import adapter from "./adapter";
