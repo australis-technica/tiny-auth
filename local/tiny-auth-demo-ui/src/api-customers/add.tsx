@@ -7,8 +7,8 @@ import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
 import messages, { Message } from "../messages";
-import adapter, { ViewState } from "./customer-add-state";
-import styles from "./customer-add-styles";
+import adapter, { ViewState } from "./add-state";
+import styles from "./add-styles";
 /** */
 const selector = createSelector(adapter.selector, state => ({ ...state }));
 /** */

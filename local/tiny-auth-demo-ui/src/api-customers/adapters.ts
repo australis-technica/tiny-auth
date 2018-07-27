@@ -1,8 +1,8 @@
 export {
   default as customersViewState,
   ViewState as CustomersViewState
-} from "./customers-view-state";
+} from "./view-state";
 export {
     default as customerAddState,
     ViewState as CustomerAddState,
-} from "./customer-add-state";
+} from "./add-state";

@@ -1,2 +1,2 @@
 export { default as CustomersView } from "./view";
-export * from "./store-adapter";
+export * from "./adapters";

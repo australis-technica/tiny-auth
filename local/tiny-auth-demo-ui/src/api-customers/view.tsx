@@ -1,10 +1,10 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import CustomerAdd from "./customer-add";
+import Add from "./add";
 import List from "./list";
 import { connect } from "react-redux";
-import { CustomersViewState, customersViewState} from "./store-adapter";
+import { CustomersViewState, customersViewState} from "./adapters";
 import { Dispatch } from "redux";
 import withStyles, {
   ClassNameMap,
@@ -51,7 +51,7 @@ class View extends Component<
         return <List />;
       }
       case 1: {
-        return <CustomerAdd />;
+        return <Add />;
       }
       default: {
         return null;
