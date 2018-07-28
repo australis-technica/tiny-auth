@@ -1,14 +1,15 @@
 import { Component, ReactNode } from "react";
 import { FormDataProps, FormData } from "./types";
-import validate, {
-  ValidationResult,
-  Validate,
+
+import createValidate, {
+  ValidationResultMap,
   ValidationRuleMap,
-  ValidationMessage
+  ValidationMessage,
+  Validate
 } from "./validate";
 
 export type FormDataPropsExtended = FormDataProps & {
-  validation: ValidationResult;
+  validation: ValidationResultMap;
 };
 
 export interface FormDataParams {
@@ -24,27 +25,17 @@ export interface FormDataParams {
 type WithFormDataProps = FormDataProps & FormDataParams;
 
 interface WithFormDataState {
-  validation: ValidationResult;
+  validation: ValidationResultMap;
 }
 /** */
 class WithFormData extends Component<WithFormDataProps> {
-  
   state: WithFormDataState = {
     validation: {}
   };
-
-  setResult = (key: string, value?: string) => {
-    const _ = {
-      ...this.state.validation,
-      [key]: value
-    };
-    this.setState({ validation: _ });
-  };
-
   /** */
-  hijacked = (values: Partial<FormData>) => {
-    this.validate && this.validate(values);
-    return this.props.setFormState(values);
+  setFormState = (formData: Partial<FormData>) => {
+    this.validate && this.validate(formData);
+    return this.props.setFormState(formData);
   };
 
   /**
@@ -56,28 +47,46 @@ class WithFormData extends Component<WithFormDataProps> {
     return {
       validation,
       ...props,
-      setFormState: this.hijacked
+      setFormState: this.setFormState
     };
   }
   /** */
   noData = () => {
     if (this.props.whenNoData) return this.props.whenNoData(this.props);
-    return "No Form Data";
+    throw new Error("No Form Data");
   };
 
   validate: Validate;
-
+  unmointing: boolean;
+  componentWillUnmount() {
+    this.unmointing = true;
+  }
   componentDidMount() {
     const { validationMessages, validationRules, formData } = this.props;
     if (!validationRules) return;
     // init
-    this.validate = validate(
+    const validate = createValidate(
       validationRules,
-      validationMessages || "Not Valid",
-      this.setResult
+      validationMessages || "Not Valid"
     );
 
-    if (formData) this.validate(formData);
+    this.validate = (data: FormData) => {
+      return validate(data).then(values => {
+        if (this.unmointing) return values;
+        const _ = {
+          ...this.state.validation,
+          ...values
+        };
+        this.setState({
+          validation: _
+        });
+        return values;
+      });
+    };
+
+    if (formData) {
+      this.validate(formData);
+    }
   }
   /** */
   render() {

@@ -34,13 +34,18 @@ function isMap(x: any): x is Map<any, any> {
   return x instanceof Map || (x && isFunction(x.get) && isFunction(x.has));
 }
 
-export interface ValidationResult {
-  [key: string]: string;
+export interface ValidationResultMap {
+  [key: string]: string | undefined;
 }
 
 export type ValidationFunc = (formData: FormData) => boolean | Promise<boolean>;
 
-export type Validate = (formData: FormData) => any;
+export type Validate = (formData: FormData) => Promise<ValidationResultMap>;
+
+export type ValidateRule = (
+  key: string,
+  value: any
+) => Promise<ValidationResultMap>;
 
 /**
  * @returns OK
@@ -63,14 +68,15 @@ export type ValidationMessage =
   | ((k: string) => Promise<string>)
   | Map<string, string>;
 
+/**
+ *
+ */
 export default function(
   rules: ValidationRuleMap,
-  message: ValidationMessage,
-  callback: SetResulCallback
+  message: ValidationMessage
 ): Validate {
   /** */
-  const getMessage = (key: string) => {
-    
+  const getMessage = (key: string): Promise<string> => {
     if (!message) {
       return Promise.reject(new Error("message/s is required"));
     }
@@ -80,74 +86,92 @@ export default function(
     }
 
     if (isMap(message)) {
-      if (message.has(key)) return Promise.resolve(message.get(key))
-      if (message.has("*")) return Promise.resolve(message.get("*"));
+      if (message.has(key)) return Promise.resolve(message.get(key) as string);
+      if (message.has("*")) return Promise.resolve(message.get("*") as string);
     }
 
     if (isFunction(message)) {
       const value = message(key);
-      if (isPromise) return value;
+      if (isPromise(value)) return value;
       return Promise.resolve(value);
     }
 
-    // is Object ? 
+    // is Object ?
     if (key in message) return Promise.resolve(message[key]);
     if ("*" in message) return Promise.resolve(message["*"]);
 
     return Promise.resolve("(!)");
   };
+  /**
+   * TODO: replace with Promises with Subscription
+   * or make Promise cancellable
+   */
+  const validateRules = (data: FormData) => {
+    /**
+     *
+     */
+    const validateRule = async (
+      key: string,
+      value: any,
+      rule: ValidationRule
+    ) => {
+      if (!rule) return Promise.resolve({ key, message: undefined });
 
-  return function validate(formData: FormData) {
-    /** */
-    async function complete(key: string, ok: boolean) {
-      const message = await getMessage(key);
-      callback(key, !ok ? message : undefined);
-    }
-    /** */
-    const processRule = async (key: string, rule: ValidationRule) => {
       if (isFunction(rule)) {
-        let ok = rule(formData);
+        let ok = rule(data);
         ok = !isPromise(ok) ? ok : await ok;
-        return complete(key, ok);
+        return Promise.resolve({
+          key,
+          message: ok ? undefined : await getMessage(key)
+        });
       }
+
       if (isRegExp(rule)) {
-        let ok = rule.test(formData[key]);
-        return complete(key, ok);
+        let ok = rule.test(value);
+        return Promise.resolve({
+          key,
+          message: ok ? undefined : await getMessage(key)
+        });
       }
 
       if (isString(rule)) {
-        const value = formData[key] || "";
-        let ok = value.includes(rule);
-        return complete(key, ok);
+        let ok = rule.includes(value);
+        return Promise.resolve({
+          key,
+          message: ok ? undefined : await getMessage(key)
+        });
       }
 
       if (isStringArray(rule)) {
-        let ok = rule.indexOf(formData[key]) !== -1;
-        return complete(key, ok);
+        let ok = rule.indexOf(value) !== -1;
+        return Promise.resolve({
+          key,
+          message: ok ? undefined : await getMessage(key)
+        });
       }
 
       if (isBoolean(rule)) {
         // assume means required !
         // not null not undefined not empty
-        let ok = isStringNotEmpty(formData[key]);
-        return complete(key, ok);
+        let ok = isStringNotEmpty(value);
+        return Promise.resolve({
+          key,
+          message: ok ? undefined : await getMessage(key)
+        });
       }
 
       return Promise.reject(new TypeError("Invalid rule type"));
     };
-    /** */
-    const processRules = (values: Partial<FormData>) => {
-      const keys = Object.keys(values);
-      for (const key of keys) {
-        const rule = rules[key];
-        if (rule) {
-          setTimeout(() => {
-            processRule(key, rule);
-          }, 1);
-        }
-      }
-    };
 
-    return processRules(formData);
+    const keys = Object.keys(data);
+    return Promise.all(
+      keys.map(key => validateRule(key, data[key], rules[key]))
+    ).then(values =>
+      values.reduce((out, next) => {
+        out[next.key] = next.message;
+        return out;
+      }, {})
+    );
   };
+  return validateRules;
 }

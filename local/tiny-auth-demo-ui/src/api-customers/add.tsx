@@ -15,7 +15,6 @@ import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
 import { actionBinder, CrudViewActions } from "../crud-view";
@@ -41,6 +40,21 @@ export interface ViewProps {
 class View extends Component<
   ViewState & CrudViewActions & FormDataProps & { classes: ClassNameMap }
 > {
+  WithFormData: ComponentType<any> = connect(
+    state => {
+      const formData = formDataStore.selector(state);
+      return {
+        formData
+      };
+    },
+    dispatch => {
+      return {
+        setFormState: (data: {}) => {
+          dispatch(formDataStore.actions.setState(data));
+        }
+      };
+    }
+  )(WithFormData);
   /** */
   save = async () => {
     const { setBusy, setError, setSuccess, delay } = this.props;
@@ -75,10 +89,7 @@ class View extends Component<
       handleActionToConfirm,
       handleMenuAction,
       setError,
-      setConfirmAction,
-      formData,
-      setFormValue,
-      setFormState
+      setConfirmAction
     } = this.props;
     return (
       <Fragment>
@@ -113,19 +124,16 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           <form className={classes.form}>
-            <WithFormData
-              formData={formData}
-              setFormState={setFormState}
-              setFormValue={setFormValue}
+            <this.WithFormData
               validationRules={{
                 displayName: true,
                 email: EMAIL_REGEX
               }}
-              validationMessages={async () => {
-                await this.props.delay(1000);
-                return Promise.resolve("Not Valid!!!");
+              validationMessages={{
+                email: "invalid Email",
+                "*": "Not Valid!"
               }}
-              render={formDataProps => {
+              render={(formDataProps: any) => {
                 const { setFormState, formData, validation } = formDataProps;
                 return (
                   <Fragment>
@@ -139,7 +147,7 @@ class View extends Component<
                       disabled={!!this.props.busy}
                       value={formData.displayName}
                       onChange={e => {
-                        setFormValue("displayName", e.target.value);
+                        setFormState({ displayName: e.target.value });
                       }}
                     />
                     <TextField
@@ -192,21 +200,8 @@ class View extends Component<
 /** */
 const bindActions = actionBinder(adapter.actions.setState);
 
-const combineActions = (dispatch: Dispatch) => {
-  const actions = bindActions(dispatch);
-  return {
-    ...actions,
-    setFormState: (data: {}) => {
-      dispatch(formDataStore.actions.setState(data));
-    },
-    setFormValue: (key: string, value: any) => {
-      dispatch(formDataStore.actions.setValue(key, value));
-    }
-  };
-};
-
 const Connected: ComponentType<ViewProps> = connect(
   selector,
-  combineActions
+  bindActions
 )(withStyles(styles)(View));
 export default Connected;
