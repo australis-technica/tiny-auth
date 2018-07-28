@@ -5,7 +5,7 @@ import { FluxStandardAction } from "flux-standard-action";
  * @param viewName
  */
 export default function(viewName: string) {
-  const { SET_STATE } = actionTypes(viewName);
+  const { SET_STATE, SET_VALUE } = actionTypes(viewName);
   /** */
   const setState: (
     payload: {}
@@ -14,7 +14,13 @@ export default function(viewName: string) {
     payload,
     meta: undefined
   });
+  const setValue = (key: string, value: any): FluxStandardAction<Partial<{}>>=> ({
+    type: SET_VALUE,
+    payload: { key, value},
+    meta: undefined
+  })
   return {
-    setState
+    setState,
+    setValue
   };
 }

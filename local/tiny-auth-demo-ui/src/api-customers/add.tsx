@@ -77,7 +77,8 @@ class View extends Component<
       setError,
       setConfirmAction,
       formData,
-      setFormData
+      setFormValue,
+      setFormState
     } = this.props;
     return (
       <Fragment>
@@ -114,28 +115,31 @@ class View extends Component<
           <form className={classes.form}>
             <WithFormData
               formData={formData}
-              setFormData={setFormData}
+              setFormState={setFormState}
+              setFormValue={setFormValue}
               validationRules={{
                 displayName: true,
                 email: EMAIL_REGEX
               }}
-              validationMessages={async ()=> {
+              validationMessages={async () => {
                 await this.props.delay(1000);
                 return Promise.resolve("Not Valid!!!");
               }}
               render={formDataProps => {
-                const { setFormData, formData, validation } = formDataProps;
+                const { setFormState, formData, validation } = formDataProps;
                 return (
                   <Fragment>
                     <TextField
                       className={classes.textField}
                       label="DisplayName"
-                      helperText={validation.displayName || "important helper text"}
+                      helperText={
+                        validation.displayName || "important helper text"
+                      }
                       error={!!validation.displayName}
                       disabled={!!this.props.busy}
                       value={formData.displayName}
                       onChange={e => {
-                        setFormData({ displayName: e.target.value });
+                        setFormValue("displayName", e.target.value);
                       }}
                     />
                     <TextField
@@ -146,7 +150,7 @@ class View extends Component<
                       error={!!validation.email}
                       disabled={!!this.props.busy}
                       value={formData.email}
-                      onChange={e => setFormData({ email: e.target.value })}
+                      onChange={e => setFormState({ email: e.target.value })}
                     />
                   </Fragment>
                 );
@@ -187,15 +191,20 @@ class View extends Component<
 }
 /** */
 const bindActions = actionBinder(adapter.actions.setState);
+
 const combineActions = (dispatch: Dispatch) => {
   const actions = bindActions(dispatch);
   return {
     ...actions,
-    setFormData: (data: {}) => {
+    setFormState: (data: {}) => {
       dispatch(formDataStore.actions.setState(data));
+    },
+    setFormValue: (key: string, value: any) => {
+      dispatch(formDataStore.actions.setValue(key, value));
     }
   };
 };
+
 const Connected: ComponentType<ViewProps> = connect(
   selector,
   combineActions

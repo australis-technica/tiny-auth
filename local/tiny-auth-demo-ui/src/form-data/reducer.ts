@@ -12,7 +12,7 @@ export default function(
   persist?: Persist
 ): Reducer {
     
-  const { SET_STATE } = actionTypes(viewName);      
+  const { SET_STATE, SET_VALUE } = actionTypes(viewName);      
   const preloaded = !persist ? defaultState : persist.tryParse(defaultState);
   /**
    *
@@ -21,6 +21,12 @@ export default function(
     switch (action.type) {
       case SET_STATE: {
         const _newSTate = Object.assign({}, state, action.payload);
+        persist && persist.trySet(_newSTate);
+        return _newSTate;
+      }
+      case SET_VALUE: {
+        const { key, value} = action.payload;
+        const _newSTate = Object.assign({}, state, { [key]:value});
         persist && persist.trySet(_newSTate);
         return _newSTate;
       }

@@ -44,7 +44,7 @@ class WithFormData extends Component<WithFormDataProps> {
   /** */
   hijacked = (values: Partial<FormData>) => {
     this.validate && this.validate(values);
-    return this.props.setFormData(values);
+    return this.props.setFormState(values);
   };
 
   /**
@@ -52,11 +52,11 @@ class WithFormData extends Component<WithFormDataProps> {
    */
   extend() {
     const { validation } = this.state;
-    const { setFormData, ...props } = this.props;
+    const { setFormState, ...props } = this.props;
     return {
       validation,
       ...props,
-      setFormData: this.hijacked
+      setFormState: this.hijacked
     };
   }
   /** */
