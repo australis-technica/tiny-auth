@@ -6,3 +6,6 @@ export {
     default as customerAddState,
     ViewState as CustomerAddState,
 } from "./add-state";
+export {
+  default as customerAddFormDataStore
+} from "./add-form-data"

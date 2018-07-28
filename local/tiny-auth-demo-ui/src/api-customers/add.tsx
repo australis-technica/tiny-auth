@@ -1,22 +1,41 @@
-import { Button, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, TextField, Toolbar, Typography, withStyles } from "@material-ui/core";
+import {
+  Button,
+  Icon,
+  IconButton,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Paper,
+  TextField,
+  Toolbar,
+  Typography,
+  withStyles
+} from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
-import messages, { Message } from "../messages";
 import adapter, { ViewState } from "./add-state";
 import styles from "./add-styles";
+import { actionBinder, CrudViewActions } from "../crud-view";
+import formDataStore from "./add-form-data";
+import { Dispatch } from "redux";
 /** */
-const selector = createSelector(adapter.selector, state => ({ ...state }));
-/** */
-interface ViewActions {
-  setState(payload: Partial<ViewState>): any;
-  setMessage(message: Message): any;
-  clearMessage(): any;
+const selector = createSelector(
+  adapter.selector,
+  formDataStore.selector,
+  (state, formData) => ({ ...state, formData })
+);
+
+interface FormDataState {
+  formData: { [key: string]: any };
 }
+interface FormDataActions {
+  setFormData({}): any;
+}
+type FormDataProps = FormDataState & FormDataActions;
 /**
  * parameters
  */
@@ -24,95 +43,22 @@ export interface ViewProps {
   // ...
 }
 /** */
-const bindActions = (dispatch: Dispatch) => {
-  return {
-    setState: (payload: Partial<ViewState>) => {
-      dispatch(adapter.actions.setState(payload));
-    },
-    setMessage: (payload: Message) => {
-      dispatch(messages.actions.setMessage(payload));
-    },
-    clearMessage() {
-      dispatch(messages.actions.clear());
-    }
-
-  };
-};
-/** */
-function getErrorMessage(error?: string | Error | undefined): string | undefined {
-  return !error ? undefined : typeof error === "string" ? error : error.message ? error.message : error.toString();
-}
-/** */
-class View extends Component<ViewState & ViewActions & { classes: ClassNameMap }
-  > {
+class View extends Component<
+  ViewState & CrudViewActions & FormDataProps & { classes: ClassNameMap }
+> {
   /** */
-  setError = (error?: Error | string) => {
-    this.props.setMessage({
-      message: getErrorMessage(error),
-      status: "error"
-    })
-  }
-  /**
-   * 
-   */
-  setSuccess = (message: string) => {
-    this.props.setMessage({ message, status: "success" });
-  }
-  /** */
-  setBusy = (busy: boolean) => {
-    this.props.setState({ busy });
-  }
-  /** */
-  confirmAction = (confirmAction: string) => {
-    if (!confirmAction) {
-      throw new Error("Nothing to Confirm");
-    }
-    return () => this.props.setState({
-      confirmAction,
-    });
-  };
-  /** */
-  removeActionToConfirm = () => {
-    this.props.setState({
-      confirmAction: undefined,
-    })
-  }
-  /** */
-  handleActionToConfirm = (onOk?: () => any, onCancel?: () => any, ) => {
-    return (ok: boolean) => {
-      this.removeActionToConfirm();
-      if (ok) {
-        onOk && onOk();
-      } else {
-        onCancel && onCancel();
-      }
-    }
-  }
-  delay = (n: number) => new Promise(resolve => setTimeout(resolve, n));
-  /** */
-  action1 = async () => {
+  save = async () => {
+    const { setBusy, setError, setSuccess, delay } = this.props;
     try {
-      this.setBusy(true);
-      await this.delay(1500);
-      this.setSuccess("action1 Done!");
+      setBusy(true);
+      await delay(1500);
+      setSuccess("Save Completed!");
     } catch (error) {
-      this.setError(error);
+      setError(error);
     } finally {
-      this.setBusy(false);
+      setBusy(false);
     }
-  }
-  /** */
-  action2 = async () => {
-    try {
-      this.setBusy(true);
-      await this.delay(1500);
-      this.setSuccess("Action2: Completed");
-    } catch (error) {
-      this.setError(error);
-    } finally {
-      this.setBusy(false);
-    }
-  }
+  };
 
   menuButton: any;
   /** */
@@ -128,7 +74,16 @@ class View extends Component<ViewState & ViewActions & { classes: ClassNameMap }
   };
   /** */
   render() {
-    const { classes, isMenuOpen } = this.props;
+    const {
+      classes,
+      isMenuOpen,
+      handleActionToConfirm,
+      handleMenuAction,
+      setError,
+      setConfirmAction,
+      formData,
+      setFormData
+    } = this.props;
     return (
       <Fragment>
         <Paper className={classes.paper} elevation={0.5}>
@@ -149,12 +104,12 @@ class View extends Component<ViewState & ViewActions & { classes: ClassNameMap }
                 anchorEl={this.menuButton}
               >
                 <MenuItem
-                  onClick={this.handleMenuAction(this.confirmAction("action1"))}
+                  onClick={handleMenuAction(setConfirmAction("action1"))}
                 >
                   <ListItemText children="Action:1" />
                 </MenuItem>
                 <MenuItem
-                  onClick={this.handleMenuAction(this.confirmAction("action2"))}
+                  onClick={handleMenuAction(setConfirmAction("action2"))}
                 >
                   <ListItemText children="Action:2" />
                 </MenuItem>
@@ -167,46 +122,66 @@ class View extends Component<ViewState & ViewActions & { classes: ClassNameMap }
               label="DisplayName"
               helperText="important helper text"
               disabled={!!this.props.busy}
+              value={formData.displayName}
+              onChange={e => {
+                setFormData({ displayName: e.target.value });
+              }}
             />
             <TextField
+              type="email"
               className={classes.textField}
               label="Email"
               helperText="important helper text"
               disabled={!!this.props.busy}
+              value={formData.email}
+              onChange={e => setFormData({ email: e.target.value })}
             />
           </form>
           <div className={classes.actions}>
-            <Button className={classes.button} variant="raised" disabled={!!this.props.busy}>
+            <Button
+              className={classes.button}
+              variant="raised"
+              disabled={!!this.props.busy}
+            >
               Cancel
-          </Button>
+            </Button>
             <Button
               className={classes.button}
               variant="raised"
               color="primary"
               disabled={!!this.props.busy}
+              onClick={setConfirmAction("save")}
             >
               Save
-          </Button>
+            </Button>
           </div>
         </Paper>
         <ConfirmAction
           classes={classes}
-          isOpen={this.props.confirmAction === "action1"}
-          actionTittle={"Confirm Action1"}
-          actionMessage={"Really do Action1"}
-          acceptAction={this.handleActionToConfirm(this.action1, () => this.setError("Action 1 Cancelled"))}
-        />
-        <ConfirmAction
-          classes={classes}
-          isOpen={this.props.confirmAction === "action2"}
-          actionTittle={"Confirm Action2"}
-          actionMessage={"Really do Action2"}
-          acceptAction={this.handleActionToConfirm(this.action1, () => this.setError("Action 2 Cancelled"))}
+          isOpen={this.props.confirmAction === "save"}
+          actionTittle={"Confirm Action"}
+          actionMessage={"Save?"}
+          acceptAction={handleActionToConfirm(this.save, () =>
+            setError("Save Action Cancelled")
+          )}
         />
       </Fragment>
     );
-  } // render    
+  } // render
 }
 /** */
-const Connected: ComponentType<ViewProps> = connect(selector, bindActions)(withStyles(styles)(View));
+const bindActions = actionBinder(adapter.actions.setState);
+const combineActions = (dispatch: Dispatch) => {
+  const actions = bindActions(dispatch);
+  return {
+    ...actions,
+    setFormData: (data: {}) => {
+      dispatch(formDataStore.actions.setState(data));
+    }
+  };
+};
+const Connected: ComponentType<ViewProps> = connect(
+  selector,
+  combineActions
+)(withStyles(styles)(View));
 export default Connected;
