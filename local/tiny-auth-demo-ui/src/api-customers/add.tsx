@@ -23,7 +23,7 @@ import formDataStore from "./add-form-data";
 import adapter, { ViewState } from "./add-state";
 import styles from "./add-styles";
 import { FormDataProps, WithFormData } from "../form-data";
-import { EMAIL_REGEX } from "../form-data/with-form-data";
+import { EMAIL_REGEX } from "../form-data/validate";
 /** */
 const selector = createSelector(
   adapter.selector,
@@ -119,8 +119,9 @@ class View extends Component<
                 displayName: true,
                 email: EMAIL_REGEX
               }}
-              validationMessages={{
-                email: "Valid Email is Required"
+              validationMessages={async ()=> {
+                await this.props.delay(1000);
+                return Promise.resolve("Not Valid!!!");
               }}
               render={formDataProps => {
                 const { setFormData, formData, validation } = formDataProps;
