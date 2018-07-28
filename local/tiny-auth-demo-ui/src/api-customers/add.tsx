@@ -15,13 +15,15 @@ import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
-import adapter, { ViewState } from "./add-state";
-import styles from "./add-styles";
 import { actionBinder, CrudViewActions } from "../crud-view";
 import formDataStore from "./add-form-data";
-import { Dispatch } from "redux";
+import adapter, { ViewState } from "./add-state";
+import styles from "./add-styles";
+import { FormDataProps, WithFormData } from "../form-data";
+import { EMAIL_REGEX } from "../form-data/with-form-data";
 /** */
 const selector = createSelector(
   adapter.selector,
@@ -29,13 +31,6 @@ const selector = createSelector(
   (state, formData) => ({ ...state, formData })
 );
 
-interface FormDataState {
-  formData: { [key: string]: any };
-}
-interface FormDataActions {
-  setFormData({}): any;
-}
-type FormDataProps = FormDataState & FormDataActions;
 /**
  * parameters
  */
@@ -117,24 +112,44 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           <form className={classes.form}>
-            <TextField
-              className={classes.textField}
-              label="DisplayName"
-              helperText="important helper text"
-              disabled={!!this.props.busy}
-              value={formData.displayName}
-              onChange={e => {
-                setFormData({ displayName: e.target.value });
+            <WithFormData
+              formData={formData}
+              setFormData={setFormData}
+              validationRules={{
+                displayName: true,
+                email: EMAIL_REGEX
               }}
-            />
-            <TextField
-              type="email"
-              className={classes.textField}
-              label="Email"
-              helperText="important helper text"
-              disabled={!!this.props.busy}
-              value={formData.email}
-              onChange={e => setFormData({ email: e.target.value })}
+              validationMessages={{
+                email: "Valid Email is Required"
+              }}
+              render={formDataProps => {
+                const { setFormData, formData, validation } = formDataProps;
+                return (
+                  <Fragment>
+                    <TextField
+                      className={classes.textField}
+                      label="DisplayName"
+                      helperText={validation.displayName || "important helper text"}
+                      error={!!validation.displayName}
+                      disabled={!!this.props.busy}
+                      value={formData.displayName}
+                      onChange={e => {
+                        setFormData({ displayName: e.target.value });
+                      }}
+                    />
+                    <TextField
+                      type="email"
+                      className={classes.textField}
+                      label="Email"
+                      helperText={validation.email || "important helper text"}
+                      error={!!validation.email}
+                      disabled={!!this.props.busy}
+                      value={formData.email}
+                      onChange={e => setFormData({ email: e.target.value })}
+                    />
+                  </Fragment>
+                );
+              }}
             />
           </form>
           <div className={classes.actions}>
