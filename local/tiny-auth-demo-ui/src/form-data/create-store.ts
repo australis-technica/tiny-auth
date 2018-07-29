@@ -4,6 +4,7 @@ import createPersist from "./persist";
 import reducer from "./reducer";
 import defaultOptions, { DefaultOptions } from "./default-options";
 import { PREFIX } from "./constants";
+import actionBinder from "./action-binder";
 /**
  *
  * @param name
@@ -20,10 +21,12 @@ export default function(
     persist = createPersist(name);
   }
   return {
-    storeKey,
-    actionTypes: actionTypes(name),
     actions: actions(name),
+    actionTypes: actionTypes(name),
+    bindActions: actionBinder(name),
     reducer: reducer(name, defaultState, persist),
-    selector: (state: {}) => state[storeKey]
+    selector: (state: {}) => state[storeKey],
+    selectAsFormData: (state: {})=> ({ formData: state[storeKey]}),
+    storeKey,
   };
 }

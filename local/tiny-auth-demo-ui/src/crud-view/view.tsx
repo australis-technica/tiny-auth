@@ -115,7 +115,7 @@ export class CrudView extends Component<CrudViewProps> {
         <ConfirmAction
           classes={classes}
           isOpen={this.props.confirmAction === "save"}
-          actionTittle={"Confirm Save Action"}
+          actionTitle={"Confirm Save Action"}
           actionMessage={"Ready to Save?"}
           acceptAction={this.props.handleActionToConfirm(this.save, () =>
             this.props.setError("Save Action Cancelled")
@@ -124,7 +124,7 @@ export class CrudView extends Component<CrudViewProps> {
         <ConfirmAction
           classes={classes}
           isOpen={this.props.confirmAction === "cancel"}
-          actionTittle={"Confirm Cancel Cancel Action"}
+          actionTitle={"Confirm Cancel Cancel Action"}
           actionMessage={"Cancel Cancel Action?"}
           acceptAction={this.props.handleActionToConfirm(this.cancel, () =>
             this.props.setError("ACancel Action Cancelled")

@@ -1,4 +1,4 @@
-import { Message } from "../messages";
+import { MessageActions } from "../messages";
 /** */
 export interface CrudViewState {
     busy: boolean;
@@ -6,14 +6,10 @@ export interface CrudViewState {
     confirmAction?: string;
     error?: string;
 }
-export interface CrudViewActions {
+export interface CrudViewActions extends MessageActions{
     setState(payload: Partial<CrudViewState>): any;
-    setMessage(message: Message): any;
-    clearMessage(): any;
     setConfirmAction(confirmAction: string): any;
-    handleActionToConfirm(onOk: () => any, onCancel?: () => any): (...args: any[]) => any;
-    setError(error: string | Error): any;
-    setSuccess(message: string | undefined): any;
+    handleActionToConfirm(onOk: () => any, onCancel?: () => any): (...args: any[]) => any;    
     setBusy(busy: boolean): any;
     delay(n: number): Promise<void>;
     openMenu(): any,

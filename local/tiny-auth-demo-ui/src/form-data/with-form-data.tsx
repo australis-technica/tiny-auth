@@ -4,20 +4,15 @@ import { FormDataProps, FormData } from "./types";
 import createValidate, {
   ValidationResultMap,
   ValidationRuleMap,
-  ValidationMessage,
   Validate
-} from "./validate";
+} from "./validate-form-data";
 
 export type FormDataPropsExtended = FormDataProps & {
   validation: ValidationResultMap;
 };
 
 export interface FormDataParams {
-  validationRules?: ValidationRuleMap;
-  /**
-   * messages map or default message
-   */
-  validationMessages?: ValidationMessage;
+  validationRules?: ValidationRuleMap;  
   render(props: FormDataPropsExtended): ReactNode;
   whenNoData?(props: FormDataProps): ReactNode;
 }
@@ -34,7 +29,7 @@ class WithFormData extends Component<WithFormDataProps> {
   };
   /** */
   setFormState = (formData: Partial<FormData>) => {
-    this.validate && this.validate(formData);
+    this.validateFormData && this.validateFormData(formData);
     return this.props.setFormState(formData);
   };
 
@@ -56,23 +51,24 @@ class WithFormData extends Component<WithFormDataProps> {
     throw new Error("No Form Data");
   };
 
-  validate: Validate;
-  unmointing: boolean;
+  validateFormData: Validate;
+  unmounting: boolean;
   componentWillUnmount() {
-    this.unmointing = true;
+    this.unmounting = true;
   }
   componentDidMount() {
-    const { validationMessages, validationRules, formData } = this.props;
+    const { validationRules, formData } = this.props;
     if (!validationRules) return;
     // init
     const validate = createValidate(
       validationRules,
-      validationMessages || "Not Valid"
     );
 
-    this.validate = (data: FormData) => {
+    this.validateFormData = (data: FormData) => {
+      // NOTE: TODO: ... cancel when new comes in if previous didn't resolve already ?
+      // or let validator do that 
       return validate(data).then(values => {
-        if (this.unmointing) return values;
+        if (this.unmounting) return values;
         const _ = {
           ...this.state.validation,
           ...values
@@ -85,7 +81,7 @@ class WithFormData extends Component<WithFormDataProps> {
     };
 
     if (formData) {
-      this.validate(formData);
+      this.validateFormData(formData);
     }
   }
   /** */

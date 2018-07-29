@@ -48,7 +48,7 @@ export default class ProductAdd extends Component<{}>{
                 isOpen={confirmAction === "actionx"}
                 acceptAction={props.handleActionToConfirm(actionx)}
                 actionMessage="Do Action x ?"
-                actionTittle="Confirm Action x"
+                actionTitle="Confirm Action x"
             />
         </Fragment>
     }

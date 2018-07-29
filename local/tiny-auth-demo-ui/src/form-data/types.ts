@@ -6,6 +6,8 @@ export interface FormDataState {
 
 export interface FormDataActions {
   setFormState(x: {}): any;  
+  setFormValue(key: string, value: any): any;
+  resetForm(): any;
 }
 
 export type FormDataProps = FormDataState & FormDataActions;

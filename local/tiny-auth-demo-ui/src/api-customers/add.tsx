@@ -9,7 +9,9 @@ import {
   TextField,
   Toolbar,
   Typography,
-  withStyles
+  withStyles,
+  Checkbox,
+  FormControlLabel
 } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
@@ -18,11 +20,13 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
 import { actionBinder, CrudViewActions } from "../crud-view";
-import formDataStore from "./add-form-data";
+import formDataStore, { FormData } from "./add-form-data";
 import adapter, { ViewState } from "./add-state";
 import styles from "./add-styles";
-import { FormDataProps, WithFormData } from "../form-data";
-import { EMAIL_REGEX } from "../form-data/validate";
+import { FormDataProps, CheapPreview } from "../form-data";
+import { EMAIL_REGEX } from "../form-data/validate-form-data";
+import { Dispatch } from "redux";
+
 /** */
 const selector = createSelector(
   adapter.selector,
@@ -40,21 +44,6 @@ export interface ViewProps {
 class View extends Component<
   ViewState & CrudViewActions & FormDataProps & { classes: ClassNameMap }
 > {
-  WithFormData: ComponentType<any> = connect(
-    state => {
-      const formData = formDataStore.selector(state);
-      return {
-        formData
-      };
-    },
-    dispatch => {
-      return {
-        setFormState: (data: {}) => {
-          dispatch(formDataStore.actions.setState(data));
-        }
-      };
-    }
-  )(WithFormData);
   /** */
   save = async () => {
     const { setBusy, setError, setSuccess, delay } = this.props;
@@ -67,6 +56,21 @@ class View extends Component<
     } finally {
       setBusy(false);
     }
+  };
+  saveActionMessage = () => {
+    const { formData } = this.props;
+    return (
+      <div>
+        <Typography> Submit Data ? </Typography>
+        <CheapPreview data={formData} />
+      </div>
+    );
+  };
+  resetForm = () => {
+    this.props.resetForm();
+  };
+  resetFormActionMessage = () => {
+    return <Typography>Reset Form Data?</Typography>;
   };
 
   menuButton: any;
@@ -88,7 +92,7 @@ class View extends Component<
       isMenuOpen,
       handleActionToConfirm,
       handleMenuAction,
-      setError,
+      setWarning,
       setConfirmAction
     } = this.props;
     return (
@@ -111,35 +115,37 @@ class View extends Component<
                 anchorEl={this.menuButton}
               >
                 <MenuItem
-                  onClick={handleMenuAction(setConfirmAction("action1"))}
+                  onClick={handleMenuAction(setConfirmAction("reset-form"))}
                 >
-                  <ListItemText children="Action:1" />
-                </MenuItem>
-                <MenuItem
-                  onClick={handleMenuAction(setConfirmAction("action2"))}
-                >
-                  <ListItemText children="Action:2" />
+                  <ListItemText children="Reset/Clear Form" />
                 </MenuItem>
               </Menu>
             </Fragment>
           </Toolbar>
-          <form className={classes.form}>
-            <this.WithFormData
+          <form className={classes.form} autoComplete="off" noValidate>
+            <FormData
               validationRules={{
-                displayName: true,
-                email: EMAIL_REGEX
-              }}
-              validationMessages={{
-                email: "invalid Email",
-                "*": "Not Valid!"
+                displayName: {
+                  test: true,
+                  message: "Required"
+                },
+                email: {
+                  test: EMAIL_REGEX,
+                  message: "Invalid email"
+                },
+                description: {
+                  test: true,
+                  message: "description Required!"
+                }
               }}
               render={(formDataProps: any) => {
                 const { setFormState, formData, validation } = formDataProps;
                 return (
                   <Fragment>
                     <TextField
+                      id="displayName"
                       className={classes.textField}
-                      label="DisplayName"
+                      label="Display Name"
                       helperText={
                         validation.displayName || "important helper text"
                       }
@@ -151,6 +157,45 @@ class View extends Component<
                       }}
                     />
                     <TextField
+                      id="description"
+                      className={classes.textField}
+                      label="Description"
+                      helperText={
+                        validation.description || "important helper text"
+                      }
+                      error={!!validation.description}
+                      disabled={!!this.props.busy}
+                      value={formData.description}
+                      onChange={e => {
+                        setFormState({ description: e.target.value });
+                      }}
+                    />
+                    <TextField
+                      id="contact"
+                      className={classes.textField}
+                      label="Contact"
+                      helperText={validation.contact || "important helper text"}
+                      error={!!validation.contact}
+                      disabled={!!this.props.busy}
+                      value={formData.contact}
+                      onChange={e => {
+                        setFormState({ contact: e.target.value });
+                      }}
+                    />
+                    <TextField
+                      id="phone"
+                      className={classes.textField}
+                      label="Phone"
+                      helperText={validation.phone || "important helper text"}
+                      error={!!validation.phone}
+                      disabled={!!this.props.busy}
+                      value={formData.phone}
+                      onChange={e => {
+                        setFormState({ phone: e.target.value });
+                      }}
+                    />
+                    <TextField
+                      id="email"
                       type="email"
                       className={classes.textField}
                       label="Email"
@@ -159,6 +204,34 @@ class View extends Component<
                       disabled={!!this.props.busy}
                       value={formData.email}
                       onChange={e => setFormState({ email: e.target.value })}
+                    />
+                    <TextField
+                      id="notes"
+                      type="text"
+                      multiline={true}
+                      rows={3}
+                      className={classes.textFieldMultiline}
+                      label="Notes"
+                      helperText={
+                        validation.notes ||
+                        "NOTE: address lines should be honored"
+                      }
+                      error={!!validation.notes}
+                      disabled={!!this.props.busy}
+                      value={formData.notes}
+                      onChange={e => setFormState({ notes: e.target.value })}
+                    />
+                    <FormControlLabel
+                      className={classes.checkbox}
+                      label="Enabled"
+                      control={
+                        <Checkbox
+                          checked={formData.enabled}
+                          onChange={e => {
+                            setFormState({ enabled: e.target.checked });
+                          }}
+                        />
+                      }
                     />
                   </Fragment>
                 );
@@ -187,18 +260,35 @@ class View extends Component<
         <ConfirmAction
           classes={classes}
           isOpen={this.props.confirmAction === "save"}
-          actionTittle={"Confirm Action"}
-          actionMessage={"Save?"}
+          actionTitle={"Confirm Action"}
+          actionMessage={
+            this.props.confirmAction === "save" && this.saveActionMessage()
+          }
           acceptAction={handleActionToConfirm(this.save, () =>
-            setError("Save Action Cancelled")
+            setWarning("Save Action Cancelled")
           )}
+        />
+        <ConfirmAction
+          classes={classes}
+          isOpen={this.props.confirmAction === "reset-form"}
+          actionTitle="Confirm Action"
+          actionMessage={
+            this.props.confirmAction === "reset-form" &&
+            this.resetFormActionMessage()
+          }
+          acceptAction={handleActionToConfirm(this.resetForm)}
         />
       </Fragment>
     );
   } // render
 }
 /** */
-const bindActions = actionBinder(adapter.actions.setState);
+const bindActions = (dispatch: Dispatch) => {
+  return {
+    ...actionBinder(adapter.actions.setState)(dispatch),
+    ...formDataStore.bindActions(dispatch)
+  };
+};
 
 const Connected: ComponentType<ViewProps> = connect(
   selector,
