@@ -20,9 +20,10 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { ConfirmAction } from "../confirm-action";
 import { actionBinder, CrudViewActions } from "../crud-view";
-import formDataStore, { FormData } from "./add-form-data";
-import adapter, { ViewState } from "./add-state";
-import styles from "./add-styles";
+import formStore from "./form-store";
+import FormView from "./form-view";
+import adapter, { ViewState } from "./store";
+import styles from "./styles";
 import { FormDataProps, CheapPreview } from "../form-data";
 import { EMAIL_REGEX } from "../form-data/validate-form-data";
 import { Dispatch } from "redux";
@@ -30,7 +31,7 @@ import { Dispatch } from "redux";
 /** */
 const selector = createSelector(
   adapter.selector,
-  formDataStore.selector,
+  formStore.selector,
   (state, formData) => ({ ...state, formData })
 );
 
@@ -123,7 +124,7 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           <form className={classes.form} autoComplete="off" noValidate>
-            <FormData
+            <FormView
               validationRules={{
                 displayName: {
                   test: true,
@@ -286,7 +287,7 @@ class View extends Component<
 const bindActions = (dispatch: Dispatch) => {
   return {
     ...actionBinder(adapter.actions.setState)(dispatch),
-    ...formDataStore.bindActions(dispatch)
+    ...formStore.bindActions(dispatch)
   };
 };
 

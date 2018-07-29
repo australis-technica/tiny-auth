@@ -1,7 +1,7 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import Add from "./add";
+import { View as Add} from "../api-customers-add";
 import List from "./list";
 import { connect } from "react-redux";
 import { CustomersViewState, customersViewState} from "./adapters";
