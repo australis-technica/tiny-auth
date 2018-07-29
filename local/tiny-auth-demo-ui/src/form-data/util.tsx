@@ -34,3 +34,5 @@ export const warn =
   process.env.NODE_ENV !== "production"
     ? console.error.bind(console)
     : () => {};
+    
+export const EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;

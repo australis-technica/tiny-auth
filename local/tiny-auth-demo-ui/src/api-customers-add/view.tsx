@@ -1,5 +1,7 @@
 import {
   Button,
+  Checkbox,
+  FormControlLabel,
   Icon,
   IconButton,
   ListItemText,
@@ -9,32 +11,17 @@ import {
   TextField,
   Toolbar,
   Typography,
-  withStyles,
-  Checkbox,
-  FormControlLabel
+  withStyles
 } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { Component, ComponentType, Fragment } from "react";
-import { connect } from "react-redux";
-import { createSelector } from "reselect";
+import { Component, Fragment } from "react";
 import { ConfirmAction } from "../confirm-action";
-import { actionBinder, CrudViewActions } from "../crud-view";
-import formStore from "./form-store";
+import { CrudViewActions } from "../crud-view";
+import { CheapPreview, FormDataProps, util } from "../form-data";
 import FormView from "./form-view";
-import adapter, { ViewState } from "./store";
+import { ViewState } from "./store";
 import styles from "./styles";
-import { FormDataProps, CheapPreview } from "../form-data";
-import { EMAIL_REGEX } from "../form-data/validate-form-data";
-import { Dispatch } from "redux";
-
-/** */
-const selector = createSelector(
-  adapter.selector,
-  formStore.selector,
-  (state, formData) => ({ ...state, formData })
-);
-
 /**
  * parameters
  */
@@ -131,7 +118,7 @@ class View extends Component<
                   message: "Required"
                 },
                 email: {
-                  test: EMAIL_REGEX,
+                  test: util.EMAIL_REGEX,
                   message: "Invalid email"
                 },
                 description: {
@@ -283,16 +270,5 @@ class View extends Component<
     );
   } // render
 }
-/** */
-const bindActions = (dispatch: Dispatch) => {
-  return {
-    ...actionBinder(adapter.actions.setState)(dispatch),
-    ...formStore.bindActions(dispatch)
-  };
-};
 
-const Connected: ComponentType<ViewProps> = connect(
-  selector,
-  bindActions
-)(withStyles(styles)(View));
-export default Connected;
+export default withStyles(styles)(View);
