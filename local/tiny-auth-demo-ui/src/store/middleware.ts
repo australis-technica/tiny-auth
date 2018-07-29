@@ -1,5 +1,12 @@
-import { customers, products, licenses } from "../apis";
+import { products, licenses } from "../apis";
+import { api as customersApi} from "../api-customers";
+import { api as customersAddApi} from "../api-customers-add";
 /**
- * 
+ *
  */
-export default [customers.middleware, products.middleware, licenses.middleware];
+export default [
+  customersApi.middleware,
+  customersAddApi.middleware,
+  products.middleware,
+  licenses.middleware  
+];

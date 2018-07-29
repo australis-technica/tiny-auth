@@ -1,22 +1,25 @@
 import { Dispatch } from "redux";
-import { actionBinder } from "../crud-view";
+import actionBinder from "./action-binder";
 import View, { ViewProps } from "./view";
 import adapter from "./store";
 import formStore from "./form-store";
 import { connect } from "react-redux";
 import { ComponentType } from "react";
 import { createSelector } from "reselect";
+import api from "./api";
 /** */
 const selector = createSelector(
   adapter.selector,
   formStore.selector,
-  (state, formData) => ({ ...state, formData })
+  api.selector,
+  (state, formData, apiData) => ({ ...state, formData, api: apiData })
 );
 /** */
 const bindActions = (dispatch: Dispatch) => {
   return {
-    ...actionBinder(adapter.actions.setState)(dispatch),
-    ...formStore.bindActions(dispatch)
+    ...actionBinder(dispatch),
+    ...formStore.bindActions(dispatch),
+    api: api.bindActions(dispatch),
   };
 };
 /** */

@@ -10,11 +10,14 @@ import createValidate, {
 export type FormDataPropsExtended = FormDataProps & {
   validation: ValidationResultMap;
 };
-
+/**
+ * Exposed to receive parameters
+ */
 export interface FormDataParams {
-  validationRules?: ValidationRuleMap;  
+  validationRules?: ValidationRuleMap;
   render(props: FormDataPropsExtended): ReactNode;
   whenNoData?(props: FormDataProps): ReactNode;
+  onValidationChanged?(validation?: ValidationResultMap): any;
 }
 
 type WithFormDataProps = FormDataProps & FormDataParams;
@@ -52,32 +55,31 @@ class WithFormData extends Component<WithFormDataProps> {
   };
 
   validateFormData: Validate;
+
   unmounting: boolean;
   componentWillUnmount() {
     this.unmounting = true;
   }
+  onValidationChanged = (values: ValidationResultMap) => {
+    if (this.unmounting) return values;
+    const validation = Object.assign({}, this.state.validation, values);
+    this.setState({ validation });
+    if (this.props.onValidationChanged) {
+      this.props.onValidationChanged(validation);
+    }
+    return values;
+  };
+
   componentDidMount() {
     const { validationRules, formData } = this.props;
     if (!validationRules) return;
     // init
-    const validate = createValidate(
-      validationRules,
-    );
+    const validate = createValidate(validationRules);
 
     this.validateFormData = (data: FormData) => {
       // NOTE: TODO: ... cancel when new comes in if previous didn't resolve already ?
-      // or let validator do that 
-      return validate(data).then(values => {
-        if (this.unmounting) return values;
-        const _ = {
-          ...this.state.validation,
-          ...values
-        };
-        this.setState({
-          validation: _
-        });
-        return values;
-      });
+      // or let validator do that
+      return validate(data).then(this.onValidationChanged);
     };
 
     if (formData) {

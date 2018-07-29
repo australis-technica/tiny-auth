@@ -8,8 +8,7 @@ export interface CrudApiArgs {
   params?: string[];
   query?: {};
   body?: {};
-  method: "GET" | "PUT" | "POST" | "DEL";
-  resultKey?: string;
+  method: "GET" | "PUT" | "POST" | "DEL";  
 }
 /** */
 export type CrudApi = (args: CrudApiArgs) => Promise<any>;

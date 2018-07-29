@@ -8,6 +8,11 @@ export interface ViewState {
   tabIndex: number;
   confirmAction?: string;
   error?: string;
+  validation: {};
+  validationEmpty: boolean;
+}
+export interface StoreActions {
+  setState(payload: Partial<ViewState>): any;
 }
 /**
  *
@@ -17,6 +22,8 @@ const defaultState: ViewState = {
   isMenuOpen: false,
   tabIndex: 0,
   confirmAction: undefined,
+  validation: {},
+  validationEmpty: true
 };
 /**
  *
@@ -29,6 +36,8 @@ const storeAdapter = viewStore("customers-add", defaultState, {
           busy,
           isMenuOpen,
           confirmAction,
+          validation, // ...
+          validationEmpty,
           ...value
         } = state;
         return value;
@@ -37,7 +46,9 @@ const storeAdapter = viewStore("customers-add", defaultState, {
         const {
           busy,
           isMenuOpen,
-          confirmAction,          
+          confirmAction,
+          validation, // ...
+          validationEmpty,
           ...value
         } = state;
         return value;

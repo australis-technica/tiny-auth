@@ -3,7 +3,7 @@ import * as React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { customers as adapter } from "../apis";
+import adapter from "./api";
 import { CrudApiState } from "../crud-api";
 
 const selector = createSelector(adapter.selector, apiState => apiState);

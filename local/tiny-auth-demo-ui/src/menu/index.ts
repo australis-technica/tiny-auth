@@ -1,2 +1,2 @@
 export { default as Menu } from "./menu";
-export { default as actionBinder } from "./action-binder";
+export { default as actionBinder, MenuActions } from "./action-binder";

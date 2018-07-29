@@ -1,4 +1,5 @@
 import { MessageActions } from "../messages";
+import { ConfirmActionActions } from "../confirm-action";
 /** */
 export interface CrudViewState {
     busy: boolean;
@@ -6,13 +7,11 @@ export interface CrudViewState {
     confirmAction?: string;
     error?: string;
 }
-export interface CrudViewActions extends MessageActions{
-    setState(payload: Partial<CrudViewState>): any;
-    setConfirmAction(confirmAction: string): any;
-    handleActionToConfirm(onOk: () => any, onCancel?: () => any): (...args: any[]) => any;    
+export type CrudViewActions<T extends CrudViewState = CrudViewState> =  MessageActions & ConfirmActionActions & {
+    setState(payload: Partial<T>): any;
     setBusy(busy: boolean): any;
     delay(n: number): Promise<void>;
     openMenu(): any,
-    closeMenu(): any,
-    handleMenuAction(action: () => any): () => any
+    closeMenu(): any    
+    handleMenuAction(action: () => any): () => any;
 }

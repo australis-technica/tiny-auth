@@ -11,34 +11,97 @@ import {
   TextField,
   Toolbar,
   Typography,
-  withStyles
+  withStyles,
+  DialogContent,
+  Dialog
 } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
-import { ConfirmAction } from "../confirm-action";
-import { CrudViewActions } from "../crud-view";
+import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
+import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview, FormDataProps, util } from "../form-data";
+import { MenuActions } from "../menu";
+import { MessageActions } from "../messages";
 import FormView from "./form-view";
-import { ViewState } from "./store";
+import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
+import { delay } from "./util";
 /**
  * parameters
  */
 export interface ViewProps {
   // ...
 }
+/**
+ * this.View Wish
+ * provided by this.action-binder
+ */
+export type ViewActions = StoreActions &
+  ConfirmActionActions &
+  MessageActions &
+  MenuActions & {
+    setBusy(busy: boolean): any;
+  };
 /** */
 class View extends Component<
-  ViewState & CrudViewActions & FormDataProps & { classes: ClassNameMap }
+  ViewState &
+    ViewActions &
+    FormDataProps & { api: CrudApiActions & CrudApiState } & {
+      classes: ClassNameMap;
+    }
 > {
+  onValidationChanged = (validation: {}) => {
+    const validationEmpty = util.isValidationEmpty(validation);
+    this.props.setState({ validation, validationEmpty });
+  };
+
   /** */
   save = async () => {
-    const { setBusy, setError, setSuccess, delay } = this.props;
+    const {
+      setBusy,
+      setError,
+      setSuccess,
+      clearMessage,
+      api,
+      formData,
+      validationEmpty
+    } = this.props;
     try {
+      if (!validationEmpty) {
+        setError("Can't Save");
+        return;
+      }
       setBusy(true);
       await delay(1500);
-      setSuccess("Save Completed!");
+      const {
+        contact,
+        description,
+        displayName,
+        email,
+        enabled,
+        phone
+      } = formData;
+      const body = {
+        contact,
+        description,
+        displayName,
+        email,
+        enabled,
+        phone
+      };
+      await api.fetch({
+        method: "POST",
+        body
+        /**
+         * TODO: extra to Meta
+         * set Success ?
+         */
+      });
+      setSuccess("Save inprogress!");
+      setTimeout(() => {
+        clearMessage();
+      }, 1000);
     } catch (error) {
       setError(error);
     } finally {
@@ -54,25 +117,12 @@ class View extends Component<
       </div>
     );
   };
-  resetForm = () => {
-    this.props.resetForm();
-  };
+
   resetFormActionMessage = () => {
     return <Typography>Reset Form Data?</Typography>;
   };
 
   menuButton: any;
-  /** */
-  openMenu = () => this.props.setState({ isMenuOpen: true });
-  /** */
-  closeMenu = () => this.props.setState({ isMenuOpen: false });
-  /** */
-  handleMenuAction = (action: () => any) => {
-    return () => {
-      this.closeMenu();
-      action();
-    };
-  };
   /** */
   render() {
     const {
@@ -91,7 +141,7 @@ class View extends Component<
             <div style={{ flex: "1 0" }} />
             <Fragment>
               <IconButton
-                onClick={this.openMenu}
+                onClick={this.props.openMenu}
                 buttonRef={x => (this.menuButton = x)}
                 disabled={!!this.props.busy}
               >
@@ -99,7 +149,7 @@ class View extends Component<
               </IconButton>
               <Menu
                 open={!!isMenuOpen}
-                onClose={this.closeMenu}
+                onClose={this.props.closeMenu}
                 anchorEl={this.menuButton}
               >
                 <MenuItem
@@ -112,6 +162,7 @@ class View extends Component<
           </Toolbar>
           <form className={classes.form} autoComplete="off" noValidate>
             <FormView
+              onValidationChanged={this.onValidationChanged}
               validationRules={{
                 displayName: {
                   test: true,
@@ -238,7 +289,7 @@ class View extends Component<
               className={classes.button}
               variant="raised"
               color="primary"
-              disabled={!!this.props.busy}
+              disabled={!!this.props.busy || !this.props.validationEmpty}
               onClick={setConfirmAction("save")}
             >
               Save
@@ -264,8 +315,18 @@ class View extends Component<
             this.props.confirmAction === "reset-form" &&
             this.resetFormActionMessage()
           }
-          acceptAction={handleActionToConfirm(this.resetForm)}
+          acceptAction={handleActionToConfirm(this.props.resetForm)}
         />
+        {!!this.props.api.error && <Dialog open={!!this.props.api.error}>
+          <DialogContent>
+            <Typography color="error" variant="headline">{this.props.api.error}</Typography>
+          </DialogContent>
+        </Dialog>}
+        {!!this.props.api.success && <Dialog open={!!this.props.api.success}>
+          <DialogContent>
+            <Typography variant="headline">Saved</Typography>
+          </DialogContent>
+        </Dialog>}
       </Fragment>
     );
   } // render

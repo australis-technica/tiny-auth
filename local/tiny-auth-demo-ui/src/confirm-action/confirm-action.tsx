@@ -12,12 +12,13 @@ import * as React from "react";
 /**
  *
  */
-interface ConfirmActionProps {
+export interface ConfirmActionProps {
   isOpen: boolean;
   actionTitle?: ReactNode;
   actionMessage?: ReactNode;
   acceptAction(ok: boolean): any;
 }
+/** */
 const renderActionMessage: StatelessComponent<{ actionMessage: ReactNode }> = ({
   actionMessage
 }) => {

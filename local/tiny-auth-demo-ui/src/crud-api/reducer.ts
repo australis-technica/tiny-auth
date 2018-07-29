@@ -21,21 +21,20 @@ export default function(
     switch (action.type) {
       case BUSY: {
         const { payload } = action;
-        return Object.assign({}, state, { busy: payload });
+        const busy = !!payload;
+        if(busy){
+          return Object.assign({}, state, { busy, success: false });  
+        }
+        return Object.assign({}, state, { busy });
       }
       case FETCH: {
-        // const { payload } = action;
-        // return Object.assign({}, state, { busy: payload });
-        return state;
+        return state; // catched by Middleware
       }
       case RESULT: {
         const {
           payload
-          // meta
         } = action;
-        // TODO: set Different results?
-        // const key = meta && meta.resultKey ? meta.resultKey : "data";
-        return Object.assign({}, state, { [resultKey]: payload });
+        return Object.assign({}, state, { [resultKey]: payload, success: true });
       }
       case ERROR: {
         const { payload } = action;
@@ -45,7 +44,7 @@ export default function(
             : payload && payload.message
               ? payload.message
               : payload;
-        return Object.assign({}, state, { error });
+        return Object.assign({}, state, { error, success: false });
       }
       default:
         return state;

@@ -30,6 +30,20 @@ export function isMap(x: any): x is Map<any, any> {
   return x instanceof Map || (x && isFunction(x.get) && isFunction(x.has));
 }
 
+export function isValidationEmpty(validation: {}) {
+  const ok = Object.keys(validation)
+    .map(key => isFalsyOrEmpty(validation[key]))
+    .reduce((out, empty) => {
+      out = out && empty;
+      return out;
+    }, true);
+  return ok;
+}
+
+export function isFalsyOrEmpty(x: any) {
+  return !x || (typeof x === "string" && x.trim() === "");
+}
+
 export const warn =
   process.env.NODE_ENV !== "production"
     ? console.error.bind(console)
