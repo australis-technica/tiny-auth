@@ -4,10 +4,9 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { customers as adapter } from "../apis";
-import { actionBinder, CrudApiState } from "../crud-api";
+import { CrudApiState } from "../crud-api";
 
 const selector = createSelector(adapter.selector, apiState => apiState);
-const bindActions = actionBinder("");
 
 class View extends Component<CrudApiState> {
   renderError = (error: string) => {
@@ -48,7 +47,7 @@ class View extends Component<CrudApiState> {
 }
 const Connected = connect(
   selector,
-  bindActions
+  adapter.bindActions
 )(View);
 /**
  *
