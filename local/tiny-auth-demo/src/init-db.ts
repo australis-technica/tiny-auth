@@ -6,9 +6,9 @@ import Debug from "./debug";
 import * as settings from "./settings";
 import sqlConnectionConfig from "./sql-connection-config";
 import { init as initTokenBlacklist } from "./token-blacklist";
-import { table as customers } from "./customers";
-import { table as products } from "./products";
-import { table as licenses } from "./licenses";
+import { table as customers } from "./crud-customers";
+import { table as products } from "./crud-products";
+import { table as licenses } from "./crud-licenses";
 const debug = Debug(__filename);
 /**
  * 

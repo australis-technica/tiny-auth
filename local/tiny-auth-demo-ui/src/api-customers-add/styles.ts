@@ -30,6 +30,10 @@ const styles: StyleRulesCallback = theme => ({
   textField: {
     margin: theme.spacing.unit
   },
+  textFieldLarge: {
+    margin: theme.spacing.unit,
+    minWidth: "24rem"
+  },
   textFieldMultiline: {
     margin: theme.spacing.unit,
     width: 420

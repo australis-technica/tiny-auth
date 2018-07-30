@@ -1,13 +1,13 @@
 export type FormData = { [key: string]: any };
 
-export interface FormDataState {
-  formData: FormData;
+export interface FormDataState<T extends FormData = FormData> {
+  formData: T;
 }
 
 export interface FormDataActions {
-  setFormState(x: {}): any;  
+  setFormState(x: {}): any;
   setFormValue(key: string, value: any): any;
   resetForm(): any;
 }
 
-export type FormDataProps = FormDataState & FormDataActions;
+export type FormDataProps<T extends FormData = FormData> = FormDataState<T> & FormDataActions;

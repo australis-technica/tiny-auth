@@ -8,16 +8,23 @@ export interface ViewState {
   tabIndex: number;
   confirmAction?: string;
   error?: string;
+  /**
+   * Validation result
+   * Todo: own Store 
+   */
   validation: {
+    address?: string,
     displayName?: string;
     description?: string;
     contact?: string;
     phone?: string;
     notes?: string;
     email?: string;
+    name?: string;
   };
   validationEmpty: boolean;
 }
+
 export interface StoreActions {
   setState(payload: Partial<ViewState>): any;
 }

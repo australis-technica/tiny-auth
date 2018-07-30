@@ -28,21 +28,24 @@ export default function crudApi(austhState: () => AuthState, endpoint: string): 
      */
     return async function send(args) {
         const { params, query, method, body } = args;
-        const headers: HeadersInit = {
-            "Authorization": `Bearer ${austhState().token}`,
-        }
+        const request: RequestInit = {
+            method,
+            headers: {
+                "Authorization": `Bearer ${austhState().token}`,
+            },
+        };
         if (method !== "GET") {
-            headers.body = JSON.stringify(body)
+            Object.assign(request, {
+                body: JSON.stringify(body),
+                headers: Object.assign(request.headers, {
+                    "Content-Type": "application/json"
+                })
+            });
         }
         try {
             const url = `${endpoint}${join(params)}${encode(query)}`;
             log("url: %s", url);
-            const r = await fetch(url,
-                {
-                    method,
-                    headers
-                }
-            );
+            const r = await fetch(url, request);
             if (!r.ok) {
                 return Promise.reject(Object.assign(new Error(r.statusText), { code: r.status }));
             }

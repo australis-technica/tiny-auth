@@ -28,12 +28,13 @@ import FormView from "./form-view";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
-const log = process.env.NODE_ENV !== 'production' ? console.log.bind(console) : ()=> {};
+import { ViewFormData } from "./form-store";
+const log = process.env.NODE_ENV !== 'production' ? console.log.bind(console) : () => { };
 /**
- * parameters
+ * export for external parameters
  */
 export interface ViewProps {
-  // ...
+  // ... None 
 }
 /**
  * this.View Wish
@@ -49,7 +50,7 @@ export type ViewActions = StoreActions &
 class View extends Component<
   ViewState &
   ViewActions &
-  FormDataProps & { api: CrudApiActions, apiState: CrudApiState } & {
+  FormDataProps<ViewFormData> & { api: CrudApiActions, apiState: CrudApiState } & {
     classes: ClassNameMap;
   }
   > {
@@ -75,26 +76,32 @@ class View extends Component<
       setBusy(true);
       await delay(1500);
       const {
+        address,
         contact,
         description,
         displayName,
         email,
         enabled,
-        phone
+        name,
+        phone,
+        notes,
       } = formData;
       const body = {
+        address,
         contact,
         description,
         displayName,
         email,
         enabled,
-        phone
+        name,
+        notes,
+        phone,
       };
       const r = await api.fetch({
-        method: "POST",
-        body        
+        method: "PUT",
+        body
       });
-      log(r);     
+      log(r);
     } catch (error) {
       setError(error);
     } finally {
@@ -103,12 +110,7 @@ class View extends Component<
   };
   saveActionMessage = () => {
     const { formData } = this.props;
-    return (
-      <div>
-        <Typography> Submit Data ? </Typography>
-        <CheapPreview data={formData} />
-      </div>
-    );
+    return <CheapPreview data={formData} />;
   };
 
   resetFormActionMessage = () => {
@@ -130,15 +132,15 @@ class View extends Component<
           <Typography color="error" variant="headline">{this.props.apiState.error}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="raised" children={"OK"} onClick={this.props.api.clearError}/>
+          <Button variant="raised" children={"OK"} onClick={this.props.api.clearError} />
         </DialogActions>
       </Dialog>}
       {renderSuccess && <Dialog open={!!this.props.apiState.success}>
         <DialogContent>
-          <Typography variant="headline">Saved</Typography>          
+          <Typography variant="headline">Saved</Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="raised" children={"OK"} onClick={this.props.api.clearSuccess}/>
+          <Button variant="raised" children={"OK"} onClick={this.props.api.clearSuccess} />
         </DialogActions>
       </Dialog>}
     </Fragment>
@@ -185,6 +187,18 @@ class View extends Component<
           <FormView
             onValidationChanged={this.onValidationChanged}
             validationRules={{
+              address: {
+                test: true,
+                message: "Required"
+              },
+              contact: {
+                test: true,
+                message: "Require"
+              },
+              description: {
+                test: true,
+                message: "description Required!"
+              },
               displayName: {
                 test: true,
                 message: "Required"
@@ -193,10 +207,18 @@ class View extends Component<
                 test: util.EMAIL_REGEX,
                 message: "Invalid email"
               },
-              description: {
+              name: {
                 test: true,
-                message: "description Required!"
-              }
+                message: "Require"
+              },
+              notes: {
+                test: true,
+                message: "Require"
+              },
+              phone: {
+                test: true,
+                message: "Require"
+              },
             }}
             render={(formDataProps: any) => {
               const { setFormState, formData, } = formDataProps;
@@ -204,6 +226,20 @@ class View extends Component<
               validation = validation || {};
               return (
                 <form className={classes.form} autoComplete="off">
+                  <TextField
+                    id="name"
+                    className={classes.textField}
+                    label="Name"
+                    helperText={
+                      validation.name || "important helper text"
+                    }
+                    error={!!validation.name}
+                    disabled={!!this.props.busy}
+                    value={formData.name}
+                    onChange={e => {
+                      setFormState({ name: e.target.value });
+                    }}
+                  />
                   <TextField
                     id="displayName"
                     className={classes.textField}
@@ -259,13 +295,29 @@ class View extends Component<
                   <TextField
                     id="email"
                     type="email"
-                    className={classes.textField}
+                    className={classes.textFieldLarge}
                     label="Email"
                     helperText={validation.email || "important helper text"}
                     error={!!validation.email}
                     disabled={!!this.props.busy}
                     value={formData.email}
                     onChange={e => setFormState({ email: e.target.value })}
+                  />
+                  <TextField
+                    id="address"
+                    type="text"
+                    multiline={true}
+                    rows={3}
+                    className={classes.textFieldMultiline}
+                    label="Address"
+                    helperText={
+                      validation.address ||
+                      "NOTE: address lines should be honored"
+                    }
+                    error={!!validation.address}
+                    disabled={!!this.props.busy}
+                    value={formData.address}
+                    onChange={e => setFormState({ address: e.target.value })}
                   />
                   <TextField
                     id="notes"
@@ -283,6 +335,7 @@ class View extends Component<
                     value={formData.notes}
                     onChange={e => setFormState({ notes: e.target.value })}
                   />
+                  <div style={{ flex: "1 0" }} />
                   <FormControlLabel
                     className={classes.checkbox}
                     label="Enabled"
@@ -321,7 +374,7 @@ class View extends Component<
         <ConfirmAction
           classes={classes}
           isOpen={this.props.confirmAction === "save"}
-          actionTitle={"Confirm Action"}
+          actionTitle={"Submit Data?"}
           actionMessage={
             this.props.confirmAction === "save" && this.saveActionMessage()
           }
