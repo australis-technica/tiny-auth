@@ -34,7 +34,7 @@ class WithFormData extends Component<WithFormDataProps> {
   
   /** */
   setFormState = (formData: Partial<FormData>) => {
-    this.validateFormData && this.validateFormData(formData);
+    this.validateFormData && this.validateFormData(this.props.formData);
     return this.props.setFormState(formData);
   };
 
