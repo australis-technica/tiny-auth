@@ -41,21 +41,21 @@ export type ViewActions = StoreActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
-    setBusy(busy: boolean): any;
-  };
+  setBusy(busy: boolean): any;
+};
 /** */
 class View extends Component<
   ViewState &
-    ViewActions &
-    FormDataProps & { api: CrudApiActions & CrudApiState } & {
-      classes: ClassNameMap;
-    }
-> {
+  ViewActions &
+  FormDataProps & { api: CrudApiActions & CrudApiState } & {
+    classes: ClassNameMap;
+  }
+  > {
+  /** */
   onValidationChanged = (validation: {}) => {
     const validationEmpty = util.isValidationEmpty(validation);
-    this.props.setState({ validation, validationEmpty });
+    this.props.setState({ validation: Object.assign({}, this.props.validation, validation), validationEmpty });
   };
-
   /** */
   save = async () => {
     const {
@@ -160,125 +160,123 @@ class View extends Component<
               </Menu>
             </Fragment>
           </Toolbar>
-          <form className={classes.form} autoComplete="off" noValidate>
-            <FormView
-              onValidationChanged={this.onValidationChanged}
-              validationRules={{
-                displayName: {
-                  test: true,
-                  message: "Required"
-                },
-                email: {
-                  test: util.EMAIL_REGEX,
-                  message: "Invalid email"
-                },
-                description: {
-                  test: true,
-                  message: "description Required!"
-                }
-              }}
-              render={(formDataProps: any) => {
-                const { setFormState, formData,  } = formDataProps;
-                let { validation } = this.props;
-                validation = validation || {};
-                return (
-                  <Fragment>
-                    <TextField
-                      id="displayName"
-                      className={classes.textField}
-                      label="Display Name"
-                      helperText={
-                        validation.displayName || "important helper text"
-                      }
-                      error={!!validation.displayName}
-                      disabled={!!this.props.busy}
-                      value={formData.displayName}
-                      onChange={e => {
-                        setFormState({ displayName: e.target.value });
-                      }}
-                    />
-                    <TextField
-                      id="description"
-                      className={classes.textField}
-                      label="Description"
-                      helperText={
-                        validation.description || "important helper text"
-                      }
-                      error={!!validation.description}
-                      disabled={!!this.props.busy}
-                      value={formData.description}
-                      onChange={e => {
-                        setFormState({ description: e.target.value });
-                      }}
-                    />
-                    <TextField
-                      id="contact"
-                      className={classes.textField}
-                      label="Contact"
-                      helperText={validation.contact || "important helper text"}
-                      error={!!validation.contact}
-                      disabled={!!this.props.busy}
-                      value={formData.contact}
-                      onChange={e => {
-                        setFormState({ contact: e.target.value });
-                      }}
-                    />
-                    <TextField
-                      id="phone"
-                      className={classes.textField}
-                      label="Phone"
-                      helperText={validation.phone || "important helper text"}
-                      error={!!validation.phone}
-                      disabled={!!this.props.busy}
-                      value={formData.phone}
-                      onChange={e => {
-                        setFormState({ phone: e.target.value });
-                      }}
-                    />
-                    <TextField
-                      id="email"
-                      type="email"
-                      className={classes.textField}
-                      label="Email"
-                      helperText={validation.email || "important helper text"}
-                      error={!!validation.email}
-                      disabled={!!this.props.busy}
-                      value={formData.email}
-                      onChange={e => setFormState({ email: e.target.value })}
-                    />
-                    <TextField
-                      id="notes"
-                      type="text"
-                      multiline={true}
-                      rows={3}
-                      className={classes.textFieldMultiline}
-                      label="Notes"
-                      helperText={
-                        validation.notes ||
-                        "NOTE: address lines should be honored"
-                      }
-                      error={!!validation.notes}
-                      disabled={!!this.props.busy}
-                      value={formData.notes}
-                      onChange={e => setFormState({ notes: e.target.value })}
-                    />
-                    <FormControlLabel
-                      className={classes.checkbox}
-                      label="Enabled"
-                      control={
-                        <Checkbox
-                          checked={formData.enabled}
-                          onChange={e => {
-                            setFormState({ enabled: e.target.checked });
-                          }}
-                        />
-                      }
-                    />
-                  </Fragment>
-                );
-              }}
-            />
-          </form>
+          <FormView
+            onValidationChanged={this.onValidationChanged}
+            validationRules={{
+              displayName: {
+                test: true,
+                message: "Required"
+              },
+              email: {
+                test: util.EMAIL_REGEX,
+                message: "Invalid email"
+              },
+              description: {
+                test: true,
+                message: "description Required!"
+              }
+            }}
+            render={(formDataProps: any) => {
+              const { setFormState, formData, } = formDataProps;
+              let { validation } = this.props;
+              validation = validation || {};
+              return (
+                <form className={classes.form} autoComplete="off">
+                  <TextField
+                    id="displayName"
+                    className={classes.textField}
+                    label="Display Name"
+                    helperText={
+                      validation.displayName || "important helper text"
+                    }
+                    error={!!validation.displayName}
+                    disabled={!!this.props.busy}
+                    value={formData.displayName}
+                    onChange={e => {
+                      setFormState({ displayName: e.target.value });
+                    }}
+                  />
+                  <TextField
+                    id="description"
+                    className={classes.textField}
+                    label="Description"
+                    helperText={
+                      validation.description || "important helper text"
+                    }
+                    error={!!validation.description}
+                    disabled={!!this.props.busy}
+                    value={formData.description}
+                    onChange={e => {
+                      setFormState({ description: e.target.value });
+                    }}
+                  />
+                  <TextField
+                    id="contact"
+                    className={classes.textField}
+                    label="Contact"
+                    helperText={validation.contact || "important helper text"}
+                    error={!!validation.contact}
+                    disabled={!!this.props.busy}
+                    value={formData.contact}
+                    onChange={e => {
+                      setFormState({ contact: e.target.value });
+                    }}
+                  />
+                  <TextField
+                    id="phone"
+                    className={classes.textField}
+                    label="Phone"
+                    helperText={validation.phone || "important helper text"}
+                    error={!!validation.phone}
+                    disabled={!!this.props.busy}
+                    value={formData.phone}
+                    onChange={e => {
+                      setFormState({ phone: e.target.value });
+                    }}
+                  />
+                  <TextField
+                    id="email"
+                    type="email"
+                    className={classes.textField}
+                    label="Email"
+                    helperText={validation.email || "important helper text"}
+                    error={!!validation.email}
+                    disabled={!!this.props.busy}
+                    value={formData.email}
+                    onChange={e => setFormState({ email: e.target.value })}
+                  />
+                  <TextField
+                    id="notes"
+                    type="text"
+                    multiline={true}
+                    rows={3}
+                    className={classes.textFieldMultiline}
+                    label="Notes"
+                    helperText={
+                      validation.notes ||
+                      "NOTE: address lines should be honored"
+                    }
+                    error={!!validation.notes}
+                    disabled={!!this.props.busy}
+                    value={formData.notes}
+                    onChange={e => setFormState({ notes: e.target.value })}
+                  />
+                  <FormControlLabel
+                    className={classes.checkbox}
+                    label="Enabled"
+                    control={
+                      <Checkbox
+                        checked={formData.enabled}
+                        onChange={e => {
+                          setFormState({ enabled: e.target.checked });
+                        }}
+                      />
+                    }
+                  />
+                </form>
+              );
+            }}
+          />
           <div className={classes.actions}>
             <Button
               className={classes.button}
