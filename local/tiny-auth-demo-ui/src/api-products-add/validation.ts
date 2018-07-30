@@ -1,4 +1,4 @@
-import createMiddleWare from "../form-data/middleware";
+import { validation } from "../form-data";
 import formStore from "./form-store";
 import store from "./store";
 import { util } from "../form-data";
@@ -24,14 +24,10 @@ const rules = {
     message: "Require"
   }
 };
-const middleware = createMiddleWare(
-  formStore.storeKey,
-  rules,
-  validation => {
-    const validationEmpty = util.isValidationEmpty(validation);
-    return store.actions.setState({ validation, validationEmpty });
-  }
-);
+const middleware = validation(formStore.storeKey, rules, validation => {
+  const validationEmpty = util.isValidationEmpty(validation);
+  return store.actions.setState({ validation, validationEmpty });
+});
 export default {
   middleware
 };
