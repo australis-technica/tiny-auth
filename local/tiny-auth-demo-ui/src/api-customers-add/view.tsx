@@ -13,7 +13,8 @@ import {
   Typography,
   withStyles,
   DialogContent,
-  Dialog
+  Dialog,
+  DialogActions
 } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
@@ -27,6 +28,7 @@ import FormView from "./form-view";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
+const log = process.env.NODE_ENV !== 'production' ? console.log.bind(console) : ()=> {};
 /**
  * parameters
  */
@@ -47,7 +49,7 @@ export type ViewActions = StoreActions &
 class View extends Component<
   ViewState &
   ViewActions &
-  FormDataProps & { api: CrudApiActions & CrudApiState } & {
+  FormDataProps & { api: CrudApiActions, apiState: CrudApiState } & {
     classes: ClassNameMap;
   }
   > {
@@ -61,8 +63,6 @@ class View extends Component<
     const {
       setBusy,
       setError,
-      setSuccess,
-      clearMessage,
       api,
       formData,
       validationEmpty
@@ -90,18 +90,11 @@ class View extends Component<
         enabled,
         phone
       };
-      await api.fetch({
+      const r = await api.fetch({
         method: "POST",
-        body
-        /**
-         * TODO: extra to Meta
-         * set Success ?
-         */
+        body        
       });
-      setSuccess("Save inprogress!");
-      setTimeout(() => {
-        clearMessage();
-      }, 1000);
+      log(r);     
     } catch (error) {
       setError(error);
     } finally {
@@ -121,6 +114,35 @@ class View extends Component<
   resetFormActionMessage = () => {
     return <Typography>Reset Form Data?</Typography>;
   };
+  renderApiState() {
+    const renderError = !!this.props.apiState.error;
+    const renderSuccess = !!this.props.apiState.success;
+    const renderBusy = !!this.props.apiState.busy;
+    /** */
+    return <Fragment>
+      {renderBusy && <Dialog open={renderBusy}>
+        <DialogContent>
+          <Typography >Sending ... please wait!</Typography>
+        </DialogContent>
+      </Dialog>}
+      {renderError && <Dialog open={!!this.props.apiState.error}>
+        <DialogContent>
+          <Typography color="error" variant="headline">{this.props.apiState.error}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="raised" children={"OK"} onClick={this.props.api.clearError}/>
+        </DialogActions>
+      </Dialog>}
+      {renderSuccess && <Dialog open={!!this.props.apiState.success}>
+        <DialogContent>
+          <Typography variant="headline">Saved</Typography>          
+        </DialogContent>
+        <DialogActions>
+          <Button variant="raised" children={"OK"} onClick={this.props.api.clearSuccess}/>
+        </DialogActions>
+      </Dialog>}
+    </Fragment>
+  }
 
   menuButton: any;
   /** */
@@ -317,16 +339,7 @@ class View extends Component<
           }
           acceptAction={handleActionToConfirm(this.props.resetForm)}
         />
-        {!!this.props.api.error && <Dialog open={!!this.props.api.error}>
-          <DialogContent>
-            <Typography color="error" variant="headline">{this.props.api.error}</Typography>
-          </DialogContent>
-        </Dialog>}
-        {!!this.props.api.success && <Dialog open={!!this.props.api.success}>
-          <DialogContent>
-            <Typography variant="headline">Saved</Typography>
-          </DialogContent>
-        </Dialog>}
+        {this.renderApiState()}
       </Fragment>
     );
   } // render
