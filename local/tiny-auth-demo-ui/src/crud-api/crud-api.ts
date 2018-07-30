@@ -1,6 +1,7 @@
 import { AuthState } from "@australis/tiny-auth-core";
 import { CrudApi } from "./types";
-console.log("crud-api");
+import { log } from "./util";
+log("crud-api");
 
 function join(strings?: string[]) {
     if (!strings || !strings.length) {
@@ -18,12 +19,10 @@ function encode(query?: {}) {
     return "?" + keys.map(key => `${key}=${query[key]}`).join("&");
 }
 /**
- * crud api
- * @param endpoint 
+ * @param endpoint @description fully resolved
  */
 export default function crudApi(austhState: () => AuthState, endpoint: string): CrudApi {
-    endpoint = process.env[`REACT_APP_API_${endpoint.toUpperCase()}`] || endpoint;
-    const apiBase = process.env.REACT_APP_API_BASE;
+
     /**
      * 
      */
@@ -36,7 +35,8 @@ export default function crudApi(austhState: () => AuthState, endpoint: string): 
             headers.body = JSON.stringify(body)
         }
         try {
-            const url = `${apiBase}/${endpoint}${join(params)}${encode(query)}`;
+            const url = `${endpoint}${join(params)}${encode(query)}`;
+            log("url: %s", url);
             const r = await fetch(url,
                 {
                     method,

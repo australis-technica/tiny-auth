@@ -1,25 +1,26 @@
 import { Middleware, Action } from "redux";
 import crudApi from "./crud-api";
-import { selector } from "@australis/tiny-auth-redux";
+import { selector as authSelector } from "@australis/tiny-auth-redux";
 import actions from "./actions";
 import actionTypes from "./action-types";
-
-const isDev = process.env.NODE_ENV !== "production";
+import { delay, isDev } from "./util";
+/**
+ * 
+ */
 const FETCH_DELAY = 1000;
 /**
  * 
  */
-export default function (endpoint: string): Middleware {
+export default function (storeKey: string, endpoint: string): Middleware {
 
-    const { clearError, setError, setBusy, setResult } = actions(endpoint);
-    const { FETCH } = actionTypes(endpoint);
-    const delay = (n: number) => new Promise(resolve => setTimeout(resolve, n));
+    const { clearError, setError, setBusy, setResult } = actions(storeKey);
+    const { FETCH } = actionTypes(storeKey);
     /**
      * Middleware
      */
     return function (store) {
 
-        const api = crudApi(() => selector(store.getState()), endpoint);
+        const callAPi = crudApi(() => authSelector(store.getState()), endpoint);
 
         return function (next) {
 
@@ -34,7 +35,7 @@ export default function (endpoint: string): Middleware {
                         next(clearError());
                         next(setBusy(true));
                         if (isDev) await delay(FETCH_DELAY);
-                        const x = await api(payload);
+                        const x = await callAPi(payload);
                         return next(setResult(x));
                     } catch (error) {
                         return next(setError(error));
