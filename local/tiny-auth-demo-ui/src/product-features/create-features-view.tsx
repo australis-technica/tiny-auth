@@ -5,7 +5,9 @@ import { Component, Fragment, ChangeEventHandler } from "react";
 export interface CreateFeaturesViewProps {
 
 }
+
 interface CreateFeaturesViewState {
+    newName: string;
     prevFeatureName: string,
     editFeature: string;
     features: string[];
@@ -18,7 +20,8 @@ export default class CreateFeaturesView extends Component<CreateFeaturesViewProp
         isMenuOpen: false,
         editFeature: "",
         editError: "",
-        prevFeatureName: ""
+        prevFeatureName: "",
+        newName: ""
     }
     closeMenu = () => {
         this.setState({ isMenuOpen: false });
@@ -46,19 +49,14 @@ export default class CreateFeaturesView extends Component<CreateFeaturesViewProp
         this.setState({ features: [] });
     }
 
-    removeFeature = (featureName: any) => {
-        this.setState({ features: this.state.features.filter(x => x !== featureName) });
-    }
-
-
     renderFeature = (featureName: string, index: number, array: string[]) => {
-
         const isEditing = this.state.editFeature === featureName;
 
         const startEdit = () => {
             this.setState({
                 prevFeatureName: featureName,
-                editFeature: featureName
+                editFeature: featureName,
+                newName: featureName
             })
         };
 
@@ -71,28 +69,52 @@ export default class CreateFeaturesView extends Component<CreateFeaturesViewProp
             })
         }
 
+        const rename = () => {
+            return this.state.features.filter(x => x !== featureName).concat([this.state.newName]);
+        }
+
         const applyEdit = () => {
-            return this.setState({ editFeature: undefined });
+            return this.setState({ editFeature: undefined, features: rename() });
+        }
+
+        const remove = () => {
+            this.setState({ features: this.state.features.filter(x => x !== featureName) });
+        }
+
+        const validate = (value: string) => {
+            if (!value || value.trim() === "") {
+                return "Not Empty";
+            }
+            if (/\s+/.test(value)) {
+                return "No White Spaces";
+            }
+            if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+                return "Invalid Name";
+            }
+            const { features } = this.state;
+            const found = features.map(x => x.toLowerCase()).indexOf(value) !== -1;
+            if (found) {
+                return "Already taken";
+            }
+            return undefined;
         }
 
         const onEditNameChanged: ChangeEventHandler<HTMLInputElement> = (e) => {
             const newName = e.target.value;
-            if (this.state.features.indexOf(newName) !== -1) {
-                return this.setState({ error: "Already taken" });
-            }
-            const features = this.state.features.filter(x => x !== featureName).concat([newName]);
-            const { editFeature } = this.state;
-            this.setState({ features, editFeature: isEditing ? newName : editFeature });
+            const editError = validate(newName);
+            this.setState({ newName, editError });
         };
 
         const edit = () => (<TextField
             autoFocus={true}
             style={{ backgroundColor: "lightpink", padding: "0.5rem" }}
-            value={featureName}
+            value={this.state.newName}
             onChange={onEditNameChanged}
             onKeyUp={e => {
                 if ((["Enter"].indexOf(e.key) !== -1)) {
-                    return applyEdit();
+                    if (!this.state.editError) {
+                        return applyEdit();
+                    }
                 }
                 if ((["Escape"].indexOf(e.key) !== -1)) {
                     return cancelEdit();
@@ -110,19 +132,17 @@ export default class CreateFeaturesView extends Component<CreateFeaturesViewProp
                             disabled={isEditing}
                             aria-label="Delete"
                             title="Delete"
-                            onClick={() => {
-                                this.removeFeature(featureName);
-                            }} children={<Icon children="delete" />} />
+                            onClick={remove}
+                            children={<Icon children="delete" />} />
                     } />
-                <ListItemText
-                    color={this.state.editError ? "error" : undefined}
+                <ListItemText                    
                     primary={isEditing ? edit() : show()}
-                    secondary={(!isEditing && `${index} of ${array.length}`) || (this.state.editError && this.state.editError)} />
+                    secondary={(!isEditing && `${index} of ${array.length}`) || <span style={{color: "red"}} children={(this.state.editError && this.state.editError)} />} />
                 <ListItemSecondaryAction>
                     <IconButton hidden={!isEditing}
                         aria-label="apply-edit"
                         title="Apply Edit"
-                        disabled={!isEditing}>
+                        disabled={!isEditing || !!this.state.editError}>
                         <Icon children="checked" onClick={applyEdit} />
                     </IconButton>
                     <IconButton hidden={!isEditing}
