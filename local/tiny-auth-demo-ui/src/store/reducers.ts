@@ -2,6 +2,7 @@ import * as auth from "@australis/tiny-auth-redux";
 import { products, licenses } from "../apis";
 import { api as customersApi } from "../api-customers";
 import { api as customersAddApi } from "../api-customers-add";
+import { api as productsAddApi } from "../api-products-add";
 import messages from "../messages";
 
 export default {
@@ -10,5 +11,6 @@ export default {
   [products.storeKey]: products.reducer,
   [licenses.storeKey]: licenses.reducer,
   [messages.storeKey]: messages.reducer,
-  [customersAddApi.storeKey]: customersAddApi.reducer
+  [customersAddApi.storeKey]: customersAddApi.reducer,
+  [productsAddApi.storeKey]: productsAddApi.reducer
 };
