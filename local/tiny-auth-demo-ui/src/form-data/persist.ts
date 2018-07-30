@@ -1,3 +1,7 @@
+export interface PersistOptions {
+  off?: boolean;
+  transform?: PersistTransform;
+};
 export interface PersistTransform {
   onSave?(value: {}):{};
   onLoad?(value: {}):{};
@@ -9,20 +13,19 @@ export interface Persist {
 }
 /**
  *
- * @param viewName
+ * @param storeKey
  */
 export default function(
-  viewName: string,
+  storeKey: string,
   transform?: PersistTransform
 ): Persist {
-  const STORE_KEY = `view-store-${viewName}`;
   /**
    *
    * @param defaultState
    */
   function tryParse(defaultState: {}): {} {
     try {
-      const json = localStorage.getItem(STORE_KEY);
+      const json = localStorage.getItem(storeKey);
       let value = Object.assign({}, defaultState, JSON.parse(json || "{}"));
       if (transform && transform.onLoad) {
         value = transform.onLoad(value);
@@ -46,13 +49,13 @@ export default function(
       setTimeout(() => {
         if (transform && transform.onSave) {
           localStorage.setItem(
-            STORE_KEY,
+            storeKey,
             JSON.stringify(transform.onSave(state))
           );
           return;
         }
         const json = JSON.stringify(state);
-        localStorage.setItem(STORE_KEY, json);
+        localStorage.setItem(storeKey, json);
       }, 1);
     } catch (e) {
       log(e);
@@ -62,7 +65,7 @@ export default function(
    *
    */
   function clear() {
-    localStorage.removeItem(STORE_KEY);
+    localStorage.removeItem(storeKey);
   }
   return {
     tryParse,

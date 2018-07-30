@@ -19,6 +19,9 @@ export default function(viewName: string) {
       },
       resetForm: () => {
         dispatch(actions.reset());
+      },
+      validate:()=>{
+        dispatch(actions.validate());
       }
     } as FormDataActions;
   };

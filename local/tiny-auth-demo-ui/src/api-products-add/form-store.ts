@@ -22,5 +22,5 @@ const defaultState: ViewFormData = {
   features: "",  
   notes: "",
 };
-const formDataStore = createStore("products-add", defaultState, {});
+const formDataStore = createStore("products-add", defaultState);
 export default formDataStore;

@@ -7,9 +7,9 @@ import { DefaultOptions } from "./default-options";
  *
  * @param viewName
  */
-export default function(
+export default function<T extends {}>(
   viewName: string,
-  defaultState = {},
+  defaultState: T,
   options?: DefaultOptions
 ) {
   const storeKey = `view-store-${viewName}`;
@@ -19,6 +19,6 @@ export default function(
     actions: actions(viewName),
     persist: persist(viewName),
     reducer: reducer(viewName, defaultState, options),
-    selector: (state: {}) => state[storeKey]
+    selector: (state: {}) => state[storeKey] as T
   };
 }

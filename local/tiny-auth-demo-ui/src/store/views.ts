@@ -2,7 +2,10 @@ import { adapter as rootAdapter } from "../app";
 import { customersViewState } from "../api-customers";
 import { productAdAdapter, productsViewState } from "../api-products";
 import { adapter as home } from "../home";
-import { store as apiProductsAdd, formStore as apiProductsAddForm } from "../api-products-add"
+import {
+  store as apiProductsAdd,
+  formStore as apiProductsAddForm
+} from "../api-products-add";
 import {
   store as apiCustomersAddStore,
   formStore as apiCustomersAddFormStore

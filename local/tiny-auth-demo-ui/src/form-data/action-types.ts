@@ -1,14 +1,14 @@
-import { PREFIX } from "./constants";
-
-export default function(viewName: string) {
+export default function(storeKey: string) {
   /** */
-  const SET_STATE = `@${PREFIX}-${viewName}/set-state`;
-  const SET_VALUE = `@${PREFIX}-${viewName}/set-value`;
-  const RESET = `@${PREFIX}-${viewName}/reset`;
+  const SET_STATE = `@${storeKey}/set-state`;
+  const SET_VALUE = `@${storeKey}/set-value`;
+  const RESET = `@${storeKey}/reset`;
+  const VALIDATE =  `@${storeKey}/validate`;
   /** */
   return {
     SET_STATE,
     SET_VALUE,
-    RESET
+    RESET,
+    VALIDATE
   };
 }

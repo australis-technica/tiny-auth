@@ -1,15 +1,16 @@
-import { PersistTransform } from "./persist";
+import { PersistOptions } from "./persist";
+// import { ValidationOptions } from "./middleware";
 /**
  *
  */
-export interface DefaultOptions {  
-  persist?: {
-    off?: boolean;
-    transform?: PersistTransform;
-  };
+export interface DefaultOptions {
+  prefix?: string;
+  persist?: PersistOptions;
+  // validation?: ValidationOptions;
 }
 
 const defaultOptions: DefaultOptions = {
+  prefix: "form-data",
   persist: {
     off: false,
     transform: undefined

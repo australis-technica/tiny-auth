@@ -12,7 +12,7 @@ const selector = createSelector(
   adapter.selector,
   formStore.selector,
   api.selector,
-  (state, formData, apiData) => {
+  (state, formData, apiData) => { 
     return { ...state, formData, apiState: apiData };
   }
 );

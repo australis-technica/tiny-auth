@@ -2,10 +2,10 @@ import actionTypes from "./action-types";
 import { FluxStandardAction } from "flux-standard-action";
 /**
  *
- * @param viewName
+ * @param storeKey
  */
-export default function(viewName: string) {
-  const { SET_STATE, SET_VALUE, RESET, } = actionTypes(viewName);
+export default function(storeKey: string) {
+  const { SET_STATE, SET_VALUE, RESET,VALIDATE } = actionTypes(storeKey);
   /** */
   const setState: (
     payload: {}
@@ -27,9 +27,15 @@ export default function(viewName: string) {
     payload: undefined,
     meta: undefined
   });
+  const validate = (): FluxStandardAction<undefined> => ({
+    type: VALIDATE,
+    payload: undefined,
+    meta: undefined
+  })
   return {
     setState,
     setValue,
-    reset
+    reset,
+    validate
   };
 }

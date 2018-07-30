@@ -3,16 +3,16 @@ import actionTypes from "./action-types";
 import { Persist } from "./persist";
 /**
  *
- * @param viewName
+ * @param storeKey
  * @param defaultState
  */
 export default function(
-  viewName: string,
+  storeKey: string,
   defaultState = {},
   persist?: Persist
 ): Reducer {
     
-  const { SET_STATE, SET_VALUE, RESET } = actionTypes(viewName);      
+  const { SET_STATE, SET_VALUE, RESET } = actionTypes(storeKey);      
   const preloaded = !persist ? defaultState : persist.tryParse(defaultState);
   /**
    *

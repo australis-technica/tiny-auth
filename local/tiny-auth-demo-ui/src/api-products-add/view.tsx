@@ -1,6 +1,9 @@
 import {
   Button,
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
   FormControlLabel,
   Icon,
   IconButton,
@@ -11,25 +14,21 @@ import {
   TextField,
   Toolbar,
   Typography,
-  withStyles,
-  DialogContent,
-  Dialog,
-  DialogActions
+  withStyles
 } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
+import { CreateFeaturesView } from "../api-product-features";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
-import { CheapPreview, FormDataProps, util } from "../form-data";
+import { CheapPreview, FormDataProps } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
-import FormView from "./form-view";
+import { ViewFormData } from "./form-store";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
-import { ViewFormData } from "./form-store";
-import { CreateFeaturesView } from "../api-product-features";
 const log =
   process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
 /**
@@ -59,15 +58,9 @@ class View extends Component<
       classes: ClassNameMap;
     }
 > {
-  /** */
-  onValidationChanged = (validation: {}) => {
-    const values = Object.assign({}, this.props.validation, validation);
-    const validationEmpty = util.isValidationEmpty(values);
-    this.props.setState({
-      validation,
-      validationEmpty
-    });
-  };
+  componentDidMount(){
+    this.props.validate();
+  }
   /** */
   save = async () => {
     const { setBusy, setError, api, formData, validationEmpty } = this.props;
@@ -119,6 +112,7 @@ class View extends Component<
   resetFormActionMessage = () => {
     return <Typography>Reset Form Data?</Typography>;
   };
+  /** */
   renderApiState() {
     const renderError = !!this.props.apiState.error;
     const renderSuccess = !!this.props.apiState.success;
@@ -173,11 +167,16 @@ class View extends Component<
     const {
       classes,
       isMenuOpen,
+      formData,
+      // ...
+      setFormState,
       handleActionToConfirm,
       handleMenuAction,
       setWarning,
-      setConfirmAction
+      setConfirmAction,
     } = this.props;
+    let { validation } = this.props;
+    validation = validation || {};
     return (
       <Fragment>
         <Paper className={classes.paper} elevation={0.5}>
@@ -205,118 +204,83 @@ class View extends Component<
               </Menu>
             </Fragment>
           </Toolbar>
-          <FormView
-            onValidationChanged={this.onValidationChanged}
-            validationRules={{
-              description: {
-                test: true,
-                message: "description Required!"
-              },
-              displayName: {
-                test: true,
-                message: "Required"
-              },
-              name: {
-                test: true,
-                message: "Require"
-              },
-              notes: {
-                test: true,
-                message: "Require"
-              },
-              features: {
-                test: true,
-                message: "Require"
-              }
-            }}
-            render={(formDataProps: any) => {
-              const { setFormState, formData } = formDataProps;
-              let { validation } = this.props;
-              validation = validation || {};
-              return (
-                <form className={classes.form} autoComplete="off">
-                  <TextField
-                    id="name"
-                    className={classes.textField}
-                    label="Name"
-                    helperText={validation.name || "important helper text"}
-                    error={!!validation.name}
-                    disabled={!!this.props.busy}
-                    value={formData.name}
-                    onChange={e => {
-                      setFormState({ name: e.target.value });
-                    }}
-                  />
-                  <TextField
-                    id="displayName"
-                    className={classes.textField}
-                    label="Display Name"
-                    helperText={
-                      validation.displayName || "important helper text"
-                    }
-                    error={!!validation.displayName}
-                    disabled={!!this.props.busy}
-                    value={formData.displayName}
-                    onChange={e => {
-                      setFormState({ displayName: e.target.value });
-                    }}
-                  />
-                  <TextField
-                    id="description"
-                    className={classes.textFieldLarge}
-                    label="Description"
-                    helperText={
-                      validation.description || "important helper text"
-                    }
-                    error={!!validation.description}
-                    disabled={!!this.props.busy}
-                    value={formData.description}
-                    onChange={e => {
-                      setFormState({ description: e.target.value });
-                    }}
-                  />
+          {/* Form */}
+          <form className={classes.form} autoComplete="off">
+            <TextField
+              id="name"
+              className={classes.textField}
+              label="Name"
+              helperText={validation.name || "important helper text"}
+              error={!!validation.name}
+              disabled={!!this.props.busy}
+              value={formData.name}
+              onChange={e => {
+                setFormState({ name: e.target.value });
+              }}
+            />
+            <TextField
+              id="displayName"
+              className={classes.textField}
+              label="Display Name"
+              helperText={validation.displayName || "important helper text"}
+              error={!!validation.displayName}
+              disabled={!!this.props.busy}
+              value={formData.displayName}
+              onChange={e => {
+                setFormState({ displayName: e.target.value });
+              }}
+            />
+            <TextField
+              id="description"
+              className={classes.textFieldLarge}
+              label="Description"
+              helperText={validation.description || "important helper text"}
+              error={!!validation.description}
+              disabled={!!this.props.busy}
+              value={formData.description}
+              onChange={e => {
+                setFormState({ description: e.target.value });
+              }}
+            />
 
-                  <TextField
-                    id="notes"
-                    type="text"
-                    multiline={true}
-                    rows={3}
-                    className={classes.textFieldMultiline}
-                    label="Notes"
-                    helperText={
-                      validation.notes ||
-                      "NOTE: address lines should be honored"
-                    }
-                    error={!!validation.notes}
-                    disabled={!!this.props.busy}
-                    value={formData.notes}
-                    onChange={e => setFormState({ notes: e.target.value })}
-                  />
-                  <div style={{ flex: "1 0" }} />
-                  <FormControlLabel
-                    className={classes.checkbox}
-                    label="Enabled"
-                    control={
-                      <Checkbox
-                        checked={formData.enabled}
-                        onChange={e => {
-                          setFormState({ enabled: e.target.checked });
-                        }}
-                      />
-                    }
-                  />
-                  <div style={{ width: "100%" }}>
-                    <CreateFeaturesView
-                      features={formData.features}
-                      onFeaturesChanged={features => {
-                        setFormState({ features });
-                      }}
-                    />
-                  </div>
-                </form>
-              );
-            }}
-          />
+            <TextField
+              id="notes"
+              type="text"
+              multiline={true}
+              rows={3}
+              className={classes.textFieldMultiline}
+              label="Notes"
+              helperText={
+                validation.notes || "NOTE: address lines should be honored"
+              }
+              error={!!validation.notes}
+              disabled={!!this.props.busy}
+              value={formData.notes}
+              onChange={e => setFormState({ notes: e.target.value })}
+            />
+            <div style={{ flex: "1 0" }} />
+            <FormControlLabel
+              className={classes.checkbox}
+              label="Enabled"
+              control={
+                <Checkbox
+                  checked={formData.enabled}
+                  onChange={e => {
+                    setFormState({ enabled: e.target.checked });
+                  }}
+                />
+              }
+            />
+            <div style={{ width: "100%" }}>
+              <CreateFeaturesView
+                features={formData.features}
+                onFeaturesChanged={features => {
+                  setFormState({ features });
+                }}
+              />
+            </div>
+          </form>
+          {/* Actions  */}
           <div className={classes.actions}>
             <Button
               className={classes.button}

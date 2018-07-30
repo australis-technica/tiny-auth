@@ -41,7 +41,7 @@ const defaultState: ViewState = {
 /**
  *
  */
-const storeAdapter = viewStore("products-add", defaultState, {
+const storeAdapter = viewStore<ViewState>("products-add", defaultState, {
   persist: {
     transform: {
       onLoad: (state: Partial<ViewState>) => {
