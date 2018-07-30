@@ -8,7 +8,14 @@ export interface ViewState {
   tabIndex: number;
   confirmAction?: string;
   error?: string;
-  validation: {};
+  validation: {
+    displayName?: string;
+    description?: string;
+    contact?: string;
+    phone?: string;
+    notes?: string;
+    email?: string;
+  };
   validationEmpty: boolean;
 }
 export interface StoreActions {

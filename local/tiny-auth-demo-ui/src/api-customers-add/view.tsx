@@ -178,7 +178,9 @@ class View extends Component<
                 }
               }}
               render={(formDataProps: any) => {
-                const { setFormState, formData, validation } = formDataProps;
+                const { setFormState, formData,  } = formDataProps;
+                let { validation } = this.props;
+                validation = validation || {};
                 return (
                   <Fragment>
                     <TextField
