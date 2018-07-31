@@ -4,7 +4,7 @@ import * as React from "react";
 import { View as ProductAdd} from "../api-products-add";
 import ProductListView from "./list";
 import { connect } from "react-redux";
-import adapter from "./products-view-state";
+import adapter from "./store";
 import { createSelector } from "reselect";
 import { Dispatch } from "redux";
 /**

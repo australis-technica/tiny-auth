@@ -2,15 +2,25 @@ import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
 import List from "./list";
-import LicenseAdd from "./license-add";
+import {View as LicenseAdd} from "../api-licenses-add";
+import { ViewState } from "./store";
+/**
+ * parameters 
+ */
+export interface ViewProps {
+  // ... empty
+}
 
-export default class CustomersView extends Component<{}>{
-  /** */
-  state = {
-    tabIndex: 0
-  }
+export interface ViewActions {
+  setState(payload: Partial<ViewState>): any;
+}
+
+export type AllProps = ViewProps & ViewState & ViewActions ;
+
+export default class View extends Component<AllProps>{
+ 
   setTabIndex = (tabIndex: number) => {
-    return () => this.setState({ tabIndex });
+    return () => this.props.setState({ tabIndex });
   }
   /**
    * 
@@ -30,7 +40,7 @@ export default class CustomersView extends Component<{}>{
   }
   /** */
   render() {
-    const { tabIndex } = this.state;
+    const { tabIndex } = this.props;
     return <Fragment>
       <Tabs value={tabIndex} fullWidth={true}>
         <Tab value={0} label={"List"} onClick={this.setTabIndex(0)} />

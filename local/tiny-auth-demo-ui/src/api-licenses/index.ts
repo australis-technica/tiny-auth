@@ -1,1 +1,2 @@
-export { default as LicensesView } from "./view";
+export { default as View } from "./connected";
+export { default as store } from "./store";

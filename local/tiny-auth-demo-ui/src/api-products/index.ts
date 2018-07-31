@@ -1,3 +1,4 @@
-export { default as ProductsView } from "./view";
-export { default as productAdAdapter } from "./product-add-adapter";
-export { default as productsViewState} from "./products-view-state";
+export { default as View } from "./view";
+export { default as store} from "./store";
+// 
+export { default as listApi } from "./list-api";

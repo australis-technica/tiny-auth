@@ -2,8 +2,8 @@ import * as React from "react";
 import { Component } from "react";
 import { Tabs, Tab, StyleRulesCallback, withStyles } from "@material-ui/core";
 import { CustomersView } from "../api-customers";
-import { ProductsView } from "../api-products";
-import { LicensesView } from "../api-licenses";
+import { View } from "../api-products";
+import { View as LicensesView } from "../api-licenses";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import adapter from "./adapter";
@@ -61,7 +61,7 @@ class Home extends Component<
         return <CustomersView />;
       }
       case 1: {
-        return <ProductsView />;
+        return <View />;
       }
       case 2: {
         return <LicensesView />;
