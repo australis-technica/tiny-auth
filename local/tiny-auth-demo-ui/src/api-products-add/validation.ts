@@ -28,10 +28,10 @@ const rules: ValidationRuleMap<ViewFormData> = {
     message: "Require"
   }
 };
-const { SET_STATE, VALIDATE } = formStore.actionTypes;
+const { RESET, VALIDATE, SET_STATE } = formStore.actionTypes;
 const middleware = validationMiddleware(
   rules,
-  [SET_STATE, VALIDATE],
+  [RESET, SET_STATE, VALIDATE],
   formStore.selector,
   validation => {
     const validationEmpty = isValidationEmpty(validation);

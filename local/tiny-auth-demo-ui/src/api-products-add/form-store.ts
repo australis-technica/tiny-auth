@@ -1,9 +1,9 @@
 /**
  * 
  */
-import createStore, { FormData } from "../form-data";
+import createStore, { AnyData } from "../form-data";
 /** */
-export interface ViewFormData extends FormData {
+export interface ViewFormData extends AnyData {
   name: string;
   displayName: string;
   description: string;
@@ -14,7 +14,7 @@ export interface ViewFormData extends FormData {
 }
 export type FormDataValidationResult = Partial<ViewFormData>
 /** */
-const defaultState: ViewFormData = {
+const defaultState: ViewFormData = {  
   name: "",
   displayName: "",
   description: "",

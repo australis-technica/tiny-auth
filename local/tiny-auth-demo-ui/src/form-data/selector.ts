@@ -1,6 +1,6 @@
-import { FormData } from "./types";
+import { AnyData } from "./types";
 /** */
-export default function createSelector<T extends FormData = FormData>(
+export default function createSelector<T extends AnyData = AnyData>(
   storeKey: string
 ) {
   return function selector(state: {}) {

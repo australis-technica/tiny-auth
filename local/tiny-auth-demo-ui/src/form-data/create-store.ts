@@ -4,14 +4,14 @@ import createPersist from "./persist";
 import reducer from "./reducer";
 import defaultOptions, { DefaultOptions } from "./default-options";
 import actionBinder from "./action-binder";
-import { FormData } from "./types";
+import { AnyData } from "./types";
 import selector from "./selector";
 //import middleware from "./middleware";
 /**
  *
  * @param name
  */
-export default function createStore<T extends FormData>(name: string, defaultState: T, options?: DefaultOptions) {
+export default function createStore<T extends AnyData>(name: string, defaultState: T, options?: DefaultOptions) {
   options = Object.assign({}, defaultOptions, options);
   const storeKey = `${options.prefix}-${name}`
   let persist;
@@ -25,7 +25,7 @@ export default function createStore<T extends FormData>(name: string, defaultSta
     bindActions: actionBinder(storeKey),
     // middleware: options.validation && middleware(storeKey, options.validation),
     reducer: reducer(storeKey, defaultState, persist),
-    selector: selector(storeKey),
+    selector: selector<T>(storeKey),
     storeKey,
   };
 }
