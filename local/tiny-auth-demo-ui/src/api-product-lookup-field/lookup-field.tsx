@@ -1,22 +1,8 @@
-import { TextField, MenuItem, ListItemText } from "@material-ui/core";
+import { ListItemText, MenuItem, TextField } from "@material-ui/core";
 import * as React from "react";
 import { Component } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { createSelector } from "reselect";
-import createApi, { CrudApiActions, CrudApiState } from "../crud-api";
+import { ApiActions, ApiState, ApiItem } from "./api";
 
-const apiDefaultState: CrudApiState = {
-    busy: false,
-    error: undefined
-};
-export const api = createApi("customer-lookup", apiDefaultState, {
-    endpoint: "http://localhost:4888/api/customers"
-});
-/** 
- * @description Warning partially typed api result item
- */
-interface ApiItem { displayName: string, id: string };
 /**
  * params
  */
@@ -35,18 +21,18 @@ export interface LookupFieldParams {
 }
 /** */
 export interface LookupFieldState {
-    apiState: CrudApiState;
+    apiState: ApiState;
 }
 /** */
 export interface LookupFieldActions {
-    api: CrudApiActions
+    api: ApiActions
 }
 /** */
 export type LookupFieldsProps = LookupFieldParams & LookupFieldState & LookupFieldActions;
 /**
  * 
  */
-class LookupField extends Component<LookupFieldsProps> {
+export default class LookupField extends Component<LookupFieldsProps> {
     componentDidMount() {
         this.props.api.fetch({
             method: "GET"
@@ -64,18 +50,19 @@ class LookupField extends Component<LookupFieldsProps> {
     }
     /** */
     render() {
-        const { id, label, className, validation, disabled, value, apiState, helperText } = this.props;
+        const { id, label, className, validation, value, apiState, helperText } = this.props;
         const { data } = apiState;
         const items = (data || []);
         const error = validation || apiState.error;
+        const disabled = this.props.disabled || apiState.busy        
         return <TextField
             select
             id={id}
             className={className}
             label={label}
-            helperText={validation || error || helperText}
+            helperText={(apiState.busy && "...Busy") || validation || error || helperText}
             error={!!error}
-            disabled={disabled || apiState.busy}
+            disabled={disabled}
             value={value}
             onChange={this.handleOnChange(this.onChange)}
         >
@@ -88,14 +75,3 @@ class LookupField extends Component<LookupFieldsProps> {
         </TextField>
     }
 }
-const selector = createSelector(api.selector, (state) => ({ apiState: state }));
-const bindActions = (dispatch: Dispatch) => {
-    return {
-        api: api.bindActions(dispatch)
-    }
-}
-/**
- * 
- */
-const Connected: React.ComponentType<LookupFieldParams> = connect(selector, bindActions)(LookupField);
-export default Connected;

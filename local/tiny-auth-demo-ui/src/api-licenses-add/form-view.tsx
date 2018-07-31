@@ -4,7 +4,8 @@ import * as React from "react";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import { FormDataValidationResult } from "./validation";
 import { ViewFormData } from "./form-store";
-import CustomerLookupField from "../api-customers-list/lookup-field";
+import { Connected as CustomerLookupField } from "../api-customer-lookup-field";
+import { Connected as ProductLookupField } from "../api-product-lookup-field";
 
 export interface FormParams {
     validation: FormDataValidationResult;
@@ -44,20 +45,18 @@ export default class FormView extends Component<FormProps & { classes: ClassName
                 }}
             />
             {/* Select  Product */}
-            <TextField
+            <ProductLookupField
                 id="product"
                 className={classes.textFieldLarge}
                 label="Product"
                 helperText={validation.product || "important helper text"}
-                error={!!validation.product}
+                validation={validation.product}
                 disabled={!!this.props.busy}
                 value={formData.product}
-                onChange={e => {
-                    setFormState({ product: e.target.value });
+                onSelectionChanged={e => {
+                    setFormState({ product: e && e.id });
                 }}
-            >
-
-            </TextField>
+            />
             <TextField
                 id="displayName"
                 className={classes.textField}
@@ -115,6 +114,6 @@ export default class FormView extends Component<FormProps & { classes: ClassName
             <div style={{ width: "100%" }}>
                 {/* Set-Features */}
             </div>
-        </form>
+        </form >
     }
 }

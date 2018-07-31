@@ -6,8 +6,8 @@ import { store as lic } from "../api-licenses";
 import { api as apiLicAdd } from "../api-licenses-add";
 import { listApi as productsListApi } from "../api-products";
 import messages from "../messages";
-import { api as customerLookupFieldApi } from "../api-customers-list/lookup-field";
-
+import { api as apiCustomerLookupFieldApi } from "../api-customer-lookup-field";
+import { api as apiProductLookupField } from "../api-product-lookup-field";
 
 export default {
   [auth.STORE_KEY]: auth.reducer,
@@ -15,10 +15,11 @@ export default {
   // ...
   [apiCustomersList.storeKey]: apiCustomersList.reducer,
   [apiCustomersAdd.storeKey]: apiCustomersAdd.reducer,
-  [customerLookupFieldApi.storeKey]: customerLookupFieldApi.reducer,
+  [apiCustomerLookupFieldApi.storeKey]: apiCustomerLookupFieldApi.reducer,
   // ...
   [productsListApi.storeKey]: productsListApi.reducer,
   [apiProductsAdd.storeKey]: apiProductsAdd.reducer,
+  [apiProductLookupField.storeKey]: apiProductLookupField.reducer,
   // ...
   [lic.storeKey]: lic.reducer,
   [apiLicAdd.storeKey]: apiLicAdd.reducer,
