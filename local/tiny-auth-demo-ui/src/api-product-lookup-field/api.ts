@@ -4,7 +4,8 @@ import createApi, { CrudApiState, CrudApiActions } from "../crud-api";
  */
 export interface ApiItem {
     displayName: string,
-    id: string
+    id: string;
+    features: string;
 };
 
 export type ApiState = CrudApiState & {

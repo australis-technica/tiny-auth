@@ -54,7 +54,7 @@ export default class FormView extends Component<FormProps & { classes: ClassName
                 disabled={!!this.props.busy}
                 value={formData.product}
                 onSelectionChanged={e => {
-                    setFormState({ product: e && e.id });
+                    setFormState({ product: e && e.id, features: e && e.features });
                 }}
             />
             <TextField
@@ -109,11 +109,7 @@ export default class FormView extends Component<FormProps & { classes: ClassName
                         }}
                     />
                 }
-            />
-            {/* Features */}
-            <div style={{ width: "100%" }}>
-                {/* Set-Features */}
-            </div>
+            />           
         </form >
     }
 }

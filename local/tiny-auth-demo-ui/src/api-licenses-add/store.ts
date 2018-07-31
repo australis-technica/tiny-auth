@@ -16,6 +16,7 @@ export interface ViewState {
   validationEmpty: boolean;
   //  
   viewTitle: string;
+  featureValues: {};
 }
 
 export interface StoreActions {
@@ -30,7 +31,8 @@ const defaultState: ViewState = {
   confirmAction: undefined,
   validation: {},
   validationEmpty: true,
-  viewTitle: "Add License"
+  viewTitle: "Add License",
+  featureValues: {},
 };
 /**
  *

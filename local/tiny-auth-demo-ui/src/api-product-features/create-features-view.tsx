@@ -15,33 +15,10 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import { Fragment, ChangeEventHandler, PureComponent } from "react";
-
+import featureTools from "./tools";
 export interface CreateFeaturesViewProps {
   features: string;
   onFeaturesChanged(features: string): any;
-}
-
-function setFeature(state: { features: string }, payload: {}) {
-  const { features } = state;
-  return Object.assign({}, toObject(features), payload);
-}
-
-function toObject(s: string): {} {
-  if (!s) return {};
-  const o = s
-    .split(",")
-    .filter(x => x.trim() !== "")
-    .reduce((out, next) => {
-      out[next] = next;
-      return out;
-    }, {});
-  return o;
-}
-
-function getString(o: {}): string {
-  return Object.keys(o)
-    .map(key => o[key].toString())
-    .join(",");
 }
 
 interface CreateFeaturesViewState {
@@ -55,7 +32,7 @@ interface CreateFeaturesViewState {
 export default class CreateFeaturesView extends PureComponent<
   CreateFeaturesViewProps,
   CreateFeaturesViewState
-> {
+  > {
   state: CreateFeaturesViewState = {
     // features: {},
     isMenuOpen: false,
@@ -64,7 +41,7 @@ export default class CreateFeaturesView extends PureComponent<
     prevFeatureValue: "",
     newValue: ""
   };
-  
+
   closeMenu = () => {
     this.setState({ isMenuOpen: false });
   };
@@ -79,36 +56,36 @@ export default class CreateFeaturesView extends PureComponent<
   };
 
   addFeature = () => {
-    const keys = Object.keys(toObject(this.props.features));
+    const keys = featureTools.keys(this.props.features);
     let next = keys.length + 1;
     let newKey = `${next}`;
     while (keys.indexOf(newKey) !== -1) {
       next += 1;
       newKey = `${next}`;
     }
-    const values = setFeature(this.props, { [newKey]: `Feature_${next}` });
+    const values = featureTools.setFeature(this.props, { [newKey]: `Feature_${next}` });
     // this.setState({
     //   features: values
     // });
-    this.props.onFeaturesChanged(getString(values));
+    this.props.onFeaturesChanged(featureTools.toString(values));
   };
 
   removeFeature(featureName: string) {
     return () => {
       // const { features } = this.state;
-      const features = toObject(this.props.features);
+      const features = featureTools.toObject(this.props.features);
       delete features[featureName];
       // this.setState({
       //   features
       // });
-      this.props.onFeaturesChanged(getString(features));
+      this.props.onFeaturesChanged(featureTools.toString(features));
     };
   }
 
   clearFeatures = () => {
     const features = {};
     // this.setState({ features });
-    this.props.onFeaturesChanged(getString(features));
+    this.props.onFeaturesChanged(featureTools.toString(features));
   };
 
   renderFeature = (
@@ -136,7 +113,7 @@ export default class CreateFeaturesView extends PureComponent<
 
     const applyEdit = () => {
       const { newValue } = this.state;
-      const features = setFeature(this.props, {
+      const features = featureTools.setFeature(this.props, {
         [key]: newValue
       });
       this.setState({
@@ -144,7 +121,7 @@ export default class CreateFeaturesView extends PureComponent<
         prevFeatureValue: ""
         // features
       });
-      return this.props.onFeaturesChanged(getString(features));
+      return this.props.onFeaturesChanged(featureTools.toString(features));
     };
 
     const validate = (newValue: string) => {
@@ -158,7 +135,7 @@ export default class CreateFeaturesView extends PureComponent<
         return "Invalid Name";
       }
       // const { features } = this.state;
-      const features = toObject(this.props.features);
+      const features = featureTools.toObject(this.props.features);
       const keys = Object.keys(features);
       const found = keys
         .map(X => features[X].toLowerCase())
@@ -283,7 +260,7 @@ export default class CreateFeaturesView extends PureComponent<
     );
   };
   render() {
-    const features = toObject(this.props.features);
+    const features = featureTools.toObject(this.props.features);
     const keys = Object.keys(features);
     return (
       <Fragment>

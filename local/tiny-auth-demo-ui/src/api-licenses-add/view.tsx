@@ -12,13 +12,14 @@ import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
 import FormView from "./form-view";
+import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
 
 const log =
   process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 /**
  * export for external parameters
  */
-export interface ViewProps {
+export interface ViewParams {
   // ... None
 }
 /**
@@ -32,15 +33,14 @@ export type ViewActions = StoreActions &
   MenuActions & {
   setBusy(busy: boolean): any;
 };
+type ViewProps = ViewState & { formData: ViewFormData } & ViewActions & {
+  api: CrudApiActions;
+  apiState: CrudApiState;
+} & {
+  classes: ClassNameMap;
+};
 /** */
-class View extends Component<
-  ViewState & { formData: ViewFormData } & ViewActions & {
-    api: CrudApiActions;
-    apiState: CrudApiState;
-  } & {
-    classes: ClassNameMap;
-  }
-  > {
+class View extends Component<ViewProps> {
   componentDidMount() {
     this.props.validate();
   }
@@ -184,6 +184,19 @@ class View extends Component<
           </Toolbar>
           {/* Form */}
           <FormView formData={formData} setFormState={setFormState} classes={classes} validation={validation} busy={this.props.busy} />
+          {/* Features */}
+          <div style={{ width: "100%" }}>
+            <LicenseFeatures
+              features={this.props.formData.features}
+              featureValues={this.props.featureValues}
+              setFeatureValue={(featureValues) => this.props.setState({ featureValues })}
+              onFeatureChanged={(key, value) => {
+                const _update = Object.assign({}, this.props.featureValues, { [key]: value });
+                this.props.setState({
+                  featureValues: _update
+                });
+              }} />
+          </div>
           {/* Actions  */}
           <div className={classes.actions}>
             <Button
