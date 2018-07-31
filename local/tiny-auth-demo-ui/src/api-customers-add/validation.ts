@@ -17,8 +17,11 @@ const rules: ValidationRuleMap<ViewFormData> = {
     message: "Require"
   },
   description: {
-    test: true,
-    message: "description Required!"
+    test: (data, key) => {
+      const value = data[key];      
+      return !!value && !!value.trim() && value.length > 10 && value.length < 512;
+    },
+    message: "Required (10-512)"
   },
   displayName: {
     test: true,
@@ -33,7 +36,9 @@ const rules: ValidationRuleMap<ViewFormData> = {
     message: "Require"
   },
   notes: {
-    test: true,
+    test: data => {
+      return !!data.notes && data.notes.length > 0 && data.notes.length < 1024;
+    },
     message: "Require"
   },
   phone: {

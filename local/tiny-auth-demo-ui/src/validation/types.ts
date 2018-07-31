@@ -1,11 +1,11 @@
 
 export type KeyOf<T> = keyof T & string;
 
-export type ValidationResultMap<T> = { [k in KeyOf<T>]: string | undefined };
+export type ValidationResultMap<TState> = { [k in KeyOf<TState>]: string | undefined };
 
-export type ValidationFunc<T> = (data: T) => boolean | Promise<boolean>;
+export type ValidationFunc<TState> = (data: TState, key: KeyOf<TState>) => boolean | Promise<boolean>;
 
-export type Validate<T> = (data: T) => Promise<ValidationResultMap<T>>;
+export type Validate<TState> = (data: TState) => Promise<ValidationResultMap<TState>>;
 
 export type ValidateRule<T> = (
   key: string,
@@ -35,5 +35,6 @@ export type ValidationMessage =
   | { [key: string]: string }
   | string
   | ((k: string) => string)
+  // TODO: Race condition !
   | ((k: string) => Promise<string>)
   | Map<string, string>;

@@ -61,7 +61,7 @@ export default function validation<T>(
       if (!rule) return { key, message: undefined };
       const { test } = rule;
       if (isFunction(test)) {
-        let ok = test(data);
+        let ok = test(data, key);
         ok = !isPromise(ok) ? ok : await ok;
         return {
           key,
