@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 import createStore, { AnyData } from "../form-data";
 /** */
@@ -12,15 +12,15 @@ export interface ViewFormData extends AnyData {
   features: string;
   notes: string;
 }
-export type FormDataValidationResult = Partial<ViewFormData>
+export type FormDataValidationResult = Partial<ViewFormData>;
 /** */
-const defaultState: ViewFormData = {  
+const defaultState: ViewFormData = {
   name: "",
   displayName: "",
   description: "",
   enabled: true,
-  features: "",  
-  notes: "",
+  features: "",
+  notes: ""
 };
-const formDataStore = createStore("products-add", defaultState);
+const formDataStore = createStore<ViewFormData>("products-add", defaultState);
 export default formDataStore;

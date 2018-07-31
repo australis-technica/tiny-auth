@@ -21,13 +21,13 @@ import * as React from "react";
 import { Component, Fragment } from "react";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
-import { CheapPreview, FormDataProps } from "../form-data";
+import { CheapPreview, FormDataActions } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
-import { ViewFormData } from "./form-store";
+import { ViewFormData } from "../api-products-add/form-store";
 const log =
   process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
 /**
@@ -41,6 +41,7 @@ export interface ViewProps {
  * provided by this.action-binder
  */
 export type ViewActions = StoreActions &
+  FormDataActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
@@ -48,9 +49,7 @@ export type ViewActions = StoreActions &
   };
 /** */
 class View extends Component<
-  ViewState &
-    ViewActions &
-    FormDataProps<ViewFormData> & {
+  ViewState & { formData: ViewFormData } & ViewActions & {
       api: CrudApiActions;
       apiState: CrudApiState;
     } & {

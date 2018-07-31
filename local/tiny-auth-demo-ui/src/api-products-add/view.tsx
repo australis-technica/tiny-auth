@@ -22,7 +22,7 @@ import { Component, Fragment } from "react";
 import { CreateFeaturesView } from "../api-product-features";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
-import { CheapPreview, FormDataProps } from "../form-data";
+import { CheapPreview, FormDataActions } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { ViewFormData } from "./form-store";
@@ -42,6 +42,7 @@ export interface ViewProps {
  * provided by this.action-binder
  */
 export type ViewActions = StoreActions &
+  FormDataActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
@@ -49,16 +50,14 @@ export type ViewActions = StoreActions &
   };
 /** */
 class View extends Component<
-  ViewState &
-    ViewActions &
-    FormDataProps<ViewFormData> & {
+  ViewState & { formData: ViewFormData } & ViewActions & {
       api: CrudApiActions;
       apiState: CrudApiState;
     } & {
       classes: ClassNameMap;
     }
 > {
-  componentDidMount(){
+  componentDidMount() {
     this.props.validate();
   }
   /** */
@@ -173,7 +172,7 @@ class View extends Component<
       handleActionToConfirm,
       handleMenuAction,
       setWarning,
-      setConfirmAction,
+      setConfirmAction
     } = this.props;
     let { validation } = this.props;
     validation = validation || {};
