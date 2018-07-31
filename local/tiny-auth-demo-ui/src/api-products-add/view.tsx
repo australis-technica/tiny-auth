@@ -71,26 +71,20 @@ class View extends Component<
       setBusy(true);
       await delay(1500);
       const {
-        address,
-        contact,
         description,
         displayName,
-        email,
         enabled,
+        features,
         name,
-        phone,
         notes
       } = formData;
       const body = {
-        address,
-        contact,
         description,
         displayName,
-        email,
         enabled,
+        features,
         name,
-        notes,
-        phone
+        notes
       };
       const r = await api.fetch({
         method: "PUT",
