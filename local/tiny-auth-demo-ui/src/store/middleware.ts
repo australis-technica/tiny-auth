@@ -1,17 +1,20 @@
-import { api as customersApi } from "../api-customers";
+import { api as apiCustomersList } from "../api-customers-list";
 import * as apiCustomresAdd from "../api-customers-add";
 import * as apiProductsAdd from "../api-products-add";
 import * as apiLicAdd from "../api-licenses-add";
 import { list as apiLicList } from "../api-licenses";
+import { api as customerLookupFieldApi} from "../api-customers-list/lookup-field";
+
 /**
  *
  */
 export default [
-  customersApi.middleware,
+  apiCustomersList.middleware,
   // products.middleware,
   // ...
   apiCustomresAdd.api.middleware,
-  apiCustomresAdd.validation.middleware,
+  apiCustomresAdd.validation.middleware,  
+  customerLookupFieldApi.middleware,
   // ..  
   apiProductsAdd.api.middleware,
   apiProductsAdd.validation.middleware,
@@ -19,5 +22,5 @@ export default [
   apiLicAdd.api.middleware,
   apiLicAdd.validation.middleware,
   // ...
-  apiLicList.api.middleware
+  apiLicList.api.middleware,
 ];

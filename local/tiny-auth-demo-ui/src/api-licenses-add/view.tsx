@@ -1,21 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  FormControlLabel,
-  Icon,
-  IconButton,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  TextField,
-  Toolbar,
-  Typography,
-  withStyles
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
@@ -28,6 +11,8 @@ import { ViewFormData } from "./form-store";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
+import FormView from "./form-view";
+
 const log =
   process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 /**
@@ -198,93 +183,7 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           {/* Form */}
-          <form className={classes.form} autoComplete="off">
-            {/* Select  Customer */}
-            <TextField
-              id="customer"
-              className={classes.textField}
-              label="Customer"
-              helperText={validation.customer || "important helper text"}
-              error={!!validation.customer}
-              disabled={!!this.props.busy}
-              value={formData.customer}
-              onChange={e => {
-                setFormState({ customer: e.target.value });
-              }}
-            />
-            {/* Select  Product */}
-            <TextField
-              id="product"
-              className={classes.textFieldLarge}
-              label="Product"
-              helperText={validation.product || "important helper text"}
-              error={!!validation.product}
-              disabled={!!this.props.busy}
-              value={formData.product}
-              onChange={e => {
-                setFormState({ product: e.target.value });
-              }}
-            >
-              
-            </TextField>
-            <TextField
-              id="displayName"
-              className={classes.textField}
-              label="Display Name"
-              helperText={validation.displayName || "important helper text"}
-              error={!!validation.displayName}
-              disabled={!!this.props.busy}
-              value={formData.displayName}
-              onChange={e => {
-                setFormState({ displayName: e.target.value });
-              }}
-            />
-            <TextField
-              id="description"
-              className={classes.textFieldLarge}
-              label="Description"
-              helperText={validation.description || "important helper text"}
-              error={!!validation.description}
-              disabled={!!this.props.busy}
-              value={formData.description}
-              onChange={e => {
-                setFormState({ description: e.target.value });
-              }}
-            />
-
-            <TextField
-              id="notes"
-              type="text"
-              multiline={true}
-              rows={3}
-              className={classes.textFieldMultiline}
-              label="Notes"
-              helperText={
-                validation.notes || "NOTE: address lines should be honored"
-              }
-              error={!!validation.notes}
-              disabled={!!this.props.busy}
-              value={formData.notes}
-              onChange={e => setFormState({ notes: e.target.value })}
-            />
-            <div style={{ flex: "1 0" }} />
-            <FormControlLabel
-              className={classes.checkbox}
-              label="Enabled"
-              control={
-                <Checkbox
-                  checked={formData.enabled}
-                  onChange={e => {
-                    setFormState({ enabled: e.target.checked });
-                  }}
-                />
-              }
-            />
-            {/* Features */}
-            <div style={{ width: "100%" }}>
-              {/* Set-Features */}
-            </div>
-          </form>
+          <FormView formData={formData} setFormState={setFormState} classes={classes} validation={validation} busy={this.props.busy} />
           {/* Actions  */}
           <div className={classes.actions}>
             <Button

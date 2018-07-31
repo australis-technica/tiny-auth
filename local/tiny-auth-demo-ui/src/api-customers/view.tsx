@@ -1,10 +1,10 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import { View as Add} from "../api-customers-add";
-import List from "./list";
+import { View as Add } from "../api-customers-add";
+import { List } from "../api-customers-list";
 import { connect } from "react-redux";
-import { CustomersViewState, customersViewState} from "./adapters";
+import { CustomersViewState, customersViewState } from "./adapters";
 import { Dispatch } from "redux";
 import withStyles, {
   ClassNameMap,
@@ -36,7 +36,7 @@ interface ViewProps {
  */
 class View extends Component<
   ViewProps & CustomersViewState & ViewActions & { classes: ClassNameMap }
-> {
+  > {
   /** */
 
   setTabIndex = (tabIndex: number) => {
