@@ -8,8 +8,8 @@ export interface ViewFormData extends AnyData {
   customer: string; // 1024
   /**TODO: currently a string*/
   // createdAT: number,
-  displayName: string; // 256
   description: string;
+  displayName: string; // 256
   enabled: boolean;
   // Extra: Not in DB Dto 
   features: string;  

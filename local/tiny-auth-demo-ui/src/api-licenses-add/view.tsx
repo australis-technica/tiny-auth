@@ -55,20 +55,24 @@ class View extends Component<ViewProps> {
       setBusy(true);
       await delay(1500);
       const {
+        customer,
         description,
         displayName,
         enabled,
-        features,
         name,
-        notes
+        notes,
+        product
       } = formData;
+      const features = JSON.stringify(this.props.featureValues);
       const body = {
+        customer,
         description,
         displayName,
         enabled,
         features,
         name,
-        notes
+        notes,
+        product
       };
       const r = await api.fetch({
         method: "PUT",
@@ -83,7 +87,11 @@ class View extends Component<ViewProps> {
   };
   saveActionMessage = () => {
     const { formData } = this.props;
-    return <CheapPreview data={formData} />;
+    const { features, ...view } = formData;
+    return <CheapPreview data={{
+      ...view,
+      features: this.props.featureValues
+    }} />;
   };
 
   resetFormActionMessage = () => {
