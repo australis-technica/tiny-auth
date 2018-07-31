@@ -19,7 +19,7 @@ import {
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
-import { CreateFeaturesView } from "../api-product-features";
+import { ProductFeatures } from "../api-product-features";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview, FormDataActions } from "../form-data";
@@ -265,7 +265,7 @@ class View extends Component<
               }
             />
             <div style={{ width: "100%" }}>
-              <CreateFeaturesView
+              <ProductFeatures
                 features={formData.features}
                 onFeaturesChanged={features => {
                   setFormState({ features });

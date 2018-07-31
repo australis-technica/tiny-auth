@@ -1,2 +1,2 @@
-export { default as CreateFeaturesView  } from "./create-features-view";
+export { default as ProductFeatures  } from "./product-features";
 export { default as tools} from "./tools";
