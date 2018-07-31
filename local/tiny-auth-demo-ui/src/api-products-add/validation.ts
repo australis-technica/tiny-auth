@@ -1,8 +1,12 @@
-import { validation } from "../form-data";
+import {
+  middleware as validationMiddleware,
+  ValidationRuleMap,
+  isValidationEmpty
+} from "../validation";
 import formStore from "./form-store";
 import store from "./store";
-import { util } from "../form-data";
-const rules = {
+import { ViewFormData } from "./form-store";
+const rules: ValidationRuleMap<ViewFormData> = {
   description: {
     test: true,
     message: "description Required!"
@@ -24,10 +28,16 @@ const rules = {
     message: "Require"
   }
 };
-const middleware = validation(formStore.storeKey, rules, validation => {
-  const validationEmpty = util.isValidationEmpty(validation);
-  return store.actions.setState({ validation, validationEmpty });
-});
+const { SET_STATE, VALIDATE } = formStore.actionTypes;
+const middleware = validationMiddleware(
+  rules,
+  [SET_STATE, VALIDATE],
+  formStore.selector,
+  validation => {
+    const validationEmpty = isValidationEmpty(validation);
+    return store.actions.setState({ validation, validationEmpty });
+  }
+);
 export default {
   middleware
 };

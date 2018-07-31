@@ -21,7 +21,7 @@ import * as React from "react";
 import { Component, Fragment } from "react";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
-import { CheapPreview, FormDataProps, util } from "../form-data";
+import { CheapPreview, FormDataProps } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { StoreActions, ViewState } from "./store";
@@ -60,14 +60,6 @@ class View extends Component<
   componentDidMount() {
     this.props.validate();
   }
-  /** */
-  onValidationChanged = (validation: {}) => {
-    const validationEmpty = util.isValidationEmpty(validation);
-    this.props.setState({
-      validation: Object.assign({}, this.props.validation, validation),
-      validationEmpty
-    });
-  };
   /** */
   save = async () => {
     const { setBusy, setError, api, formData, validationEmpty } = this.props;

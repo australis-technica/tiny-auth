@@ -1,8 +1,13 @@
-import { validation } from "../form-data";
-import formStore from "./form-store";
+import {
+  middleware as validationMiddleware,
+  isValidationEmpty,
+  ValidationRuleMap,
+  EMAIL_REGEX
+} from "../validation";
+import formStore, { ViewFormData } from "./form-store";
 import store from "./store";
-import { util } from "../form-data";
-const rules = {
+
+const rules: ValidationRuleMap<ViewFormData> = {
   address: {
     test: true,
     message: "Required"
@@ -20,7 +25,7 @@ const rules = {
     message: "Required"
   },
   email: {
-    test: util.EMAIL_REGEX,
+    test: EMAIL_REGEX,
     message: "Invalid email"
   },
   name: {
@@ -36,10 +41,15 @@ const rules = {
     message: "Require"
   }
 };
-const middleware = validation(formStore.storeKey, rules, validation => {
-  const validationEmpty = util.isValidationEmpty(validation);
-  return store.actions.setState({ validation, validationEmpty });
-});
+const middleware = validationMiddleware(
+  rules,
+  [formStore.actionTypes.VALIDATE, formStore.actionTypes.SET_STATE],
+  formStore.selector,
+  validation => {
+    const validationEmpty = isValidationEmpty(validation);
+    return store.actions.setState({ validation, validationEmpty });
+  }
+);
 export default {
   middleware
 };
