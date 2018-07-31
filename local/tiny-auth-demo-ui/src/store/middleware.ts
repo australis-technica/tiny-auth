@@ -1,8 +1,8 @@
-import { licenses } from "../apis";
 import { api as customersApi } from "../api-customers";
 import * as apiCustomresAdd from "../api-customers-add";
 import * as apiProductsAdd from "../api-products-add";
 import * as apiLicAdd from "../api-licenses-add";
+import { list as apiLicList } from "../api-licenses";
 /**
  *
  */
@@ -19,5 +19,5 @@ export default [
   apiLicAdd.api.middleware,
   apiLicAdd.validation.middleware,
   // ...
-  licenses.middleware
+  apiLicList.api.middleware
 ];

@@ -1,25 +1,18 @@
 import viewStore from "../view-store";
+import { FormDataValidationResult } from "./validation";
 /**
  *
  */
 export interface ViewState {
   busy: boolean;
-  isMenuOpen: boolean;  
+  isMenuOpen: boolean;
   confirmAction?: string;
   error?: string;
   /**
    * Validation result
    * Todo: own Store 
    */
-  validation: Partial<{
-    name: string;
-    displayName: string;
-    description: string;
-    enabled: boolean;
-    // Dest: JSON or comma separated list of string
-    features: string;
-    notes: string;
-  }>;
+  validation: FormDataValidationResult;
   validationEmpty: boolean;
   //  
   viewTitle: string;
@@ -33,7 +26,7 @@ export interface StoreActions {
  */
 const defaultState: ViewState = {
   busy: false,
-  isMenuOpen: false,  
+  isMenuOpen: false,
   confirmAction: undefined,
   validation: {},
   validationEmpty: true,

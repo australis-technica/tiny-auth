@@ -1,7 +1,7 @@
 import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import List from "./list";
+import ListView from "./list-view";
 import {View as LicenseAdd} from "../api-licenses-add";
 import { ViewState } from "./store";
 /**
@@ -28,7 +28,7 @@ export default class View extends Component<AllProps>{
   content = (tabIndex: number) => {
     switch (tabIndex) {
       case 0: {
-        return <List />
+        return <ListView />
       }
       case 1: {
         return <LicenseAdd />

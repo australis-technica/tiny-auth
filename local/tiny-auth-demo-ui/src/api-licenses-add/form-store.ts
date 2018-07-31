@@ -4,23 +4,36 @@
 import createStore, { AnyData } from "../form-data";
 /** */
 export interface ViewFormData extends AnyData {
-  name: string;
-  displayName: string;
+  /** Customer ID */
+  customer: string; // 1024
+  /**TODO: currently a string*/
+  // createdAT: number,
+  displayName: string; // 256
   description: string;
   enabled: boolean;
-  // Dest: JSON or comma separated list of string
-  features: string;
-  notes: string;
+  // Extra: Not in DB Dto 
+  features: string;  
+  /** internal */
+  id: string,
+  /** 4000 */
+  notes: string; 
+  /** Internal Hidden by api */
+  // token: string,
+  /** TODO: currently a string */
+  // updatedAt:  number,
+  /** Product ID */
+  product: string;
 }
-export type FormDataValidationResult = Partial<ViewFormData>;
 /** */
 const defaultState: ViewFormData = {
-  name: "",
+  customer: "",  
   displayName: "",
   description: "",
   enabled: true,
   features: "",
-  notes: ""
+  id: "",
+  notes: "",
+  product: "",
 };
 const formDataStore = createStore<ViewFormData>("licenses-add", defaultState);
 export default formDataStore;

@@ -29,7 +29,7 @@ import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
 import { delay } from "./util";
 const log =
-  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
+  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 /**
  * export for external parameters
  */
@@ -45,17 +45,17 @@ export type ViewActions = StoreActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
-    setBusy(busy: boolean): any;
-  };
+  setBusy(busy: boolean): any;
+};
 /** */
 class View extends Component<
   ViewState & { formData: ViewFormData } & ViewActions & {
-      api: CrudApiActions;
-      apiState: CrudApiState;
-    } & {
-      classes: ClassNameMap;
-    }
-> {
+    api: CrudApiActions;
+    apiState: CrudApiState;
+  } & {
+    classes: ClassNameMap;
+  }
+  > {
   componentDidMount() {
     this.props.validate();
   }
@@ -199,18 +199,34 @@ class View extends Component<
           </Toolbar>
           {/* Form */}
           <form className={classes.form} autoComplete="off">
+            {/* Select  Customer */}
             <TextField
-              id="name"
+              id="customer"
               className={classes.textField}
-              label="Name"
-              helperText={validation.name || "important helper text"}
-              error={!!validation.name}
+              label="Customer"
+              helperText={validation.customer || "important helper text"}
+              error={!!validation.customer}
               disabled={!!this.props.busy}
-              value={formData.name}
+              value={formData.customer}
               onChange={e => {
-                setFormState({ name: e.target.value });
+                setFormState({ customer: e.target.value });
               }}
             />
+            {/* Select  Product */}
+            <TextField
+              id="product"
+              className={classes.textFieldLarge}
+              label="Product"
+              helperText={validation.product || "important helper text"}
+              error={!!validation.product}
+              disabled={!!this.props.busy}
+              value={formData.product}
+              onChange={e => {
+                setFormState({ product: e.target.value });
+              }}
+            >
+              
+            </TextField>
             <TextField
               id="displayName"
               className={classes.textField}
