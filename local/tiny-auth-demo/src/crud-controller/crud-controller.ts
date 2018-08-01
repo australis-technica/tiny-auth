@@ -6,7 +6,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   //
   const noClean = (x: any) => x;
   /**
-   *
+   * READ/GET/LIST
    */
   const get: (clean?: (x: any) => any) => RequestHandler = (
     clean = noClean
@@ -25,7 +25,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     }
   };
   /**
-   *
+   * DLETE/REMOVE
    */
   const dlete: (clean?: (x: any) => any) => RequestHandler = (
     clean = noClean
@@ -39,7 +39,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     }
   };
   /**
-   *
+   * Create, Add, Insert , NEW , PUT
    */
   const put: (
     payload?: (req: Request, res: Response) => any,
@@ -57,7 +57,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     }
   };
   /**
-   *
+   * SET, Modify, update, POST
    */
   const post: (
     payload?: (req: Request, res: Response) => any,

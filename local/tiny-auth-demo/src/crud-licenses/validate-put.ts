@@ -1,5 +1,6 @@
 import { Request } from "express-serve-static-core";
 import { repo as productsRepo } from "../crud-products";
+import {repo as customersRepo } from "../crud-customers";
 /**
  * validate PUT/ADD/NEW 
  */
@@ -21,7 +22,7 @@ export default  async function (req: Request) {
       if (!req.body.customer) {
         validation.push("customer required");
       } else {
-        const customer = await productsRepo.byId(req.body.customer);
+        const customer = await customersRepo.byId(req.body.customer);
         if (!customer || !customer.id) {
           validation.push("existing customer required");
         }
