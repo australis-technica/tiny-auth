@@ -1,4 +1,4 @@
-import { TextField, FormControlLabel, Checkbox, } from "@material-ui/core";
+import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
 import { Component } from "react";
 import * as React from "react";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
@@ -6,124 +6,162 @@ import { FormDataValidationResult } from "./validation";
 import { ViewFormData } from "./form-store";
 import { Connected as CustomerLookupField } from "../api-customer-lookup-field";
 import { Connected as ProductLookupField } from "../api-product-lookup-field";
-import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
+import { LicenseFeatures } from "../api-license-features";
 
 export interface FormParams {
-    validation: FormDataValidationResult;
-    busy: boolean;
+  validation: FormDataValidationResult;
+  busy: boolean;
 }
 
 export interface FormState {
-    formData: ViewFormData;
+  formData: ViewFormData;
 }
 
 export interface FormActions {
-    setFormState(payload: Partial<ViewFormData>): any;
+  setFormState(payload: Partial<ViewFormData>): any;
 }
 
 export type FormViewProps = FormParams & FormState & FormActions;
 /**
- * 
+ *
  */
-export default class FormView extends Component<FormViewProps & { classes: ClassNameMap }> {
-    /**
-     * 
-     */
-    render() {
-        const { classes, validation, busy, formData, setFormState } = this.props;
-        return <form className={classes.form} autoComplete="off">
-            {/* Select  Customer */}
-            <CustomerLookupField
-                id="customer"
-                className={classes.textField}
-                label="Customer"
-                helperText={validation.customer}
-                validation={validation.customer}
-                disabled={!!busy}
-                value={formData.customer}
-                onSelectionChanged={e => {
-                    setFormState({ customer: e && e.id });
-                }}
-            />
-            {/* Select  Product */}
-            <ProductLookupField
-                id="product"
-                className={classes.textFieldLarge}
-                label="Product"
-                helperText={validation.product || "important helper text"}
-                validation={validation.product}
-                disabled={!!this.props.busy}
-                value={formData.product}
-                onSelectionChanged={e => {
-                    setFormState({ product: e && e.id, features: e && e.features, featureValues: {} });
-                }}
-            />
-            <TextField
-                id="displayName"
-                className={classes.textField}
-                label="Display Name"
-                helperText={validation.displayName || "important helper text"}
-                error={!!validation.displayName}
-                disabled={!!this.props.busy}
-                value={formData.displayName}
-                onChange={e => {
-                    setFormState({ displayName: e.target.value });
-                }}
-            />
-            <TextField
-                id="description"
-                className={classes.textFieldLarge}
-                label="Description"
-                helperText={validation.description || "important helper text"}
-                error={!!validation.description}
-                disabled={!!this.props.busy}
-                value={formData.description}
-                onChange={e => {
-                    setFormState({ description: e.target.value });
-                }}
-            />
+export default class FormView extends Component<
+  FormViewProps & { classes: ClassNameMap }
+> {
+  /**
+   *
+   */
+  render() {
+    const { classes, validation, busy, formData, setFormState } = this.props;
+    return (
+      <form className={classes.form} autoComplete="off">
+        {/* Select  Customer */}
+        <CustomerLookupField
+          id="customer"
+          className={classes.textField}
+          label="Customer"
+          helperText={validation.customer}
+          validation={validation.customer}
+          disabled={!!busy}
+          value={formData.customer}
+          onSelectionChanged={e => {
+            setFormState({ customer: e && e.id });
+          }}
+        />
+        {/* Select  Product */}
+        <ProductLookupField
+          id="product"
+          className={classes.textFieldLarge}
+          label="Product"
+          helperText={validation.product || "important helper text"}
+          validation={validation.product}
+          disabled={!!this.props.busy}
+          value={formData.product}
+          onSelectionChanged={e => {
+            setFormState({
+              product: e && e.id,
+              features: e && e.features,
+              featureValues: {}
+            });
+          }}
+        />
+        <TextField
+          id="displayName"
+          className={classes.textField}
+          label="Display Name"
+          helperText={validation.displayName || "important helper text"}
+          error={!!validation.displayName}
+          disabled={!!this.props.busy}
+          value={formData.displayName}
+          onChange={e => {
+            setFormState({ displayName: e.target.value });
+          }}
+        />
+        <TextField
+          id="description"
+          className={classes.textFieldLarge}
+          label="Description"
+          helperText={validation.description || "important helper text"}
+          error={!!validation.description}
+          disabled={!!this.props.busy}
+          value={formData.description}
+          onChange={e => {
+            setFormState({ description: e.target.value });
+          }}
+        />
 
-            <TextField
-                id="notes"
-                type="text"
-                multiline={true}
-                rows={3}
-                className={classes.textFieldMultiline}
-                label="Notes"
-                helperText={
-                    validation.notes || "NOTE: address lines should be honored"
-                }
-                error={!!validation.notes}
-                disabled={!!this.props.busy}
-                value={formData.notes}
-                onChange={e => setFormState({ notes: e.target.value })}
+        <TextField
+          id="notes"
+          type="text"
+          multiline={true}
+          rows={3}
+          className={classes.textFieldMultiline}
+          label="Notes"
+          helperText={
+            validation.notes || "NOTE: address lines should be honored"
+          }
+          error={!!validation.notes}
+          disabled={!!this.props.busy}
+          value={formData.notes}
+          onChange={e => setFormState({ notes: e.target.value })}
+        />
+        <TextField
+          type="date"
+          label="Expiration"
+          value={((exp: number) => {
+            const date = new Date(exp);
+            const mm = date.getMonth();
+            const dd = date.getDate();
+            const s = `${date.getFullYear()}-${mm < 10 ? `0${mm}` : mm}-${
+                dd < 10 ? `0${dd}` : dd
+              }`;
+            console.log("exp: %s", s)
+            return s;
+          })(formData.exp)}
+          onChange={e => {
+            const parts = e.target.value.split("-");
+            const date = new Date(
+              Number(parts[0]),
+              Number(parts[1]),
+              Number(parts[2])
+            );
+            console.log(date)
+            setFormState({ exp: date.valueOf() });
+          }}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <div style={{ flex: "1 0" }} />
+        <FormControlLabel
+          className={classes.checkbox}
+          label="Enabled"
+          control={
+            <Checkbox
+              checked={formData.enabled}
+              onChange={e => {
+                setFormState({ enabled: e.target.checked });
+              }}
             />
-            <div style={{ flex: "1 0" }} />
-            <FormControlLabel
-                className={classes.checkbox}
-                label="Enabled"
-                control={
-                    <Checkbox
-                        checked={formData.enabled}
-                        onChange={e => {
-                            setFormState({ enabled: e.target.checked });
-                        }}
-                    />
-                }
-            />
-            {/* Features */}
-            <div style={{ width: "100%" }}>
-                <LicenseFeatures
-                    features={formData.features}
-                    featureValues={formData.featureValues}
-                    setFeatureValue={(featureValues) => setFormState({ featureValues })}
-                    onFeatureChanged={(key, value) => {
-                        const _update = Object.assign({}, formData.featureValues, { [key]: value });
-                        setFormState({
-                            featureValues: _update
-                        });
-                    }} />
-            </div>
-        </form >
-    }
+          }
+        />
+        {/* Features */}
+        <div style={{ width: "100%" }}>
+          <LicenseFeatures
+            features={formData.features}
+            featureValues={formData.featureValues}
+            setFeatureValue={featureValues => setFormState({ featureValues })}
+            onFeatureChanged={(key, value) => {
+              const _update = Object.assign({}, formData.featureValues, {
+                [key]: value
+              });
+              setFormState({
+                featureValues: _update
+              });
+            }}
+          />
+        </div>
+      </form>
+    );
+  }
 }
