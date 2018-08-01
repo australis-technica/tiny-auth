@@ -1,19 +1,22 @@
+/** */
 export type CrudApiState = { [key: string]: any } & {
   busy: boolean;
   error: string | undefined;
   data?: any;
 };
+/** */
 export type CrudAPiVerb = "GET" | "PUT" | "POST" | "DEL";
+/** */
 export const verbs: CrudAPiVerb[] = ["GET", "PUT", "POST", "DEL"];
 /** */
-export interface CrudApiArgs {
+export interface CrudApiRequest {
   params?: string[];
   query?: {};
   body?: {};
   method: CrudAPiVerb;
 }
 /** */
-export type CrudApi = (args: CrudApiArgs) => Promise<any>;
+export type CrudApiCall = (args: CrudApiRequest) => Promise<any>;
 /** */
 export interface CrudApiOptions {
   resultKey: string;
@@ -22,7 +25,7 @@ export interface CrudApiOptions {
 }
 /** */
 export interface CrudApiActions {
-  fetch(payload: CrudApiArgs): any;
+  fetch(payload: CrudApiRequest): any;
   setResult(data: any): any;
   clearError(): any;
   clearResult(): any;

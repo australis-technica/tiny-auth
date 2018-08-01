@@ -1,39 +1,23 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Icon,
-  IconButton,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  TextField,
-  Toolbar,
-  Typography,
-  withStyles,
-  DialogContent,
-  Dialog,
-  DialogActions
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
-import { CheapPreview, FormDataActions } from "../form-data";
+import { CheapPreview } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
+import { FormViewActions, FormViewData } from "./form-store";
+import FormView from "./form-view";
+import propsToRequest from "./props-to-request";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
-import { delay } from "./util";
-import { ViewFormData } from "../api-products-add/form-store";
 const log =
   process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
 /**
  * export for external parameters
  */
-export interface ViewProps {
+export interface ViewParams {
   // ... None
 }
 /**
@@ -41,60 +25,44 @@ export interface ViewProps {
  * provided by this.action-binder
  */
 export type ViewActions = StoreActions &
-  FormDataActions &
+  FormViewActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
     setBusy(busy: boolean): any;
   };
 /** */
-class View extends Component<
-  ViewState & { formData: ViewFormData } & ViewActions & {
-      api: CrudApiActions;
-      apiState: CrudApiState;
-    } & {
-      classes: ClassNameMap;
-    }
-> {
+export interface ViewFormDataState {
+  formData: FormViewData;
+}
+/** */
+export interface ApiContext {
+  api: CrudApiActions;
+  apiState: CrudApiState;
+}
+/** */
+export type ViewProps = ViewState &
+  ViewFormDataState &
+  ViewActions &
+  ApiContext & {
+    classes: ClassNameMap;
+  };
+/** */
+class View extends Component<ViewProps> {
   componentDidMount() {
     this.props.validate();
   }
   /** */
   save = async () => {
-    const { setBusy, setError, api, formData, validationEmpty } = this.props;
+    const { setBusy, setError, api, validationEmpty } = this.props;
     try {
       if (!validationEmpty) {
         setError("Can't Save");
         return;
       }
-      setBusy(true);
-      await delay(1500);
-      const {
-        address,
-        contact,
-        description,
-        displayName,
-        email,
-        enabled,
-        name,
-        phone,
-        notes
-      } = formData;
-      const body = {
-        address,
-        contact,
-        description,
-        displayName,
-        email,
-        enabled,
-        name,
-        notes,
-        phone
-      };
-      const r = await api.fetch({
-        method: "PUT",
-        body
-      });
+      setBusy(true);      
+      const request = propsToRequest(this.props);
+      const r = await api.fetch(request);
       log(r);
     } catch (error) {
       setError(error);
@@ -102,6 +70,7 @@ class View extends Component<
       setBusy(false);
     }
   };
+  /** */
   saveActionMessage = () => {
     const { formData } = this.props;
     return <CheapPreview data={formData} />;
@@ -162,6 +131,7 @@ class View extends Component<
   /** */
   render() {
     const {
+      busy,
       classes,
       isMenuOpen,
       handleActionToConfirm,
@@ -201,122 +171,16 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           {/* Form */}
-          <form className={classes.form} autoComplete="off">
-            <TextField
-              id="name"
-              className={classes.textField}
-              label="Name"
-              helperText={validation.name || "important helper text"}
-              error={!!validation.name}
-              disabled={!!this.props.busy}
-              value={formData.name}
-              onChange={e => {
-                setFormState({ name: e.target.value });
-              }}
-            />
-            <TextField
-              id="displayName"
-              className={classes.textField}
-              label="Display Name"
-              helperText={validation.displayName || "important helper text"}
-              error={!!validation.displayName}
-              disabled={!!this.props.busy}
-              value={formData.displayName}
-              onChange={e => {
-                setFormState({ displayName: e.target.value });
-              }}
-            />
-            <TextField
-              id="description"
-              className={classes.textField}
-              label="Description"
-              helperText={validation.description || "important helper text"}
-              error={!!validation.description}
-              disabled={!!this.props.busy}
-              value={formData.description}
-              onChange={e => {
-                setFormState({ description: e.target.value });
-              }}
-            />
-            <TextField
-              id="contact"
-              className={classes.textField}
-              label="Contact"
-              helperText={validation.contact || "important helper text"}
-              error={!!validation.contact}
-              disabled={!!this.props.busy}
-              value={formData.contact}
-              onChange={e => {
-                setFormState({ contact: e.target.value });
-              }}
-            />
-            <TextField
-              id="phone"
-              className={classes.textField}
-              label="Phone"
-              helperText={validation.phone || "important helper text"}
-              error={!!validation.phone}
-              disabled={!!this.props.busy}
-              value={formData.phone}
-              onChange={e => {
-                setFormState({ phone: e.target.value });
-              }}
-            />
-            <TextField
-              id="email"
-              type="email"
-              className={classes.textFieldLarge}
-              label="Email"
-              helperText={validation.email || "important helper text"}
-              error={!!validation.email}
-              disabled={!!this.props.busy}
-              value={formData.email}
-              onChange={e => setFormState({ email: e.target.value })}
-            />
-            <TextField
-              id="address"
-              type="text"
-              multiline={true}
-              rows={3}
-              className={classes.textFieldMultiline}
-              label="Address"
-              helperText={
-                validation.address || "NOTE: address lines should be honored"
-              }
-              error={!!validation.address}
-              disabled={!!this.props.busy}
-              value={formData.address}
-              onChange={e => setFormState({ address: e.target.value })}
-            />
-            <TextField
-              id="notes"
-              type="text"
-              multiline={true}
-              rows={3}
-              className={classes.textFieldMultiline}
-              label="Notes"
-              helperText={
-                validation.notes || "NOTE: address lines should be honored"
-              }
-              error={!!validation.notes}
-              disabled={!!this.props.busy}
-              value={formData.notes}
-              onChange={e => setFormState({ notes: e.target.value })}
-            />
-            <div style={{ flex: "1 0" }} />
-            <FormControlLabel
-              className={classes.checkbox}
-              label="Enabled"
-              control={
-                <Checkbox
-                  checked={formData.enabled}
-                  onChange={e => {
-                    setFormState({ enabled: e.target.checked });
-                  }}
-                />
-              }
-            />
-          </form>
+          <FormView
+            classes={classes}
+            validate={this.props.validate}
+            resetForm={this.props.resetForm}
+            setFormValue={this.props.setFormValue}
+            setFormState={setFormState}
+            validation={validation}
+            busy={busy}
+            formData={formData}
+          />
           {/* Actions */}
           <div className={classes.actions}>
             <Button

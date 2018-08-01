@@ -1,9 +1,11 @@
-/**
- *
- */
-import createStore, { AnyData } from "../form-data";
 /** */
-export interface ViewFormData extends AnyData {
+import createStore, { AnyData, FormDataActions } from "../form-data";
+/** */
+export interface FormViewActions extends FormDataActions {
+  setFormState(payload: Partial<FormViewData>):any;
+};
+/** */
+export interface FormViewData extends AnyData {
   address: string;
   contact: string;
   description: string;
@@ -14,9 +16,8 @@ export interface ViewFormData extends AnyData {
   notes: string;
   phone: string;
 }
-export type FormDataValidationResult = Partial<ViewFormData>;
 /** */
-const defaultState: ViewFormData = {
+const defaultState: FormViewData = {
   address: "",
   contact: "",
   description: "",

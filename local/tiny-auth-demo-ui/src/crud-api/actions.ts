@@ -1,4 +1,4 @@
-import { CrudApiArgs } from "./types";
+import { CrudApiRequest } from "./types";
 import actionTypes from "./action-types";
 import { FluxStandardAction } from "flux-standard-action";
 const log = process.env.NODE_ENV === "production" ? console.log.bind(console) : () => { };
@@ -13,7 +13,7 @@ export default function (storeKey: string) {
      * Actions
      */
     return {
-        fetch: (payload: CrudApiArgs): FluxStandardAction<CrudApiArgs> => ({
+        fetch: (payload: CrudApiRequest): FluxStandardAction<CrudApiRequest> => ({
             type: FETCH,
             payload,
             meta: undefined

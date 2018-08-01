@@ -4,17 +4,17 @@ import * as React from "react";
 import { View as Add } from "../api-customers-add";
 import { List } from "../api-customers-list";
 import { connect } from "react-redux";
-import { CustomersViewState, customersViewState } from "./adapters";
 import { Dispatch } from "redux";
 import withStyles, {
   ClassNameMap,
   StyleRulesCallback
 } from "@material-ui/core/styles/withStyles";
+import adapter, { ViewState } from "./store";
 /**
  * 
  */
 interface ViewActions {
-  setState(payload: Partial<CustomersViewState>): any;
+  setState(payload: Partial<ViewState>): any;
 }
 /**
  *
@@ -28,17 +28,15 @@ const styles: StyleRulesCallback = theme => ({
 /**
  * parameters
  */
-interface ViewProps {
+export interface ViewParams {
   // ...
 }
+export type ViewProps = ViewParams & ViewState & ViewActions & { classes: ClassNameMap };
 /**
  *
  */
-class View extends Component<
-  ViewProps & CustomersViewState & ViewActions & { classes: ClassNameMap }
-  > {
+class View extends Component<ViewProps> {
   /** */
-
   setTabIndex = (tabIndex: number) => {
     return () => this.props.setState({ tabIndex });
   };
@@ -82,7 +80,7 @@ class View extends Component<
  * @param state
  */
 const selector = (state: {}) => {
-  const s: CustomersViewState = customersViewState.selector(state);
+  const s: ViewState = adapter.selector(state);
   s.tabIndex = s.tabIndex || 0;
   return {
     ...s
@@ -93,10 +91,10 @@ const selector = (state: {}) => {
  * @param dispatch
  * @param props
  */
-const bindActions = (dispatch: Dispatch, _props: CustomersViewState) => {
+const bindActions = (dispatch: Dispatch, _props: ViewState) => {
   return {
     setState: (payload: Partial<ViewActions>) => {
-      dispatch(customersViewState.actions.setState(payload));
+      dispatch(adapter.actions.setState(payload));
     }
   };
 };
@@ -106,4 +104,4 @@ const bindActions = (dispatch: Dispatch, _props: CustomersViewState) => {
 export default connect(
   selector,
   bindActions
-)(withStyles(styles)(View)) as React.ComponentType<ViewProps>;
+)(withStyles(styles)(View)) as React.ComponentType<ViewParams>;

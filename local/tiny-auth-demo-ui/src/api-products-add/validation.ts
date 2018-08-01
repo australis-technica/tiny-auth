@@ -3,9 +3,11 @@ import {
   ValidationRuleMap,
   isValidationEmpty
 } from "../validation";
+
 import formStore from "./form-store";
 import store from "./store";
 import { ViewFormData } from "./form-store";
+
 const rules: ValidationRuleMap<ViewFormData> = {
   description: {
     test: true,

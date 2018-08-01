@@ -1,8 +1,8 @@
 import { Component, Fragment, ComponentType } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
-import { View as ProductAdd} from "../api-products-add";
-import ProductListView from "./list";
+import { Connected as ProductAdd} from "../api-products-add";
+import { Connected as ListView} from "../api-product-list";
 import { connect } from "react-redux";
 import adapter from "./store";
 import { createSelector } from "reselect";
@@ -33,7 +33,7 @@ class ProductsView extends Component<ViewProps & ViewState & { setState(state: P
     Switch = (tabIndex: number) => {
         switch (tabIndex) {
             case 0: {
-                return <ProductListView />
+                return <ListView />
             }
             case 1: {
                 return <ProductAdd />

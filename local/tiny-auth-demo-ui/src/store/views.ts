@@ -1,5 +1,5 @@
 import { adapter as rootAdapter } from "../app";
-import { customersViewState } from "../api-customers";
+import { store as customersViewState } from "../api-customers";
 import { store } from "../api-products";
 import * as api_lic_add from "../api-licenses-add";
 import { adapter as home } from "../home";

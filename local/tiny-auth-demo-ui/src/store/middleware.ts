@@ -2,7 +2,7 @@ import { api as apiCustomersList } from "../api-customers-list";
 import * as apiCustomresAdd from "../api-customers-add";
 import * as apiProductsAdd from "../api-products-add";
 import * as apiLicAdd from "../api-licenses-add";
-import { list as apiLicList } from "../api-licenses";
+import { api as apiLicenseList } from "../api-license-list";
 import { api as apiCustomerLookupFieldApi} from "../api-customer-lookup-field";
 import { api as apiProductLookupField } from "../api-product-lookup-field";
 /**
@@ -23,5 +23,5 @@ export default [
   apiLicAdd.api.middleware,
   apiLicAdd.validation.middleware,
   // ...
-  apiLicList.api.middleware,
+  apiLicenseList.middleware,
 ];

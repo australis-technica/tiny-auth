@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import actionBinder from "./action-binder";
-import View, { ViewProps } from "./view";
+import View, { ViewParams } from "./view";
 import adapter from "./store";
 import formStore from "./form-store";
 import { connect } from "react-redux";
@@ -25,7 +25,7 @@ const bindActions = (dispatch: Dispatch) => {
   };
 };
 /** */
-const Connected: ComponentType<ViewProps> = connect(
+const Connected: ComponentType<ViewParams> = connect(
   selector,
   bindActions
 )(View);

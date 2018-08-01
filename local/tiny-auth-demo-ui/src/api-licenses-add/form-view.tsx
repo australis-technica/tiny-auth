@@ -20,11 +20,11 @@ export interface FormActions {
     setFormState(payload: Partial<ViewFormData>): any;
 }
 
-export type FormProps = FormParams & FormState & FormActions;
+export type FormViewProps = FormParams & FormState & FormActions;
 /**
  * 
  */
-export default class FormView extends Component<FormProps & { classes: ClassNameMap }> {
+export default class FormView extends Component<FormViewProps & { classes: ClassNameMap }> {
     /**
      * 
      */

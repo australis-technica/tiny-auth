@@ -1,5 +1,5 @@
 import { AuthState } from "@australis/tiny-auth-core";
-import { CrudApi } from "./types";
+import { CrudApiCall } from "./types";
 import { log } from "./util";
 log("crud-api");
 
@@ -21,7 +21,7 @@ function encode(query?: {}) {
 /**
  * @param endpoint @description fully resolved
  */
-export default function crudApi(austhState: () => AuthState, endpoint: string): CrudApi {
+export default function crudApi(austhState: () => AuthState, endpoint: string): CrudApiCall {
 
     /**
      * 

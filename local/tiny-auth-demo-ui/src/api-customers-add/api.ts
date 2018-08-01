@@ -3,7 +3,8 @@ const defaultState = {
   busy: false,
   error: undefined
 };
+const { REACT_APP_API_BASE, REACT_APP_API_CUSTOMERS } = process.env;
 const api = crudApi("customers-add", defaultState, {
-  endpoint: "http://localhost:4888/api/customers"
+  endpoint: `${REACT_APP_API_BASE}/${REACT_APP_API_CUSTOMERS}`
 });
 export default api;

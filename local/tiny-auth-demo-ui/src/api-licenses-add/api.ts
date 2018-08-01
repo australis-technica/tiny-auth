@@ -3,7 +3,10 @@ const defaultState = {
   busy: false,
   error: undefined
 };
+const { REACT_APP_API_BASE, REACT_APP_API_LICENSES} = process.env; 
+/** */
 const api = crudApi("licenses-add", defaultState, {
-  endpoint: "http://localhost:4888/api/licenses"
+  endpoint: `${REACT_APP_API_BASE}/${REACT_APP_API_LICENSES}`
 });
+/** */
 export default api;

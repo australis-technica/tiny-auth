@@ -4,10 +4,12 @@ import {
   ValidationRuleMap,
   EMAIL_REGEX
 } from "../validation";
-import formStore, { ViewFormData } from "./form-store";
+import formStore, { FormViewData } from "./form-store";
 import store from "./store";
 
-const rules: ValidationRuleMap<ViewFormData> = {
+export type FormDataValidationResult = Partial<FormViewData>;
+
+const rules: ValidationRuleMap<FormViewData> = {
   address: {
     test: true,
     message: "Required"
@@ -47,7 +49,7 @@ const rules: ValidationRuleMap<ViewFormData> = {
   }
 };
 const { RESET, VALIDATE, SET_STATE } = formStore.actionTypes;
-const middleware = validationMiddleware<ViewFormData>(
+const middleware = validationMiddleware<FormViewData>(
   rules,
   [RESET, SET_STATE, VALIDATE],
   formStore.selector,

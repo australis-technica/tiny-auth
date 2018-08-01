@@ -1,21 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  FormControlLabel,
-  Icon,
-  IconButton,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  TextField,
-  Toolbar,
-  Typography,
-  withStyles
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
@@ -26,15 +9,14 @@ import { CheapPreview, FormDataActions } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { ViewFormData } from "./form-store";
+import FormView from "./form-view";
+import propsToRequest from "./props-to-request";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
-import { delay } from "./util";
-const log =
-  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
 /**
  * export for external parameters
  */
-export interface ViewProps {
+export interface ViewParams {
   // ... None
 }
 /**
@@ -48,49 +30,30 @@ export type ViewActions = StoreActions &
   MenuActions & {
     setBusy(busy: boolean): any;
   };
+export interface ApiContext {
+  api: CrudApiActions;
+  apiState: CrudApiState;
+}
+export type ViewProps = ViewState & { formData: ViewFormData } & ViewActions &
+  ApiContext & {
+    classes: ClassNameMap;
+  };
 /** */
-class View extends Component<
-  ViewState & { formData: ViewFormData } & ViewActions & {
-      api: CrudApiActions;
-      apiState: CrudApiState;
-    } & {
-      classes: ClassNameMap;
-    }
-> {
+class View extends Component<ViewProps> {
   componentDidMount() {
     this.props.validate();
   }
   /** */
   save = async () => {
-    const { setBusy, setError, api, formData, validationEmpty } = this.props;
+    const { setBusy, setError, api, validationEmpty } = this.props;
     try {
       if (!validationEmpty) {
         setError("Can't Save");
         return;
       }
       setBusy(true);
-      await delay(1500);
-      const {
-        description,
-        displayName,
-        enabled,
-        features,
-        name,
-        notes
-      } = formData;
-      const body = {
-        description,
-        displayName,
-        enabled,
-        features,
-        name,
-        notes
-      };
-      const r = await api.fetch({
-        method: "PUT",
-        body
-      });
-      log(r);
+      const request = propsToRequest(this.props);
+      await api.fetch(request);
     } catch (error) {
       setError(error);
     } finally {
@@ -198,81 +161,22 @@ class View extends Component<
             </Fragment>
           </Toolbar>
           {/* Form */}
-          <form className={classes.form} autoComplete="off">
-            <TextField
-              id="name"
-              className={classes.textField}
-              label="Name"
-              helperText={validation.name || "important helper text"}
-              error={!!validation.name}
-              disabled={!!this.props.busy}
-              value={formData.name}
-              onChange={e => {
-                setFormState({ name: e.target.value });
+          <FormView
+            classes={classes}
+            setFormState={setFormState}
+            formData={formData}
+            busy={this.props.busy}
+            validation={validation}
+          />
+          {/* Features */}
+          <div style={{ width: "100%" }}>
+            <ProductFeatures
+              features={formData.features}
+              onFeaturesChanged={features => {
+                setFormState({ features });
               }}
             />
-            <TextField
-              id="displayName"
-              className={classes.textField}
-              label="Display Name"
-              helperText={validation.displayName || "important helper text"}
-              error={!!validation.displayName}
-              disabled={!!this.props.busy}
-              value={formData.displayName}
-              onChange={e => {
-                setFormState({ displayName: e.target.value });
-              }}
-            />
-            <TextField
-              id="description"
-              className={classes.textFieldLarge}
-              label="Description"
-              helperText={validation.description || "important helper text"}
-              error={!!validation.description}
-              disabled={!!this.props.busy}
-              value={formData.description}
-              onChange={e => {
-                setFormState({ description: e.target.value });
-              }}
-            />
-
-            <TextField
-              id="notes"
-              type="text"
-              multiline={true}
-              rows={3}
-              className={classes.textFieldMultiline}
-              label="Notes"
-              helperText={
-                validation.notes || "NOTE: address lines should be honored"
-              }
-              error={!!validation.notes}
-              disabled={!!this.props.busy}
-              value={formData.notes}
-              onChange={e => setFormState({ notes: e.target.value })}
-            />
-            <div style={{ flex: "1 0" }} />
-            <FormControlLabel
-              className={classes.checkbox}
-              label="Enabled"
-              control={
-                <Checkbox
-                  checked={formData.enabled}
-                  onChange={e => {
-                    setFormState({ enabled: e.target.checked });
-                  }}
-                />
-              }
-            />
-            <div style={{ width: "100%" }}>
-              <ProductFeatures
-                features={formData.features}
-                onFeaturesChanged={features => {
-                  setFormState({ features });
-                }}
-              />
-            </div>
-          </form>
+          </div>
           {/* Actions  */}
           <div className={classes.actions}>
             <Button

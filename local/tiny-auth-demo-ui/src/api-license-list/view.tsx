@@ -1,14 +1,9 @@
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import * as React from "react";
 import { Component } from "react";
-import { connect } from "react-redux";
-import { createSelector } from "reselect";
-import api from "./list-api";
 import { CrudApiState } from "../crud-api";
 
-const selector = createSelector(api.selector, apiState => apiState);
-
-class View extends Component<CrudApiState> {
+export default class View extends Component<CrudApiState> {
   renderError = (error: string) => {
     return <span style={{ color: "red" }}>{error}</span>;
   };
@@ -45,11 +40,4 @@ class View extends Component<CrudApiState> {
     );
   }
 }
-const Connected = connect(
-  selector,
-  api.bindActions
-)(View);
-/**
- *
- */
-export default Connected;
+
