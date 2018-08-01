@@ -23,6 +23,7 @@ export interface ViewFormData extends AnyData {
   // updatedAt:  number,
   /** Product ID */
   product: string;
+  featureValues: {}
 }
 /** */
 const defaultState: ViewFormData = {
@@ -34,6 +35,7 @@ const defaultState: ViewFormData = {
   id: "",
   notes: "",
   product: "",
+  featureValues: {}
 };
 const formDataStore = createStore<ViewFormData>("licenses-add", defaultState);
 export default formDataStore;
