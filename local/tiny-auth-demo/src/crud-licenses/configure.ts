@@ -20,7 +20,7 @@ import validatePut from "./validate-put";
  * @param app
  */
 export default function configureCrud(app: Express) {
-  const { authorize, requireRole } = auth.middleware;  
+  const { authorize, requireRole } = auth.middleware;
   {
     // Licenses
     const crud = CrudController(licenses);
@@ -43,8 +43,17 @@ export default function configureCrud(app: Express) {
         try {
           const { features, ...body } = req.body;
           const token = lic.sign(lic.createLicRequest({}), features);
-          res.locals.body = Object.assign(body, { token });
+          res.locals.body = Object.assign(body, { token, features });
           next();
+        } catch (error) {
+          return next(error);
+        }
+      }) as RequestHandler,
+      ((req, res, next) => {
+        // include user
+        try {
+          res.locals.body.userid = req.user.id
+          return next();
         } catch (error) {
           return next(error);
         }

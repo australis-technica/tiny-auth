@@ -13,8 +13,14 @@ create table [${TABLE_NAME}] (
     notes VARCHAR(MAX) NOT NULL,
     /* Product ID */
     product VARCHAR(1024) NOT NULL,
+    /* token shoud reflect other fields, if other field modified token should be  recreated*/
     token VARCHAR(MAX) NOT NULL, 
+    /* TODO: compat field: this table shoudld be read only ? */
     updatedAt DATETIME NOT NULL default GETDATE(),
+    /* last modified by */
+    [userid] VARCHAR(1024) NOT NULL,
+    /* JSON: {} */
+    features VARCHAR(MAX) NOT NULL
 );
 `);
 export default table;

@@ -15,6 +15,7 @@ create table [${TABLE_NAME}] (
     notes VARCHAR(MAX) NOT NULL DEFAULT '', 
     updatedAt DATETIME NOT NULL default GETDATE(),
     createdAt DATETIME NOT NULL default GETDATE(),
+    [userid] VARCHAR(1024) NOT NULL
 );
 `);
 export default table;

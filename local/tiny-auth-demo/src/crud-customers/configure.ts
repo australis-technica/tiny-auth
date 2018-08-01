@@ -1,4 +1,4 @@
-import { Express } from "express-serve-static-core";
+import { Express , RequestHandler } from "express-serve-static-core";
 import {
     CrudController,
     ensureID,
@@ -31,6 +31,15 @@ export default function configureCrud(app: Express) {
             ensureBody<Customer, keyof Customer>(["contact", "displayName", "email", "enabled", "name", "notes", "phone", "address"]),
             ensureID(uuid),
             validate(validatePut),
+            ((req, _res, next) => {
+                // include user
+                try {
+                  req.body.userid = req.user.id
+                  return next();
+                } catch (error) {
+                  return next(error);
+                }
+              }) as RequestHandler,
             crud.put()
         ]);
         app.post(route, [

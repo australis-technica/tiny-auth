@@ -13,6 +13,7 @@ create table [${TABLE_NAME}] (
     notes varchar(max) NOT NULL default '',
     updatedAt DATETIME NOT NULL default GETDATE(),
     createdAt DATETIME NOT NULL default GETDATE(),
+    [userid] VARCHAR(1024) NOT NULL
 );
 `);
 export default table;
