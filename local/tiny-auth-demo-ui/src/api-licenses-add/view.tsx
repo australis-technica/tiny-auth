@@ -2,20 +2,17 @@ import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListIte
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
+import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview, FormDataActions } from "../form-data";
 import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { ViewFormData } from "./form-store";
+import FormView from "./form-view";
+import propsToRequest from "./props-to-request";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
-import { delay } from "./util";
-import FormView from "./form-view";
-import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
-
-const log =
-  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 /**
  * export for external parameters
  */
@@ -33,10 +30,12 @@ export type ViewActions = StoreActions &
   MenuActions & {
   setBusy(busy: boolean): any;
 };
-type ViewProps = ViewState & { formData: ViewFormData } & ViewActions & {
+interface ApiContext {
   api: CrudApiActions;
   apiState: CrudApiState;
-} & {
+}
+interface FormState { formData: ViewFormData };
+export type ViewProps = ViewState & FormState & ViewActions & ApiContext & {
   classes: ClassNameMap;
 };
 /** */
@@ -46,39 +45,15 @@ class View extends Component<ViewProps> {
   }
   /** */
   save = async () => {
-    const { setBusy, setError, api, formData, validationEmpty } = this.props;
+    const { setBusy, setError, api, validationEmpty } = this.props;
     try {
       if (!validationEmpty) {
         setError("Can't Save");
         return;
       }
       setBusy(true);
-      await delay(1500);
-      const {
-        customer,
-        description,
-        displayName,
-        enabled,
-        name,
-        notes,
-        product
-      } = formData;
-      const features = JSON.stringify(this.props.featureValues);
-      const body = {
-        customer,
-        description,
-        displayName,
-        enabled,
-        features,
-        name,
-        notes,
-        product
-      };
-      const r = await api.fetch({
-        method: "PUT",
-        body
-      });
-      log(r);
+      const request = propsToRequest(this.props);
+      await api.fetch(request);
     } catch (error) {
       setError(error);
     } finally {
