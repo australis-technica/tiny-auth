@@ -1,8 +1,9 @@
 export interface License {
     id: string;    
+    customer: string;    
     displayName: string;
     enabled: boolean,
-    customer: string;    
+    features: string;
     product: string;
     token: string;
     createdAt: number;

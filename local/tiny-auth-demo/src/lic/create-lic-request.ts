@@ -1,22 +1,27 @@
 import crypto from "crypto";
-import os from "os";
 import { LicRequest } from "./types";
 import secret from "./secret";
+import issuer from "./issuer"
+/**
+ * @description in seconds
+ */
+const ONE_DAY = 60 * 60 * 24;
 /**
  * 
  */
-export default function createLicRequest(override: Partial<LicRequest>): LicRequest {
-    const hostname = os.hostname();
+export default function createLicRequest(payload: Partial<LicRequest>): LicRequest {
+    const hostname = issuer();
     const port = process.env.PORT;
+    const { timeToExpire, aud, validator, token_id, ...extra } = payload;
     return Object.assign({}, {
         /**
          * Seconds to Expire, from now
          */
-        timeToExpire: 60,
+        timeToExpire: timeToExpire || ONE_DAY,
         /**
          * internal identifier
          */
-        token_id: crypto.randomBytes(8).toString("hex"),
+        token_id: token_id|| crypto.randomBytes(8).toString("hex"),
         /**
          * Issuer
          */
@@ -24,11 +29,11 @@ export default function createLicRequest(override: Partial<LicRequest>): LicRequ
         /**
          * internal.name.or.namespace.name.or.fully.qualified.client.app.name?
          */
-        aud: "*",
+        aud: aud || "*",
         /**
          * validator: "http://localhost:5000/validate"
          */
-        validator: `https://${hostname}:${port}/validate`,
+        validator: validator || `https://${hostname}:${port}/validate`,
         /**
          * secret: enc-key 
          */
@@ -66,5 +71,5 @@ export default function createLicRequest(override: Partial<LicRequest>): LicRequ
          * 
          */
         // evolution_agents: ["admin", "bob", "tom", "etc"],
-    }, override);
+    }, extra);
 }

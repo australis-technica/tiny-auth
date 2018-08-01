@@ -6,6 +6,7 @@ import auth from "./auth";
 import { Express } from "express-serve-static-core";
 import configureCrud from "./configure-crud";
 import fingerPrint from "@australis/tiny-auth-express-fingerprint";
+import { controller as lic } from "./lic";
 const debug = Debug(__filename);
 const isDev = process.env.NODE_ENV !== "production";
 /**
@@ -31,6 +32,7 @@ export default function configure(app: Express) {
             app.get("/auth/refresh", authorize, auth.controllers.refresh)
             app.get("/auth/profile", authorize, auth.controllers.getProfile);
             app.post("/auth/change-password", authorize, requireRole(['admin']), auth.controllers.changePassword);
+            app.get("/api/v1/validate", lic());
             configureCrud(app);
             // Errors
             app.use(errorHandler);
