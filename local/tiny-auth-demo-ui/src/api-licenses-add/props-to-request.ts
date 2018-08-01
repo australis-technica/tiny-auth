@@ -13,7 +13,7 @@ export default function propsToRequest(props: ViewProps): CrudApiRequest {
         notes,
         product
     } = formData;
-    const features = JSON.stringify(featureValues);
+    const features = featureValues; // JSON.stringify(featureValues);
     const body = {
         customer,
         description,

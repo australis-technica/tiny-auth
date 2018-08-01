@@ -27,11 +27,12 @@ export default  async function (req: Request) {
           validation.push("existing customer required");
         }
       }
-      // ... Validate existing , decoding payload
-      {
-        // ... Validate existing , decoding payload
-        // Make it slow .....
+      if(!req.body.features){
+        validation.push("features:object required");
       }
+      if(typeof req.body.features !== "object") {
+          validation.push("bad feature type: JSON object required");
+      }     
       return validation;
     } catch (error) {
       return [error.message];
