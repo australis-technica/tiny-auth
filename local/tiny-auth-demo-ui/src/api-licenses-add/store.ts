@@ -16,7 +16,7 @@ export interface ViewState {
   validationEmpty: boolean;
   //  
   viewTitle: string;
-  featureValues: {};
+  //featureValues: {};
   previewRequest: boolean;
 }
 
@@ -33,7 +33,7 @@ const defaultState: ViewState = {
   validation: {},
   validationEmpty: true,
   viewTitle: "Add License",
-  featureValues: {},
+  // featureValues: {},
   previewRequest: false
 };
 /**

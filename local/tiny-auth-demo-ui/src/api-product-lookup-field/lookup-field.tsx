@@ -120,7 +120,7 @@ export default class LookupField extends Component<LookupFieldsProps, LookupFiel
     }
     /** */
     render() {
-        const { id, label, className, validation, apiState, helperText, } = this.props;
+        const { id, label, className, validation, apiState, helperText, value } = this.props;
         const { displayName, isDialogOpen, filterText, filtering } = this.state;
         const { data } = apiState;
         const items = (data || []).filter(this.filter(new RegExp(filterText), ["id"]));
@@ -166,7 +166,9 @@ export default class LookupField extends Component<LookupFieldsProps, LookupFiel
                             return (
                                 <MenuItem
                                     onClick={this.handle(() => {
-                                        this.props.onSelectionChanged(item);
+                                        if (id !== value) {
+                                            this.props.onSelectionChanged(item);
+                                        }
                                     })}
                                     key={`lookup_item_${index}`}
                                     value={id}>

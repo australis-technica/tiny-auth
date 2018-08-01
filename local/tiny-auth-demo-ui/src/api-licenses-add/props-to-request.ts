@@ -3,7 +3,7 @@ import { ViewProps } from "./view";
 import { CrudApiRequest } from "../crud-api";
 /** */
 export default function propsToRequest(props: ViewProps): CrudApiRequest {
-    const { formData, featureValues } = props;
+    const { formData,  } = props;
     const {
         customer,
         description,
@@ -11,7 +11,8 @@ export default function propsToRequest(props: ViewProps): CrudApiRequest {
         enabled,
         name,
         notes,
-        product
+        product,
+        featureValues
     } = formData;
     const features = featureValues; // JSON.stringify(featureValues);
     const body = {

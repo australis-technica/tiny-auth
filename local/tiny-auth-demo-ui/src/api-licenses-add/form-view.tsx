@@ -6,6 +6,7 @@ import { FormDataValidationResult } from "./validation";
 import { ViewFormData } from "./form-store";
 import { Connected as CustomerLookupField } from "../api-customer-lookup-field";
 import { Connected as ProductLookupField } from "../api-product-lookup-field";
+import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
 
 export interface FormParams {
     validation: FormDataValidationResult;
@@ -54,7 +55,7 @@ export default class FormView extends Component<FormViewProps & { classes: Class
                 disabled={!!this.props.busy}
                 value={formData.product}
                 onSelectionChanged={e => {
-                    setFormState({ product: e && e.id, features: e && e.features });
+                    setFormState({ product: e && e.id, features: e && e.features, featureValues: {} });
                 }}
             />
             <TextField
@@ -109,7 +110,20 @@ export default class FormView extends Component<FormViewProps & { classes: Class
                         }}
                     />
                 }
-            />           
+            />
+            {/* Features */}
+            <div style={{ width: "100%" }}>
+                <LicenseFeatures
+                    features={formData.features}
+                    featureValues={formData.featureValues}
+                    setFeatureValue={(featureValues) => setFormState({ featureValues })}
+                    onFeatureChanged={(key, value) => {
+                        const _update = Object.assign({}, formData.featureValues, { [key]: value });
+                        setFormState({
+                            featureValues: _update
+                        });
+                    }} />
+            </div>
         </form >
     }
 }

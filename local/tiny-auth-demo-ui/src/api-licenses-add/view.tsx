@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListIte
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
-import { LicenseFeatures as LicenseFeatures } from "../api-license-features";
+
 import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview, FormDataActions } from "../form-data";
@@ -71,7 +71,7 @@ class View extends Component<ViewProps> {
     const { features, ...view } = formData;
     return <CheapPreview data={{
       ...view,
-      features: this.props.featureValues
+      // features: this.props.featureValues
     }} />;
   };
 
@@ -178,19 +178,7 @@ class View extends Component<ViewProps> {
           </Toolbar>
           {/* Form */}
           <FormView formData={formData} setFormState={setFormState} classes={classes} validation={validation} busy={this.props.busy} />
-          {/* Features */}
-          <div style={{ width: "100%" }}>
-            <LicenseFeatures
-              features={this.props.formData.features}
-              featureValues={this.props.featureValues}
-              setFeatureValue={(featureValues) => this.props.setState({ featureValues })}
-              onFeatureChanged={(key, value) => {
-                const _update = Object.assign({}, this.props.featureValues, { [key]: value });
-                this.props.setState({
-                  featureValues: _update
-                });
-              }} />
-          </div>
+          
           {/* Actions  */}
           <div className={classes.actions}>
             <Button
