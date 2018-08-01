@@ -7,14 +7,14 @@ create table [${TABLE_NAME}] (
     address VARCHAR(1024) NOT NULL,
     [description] VARCHAR(512) NOT NULL,
     contact VARCHAR(256) NOT NULL DEFAULT '',
+    createdAt DATETIME NOT NULL default GETDATE(),
     displayName VARCHAR(256) NOT NULL,
     email VARCHAR(256) NOT NULL,
     [enabled] BIT NOT NULL default 1,
     [name] VARCHAR(1024) NOT NULL,
-    phone VARCHAR(256) NOT NULL DEFAULT '',
     notes VARCHAR(MAX) NOT NULL DEFAULT '', 
+    phone VARCHAR(256) NOT NULL DEFAULT '',
     updatedAt DATETIME NOT NULL default GETDATE(),
-    createdAt DATETIME NOT NULL default GETDATE(),
     [userid] VARCHAR(1024) NOT NULL
 );
 `);

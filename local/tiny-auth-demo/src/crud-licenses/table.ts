@@ -9,6 +9,8 @@ create table [${TABLE_NAME}] (
     displayName VARCHAR(256) NOT NULL,
     [description] VARCHAR(512) NOT NULL,
     [enabled] BIT NOT NULL default 1,
+    /* JSON: {} */
+    features VARCHAR(MAX) NOT NULL,
     id VARCHAR(1024) NOT NULL UNIQUE default NEWID(),
     notes VARCHAR(MAX) NOT NULL,
     /* Product ID */
@@ -18,9 +20,7 @@ create table [${TABLE_NAME}] (
     /* TODO: compat field: this table shoudld be read only ? */
     updatedAt DATETIME NOT NULL default GETDATE(),
     /* last modified by */
-    [userid] VARCHAR(1024) NOT NULL,
-    /* JSON: {} */
-    features VARCHAR(MAX) NOT NULL
+    [userid] VARCHAR(1024) NOT NULL
 );
 `);
 export default table;
