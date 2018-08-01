@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles, DialogTitle } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
@@ -60,7 +60,13 @@ class View extends Component<ViewProps> {
       setBusy(false);
     }
   };
-  saveActionMessage = () => {
+  requestPreviewShow = () => {
+    this.props.setState({ previewRequest: true });
+  }
+  requestPreviewClose = () => {
+    this.props.setState({ previewRequest: false });
+  }
+  requestPreview = () => {
     const { formData } = this.props;
     const { features, ...view } = formData;
     return <CheapPreview data={{
@@ -134,7 +140,7 @@ class View extends Component<ViewProps> {
       handleActionToConfirm,
       handleMenuAction,
       setWarning,
-      setConfirmAction
+      setConfirmAction,
     } = this.props;
     let { validation } = this.props;
     validation = validation || {};
@@ -160,7 +166,12 @@ class View extends Component<ViewProps> {
                 <MenuItem
                   onClick={handleMenuAction(setConfirmAction("reset-form"))}
                 >
-                  <ListItemText children="Reset/Clear Form" />
+                  <ListItemText primary="Reset/Clear Form" />
+                </MenuItem>
+                <MenuItem
+                  onClick={handleMenuAction(this.requestPreviewShow)}
+                >
+                  <ListItemText primary="Preview Request" />
                 </MenuItem>
               </Menu>
             </Fragment>
@@ -200,12 +211,21 @@ class View extends Component<ViewProps> {
             </Button>
           </div>
         </Paper>
+        <Dialog open={this.props.previewRequest} onClose={this.requestPreviewClose}>
+          <DialogTitle title="Preview" />
+          <DialogContent >
+            {this.requestPreview()}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.requestPreviewClose} variant="raised">Close</Button>
+          </DialogActions>
+        </Dialog>
         <ConfirmAction
           classes={classes}
           isOpen={this.props.confirmAction === "save"}
           actionTitle={"Submit Data?"}
           actionMessage={
-            this.props.confirmAction === "save" && this.saveActionMessage()
+            this.props.confirmAction === "save" && this.requestPreview()
           }
           acceptAction={handleActionToConfirm(this.save, () =>
             setWarning("Save Action Cancelled")

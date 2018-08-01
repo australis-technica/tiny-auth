@@ -17,6 +17,7 @@ export interface ViewState {
   //  
   viewTitle: string;
   featureValues: {};
+  previewRequest: boolean;
 }
 
 export interface StoreActions {
@@ -33,6 +34,7 @@ const defaultState: ViewState = {
   validationEmpty: true,
   viewTitle: "Add License",
   featureValues: {},
+  previewRequest: false
 };
 /**
  *
@@ -47,6 +49,7 @@ const storeAdapter = viewStore<ViewState>("products-add", defaultState, {
           confirmAction,
           validation, // ...
           validationEmpty,
+          previewRequest,
           ...value
         } = state;
         return value;
@@ -58,6 +61,7 @@ const storeAdapter = viewStore<ViewState>("products-add", defaultState, {
           confirmAction,
           validation, // ...
           validationEmpty,
+          previewRequest,
           ...value
         } = state;
         return value;

@@ -36,7 +36,7 @@ export default class FormView extends Component<FormViewProps & { classes: Class
                 id="customer"
                 className={classes.textField}
                 label="Customer"
-                helperText={validation.customer || "important helper text"}
+                helperText={validation.customer}
                 validation={validation.customer}
                 disabled={!!busy}
                 value={formData.customer}
