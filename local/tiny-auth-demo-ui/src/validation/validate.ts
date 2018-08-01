@@ -56,7 +56,7 @@ export default function validation<T>(
     const applyRule = async (
       key: KeyOf<T>,
       value: any,
-      rule: ValidationRule<T>
+      rule: ValidationRule<T>|undefined
     ) => {
       if (!rule) return { key, message: undefined };
       const { test } = rule;

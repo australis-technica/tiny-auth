@@ -1,7 +1,7 @@
 
 export type KeyOf<T> = keyof T & string;
 
-export type ValidationResultMap<TState> = { [k in KeyOf<TState>]: string | undefined };
+export type ValidationResultMap<TState> = Partial<{ [k in KeyOf<TState>]: string | undefined }>;
 
 export type ValidationFunc<TState> = (data: TState, key: KeyOf<TState>) => boolean | Promise<boolean>;
 
@@ -29,7 +29,7 @@ export type ValidationRule<T> = {
 
 export type SetResulCallback<T> = (key: KeyOf<T>, value?: string) => any;
 
-export type ValidationRuleMap<T> = { [key in KeyOf<T>]: ValidationRule<T> };
+export type ValidationRuleMap<T> = Partial<{ [key in KeyOf<T>]: ValidationRule<T> }>;
 
 export type ValidationMessage =
   | { [key: string]: string }

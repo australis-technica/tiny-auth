@@ -9,7 +9,6 @@ export default function propsToRequest(props: ViewProps): CrudApiRequest {
         description,
         displayName,
         enabled,
-        name,
         notes,
         product,
         featureValues

@@ -1,9 +1,9 @@
 /**
  *
  */
-import createStore, { AnyData } from "../form-data";
+import createStore from "../form-data";
 /** */
-export interface ViewFormData extends AnyData {
+export interface ViewFormData  {
   /** Customer ID */
   customer: string; // 1024
   /**TODO: currently a string*/
