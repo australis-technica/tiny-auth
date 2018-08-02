@@ -1,4 +1,2 @@
-export { default as createREquest } from "./create-request";
-export { default as sign } from "./sign";
-export { default as signHandler } from "./sign-handler";
-export { default as validate } from "./validate";
+export { default as signMiddleware } from "./sign-middleware";
+export { default as validateHandler } from "./validate";

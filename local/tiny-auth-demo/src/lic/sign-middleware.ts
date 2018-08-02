@@ -1,26 +1,23 @@
 import { RequestHandler } from "express-serve-static-core";
 import sign from "./sign";
 import createRequest from "./create-request";
-// import { MIN_TIME_TO_EXPIRE } from "./constants";
+/** */
 export interface Options {
     // TODO:
 }
-const defaultOptions: Options = {};
+const defaultOptions: Options = {
+    // TODO:
+};
 /**
- * 
+ * Middleware
  */
-export default (options: Options = {}) => {
+export default function createMiddleware(options: Options = {}) {
     options = { ...defaultOptions, ...options }
     return ((req, _res, next) => {
-        // re shape body
+        // re-shape body
         try {
             const { features, exp, ...body } = req.body;
-            // in seconds to expire
-            // const timeToExpire = (new Date(exp as number).getTime() - Date.now()) / 1000;
-            // console.log("timeToExpire: %s", timeToExpire);
-            // if (timeToExpire < MIN_TIME_TO_EXPIRE) {
-            //     return next(new Error("timeToExpire: too short"))
-            // }
+            // exp = number
             const token = sign(createRequest({ token_id: body.id, exp }), features);
             req.body = {
                 ...body,

@@ -6,7 +6,7 @@ import auth from "./auth";
 import { Express } from "express-serve-static-core";
 import configureCrud from "./configure-crud";
 import fingerPrint from "@australis/tiny-auth-express-fingerprint";
-import { validate as validateLicense } from "./lic";
+import { validateHandler as validateLicense } from "./lic";
 const debug = Debug(__filename);
 const isDev = process.env.NODE_ENV !== "production";
 /**

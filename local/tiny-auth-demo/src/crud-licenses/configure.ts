@@ -2,9 +2,9 @@ import { json } from "body-parser";
 import { Express, RequestHandler } from "express-serve-static-core";
 import uuid from "uuid";
 import auth from "../auth";
-import { CrudController, ensureBody, ensureID, excludeKeys, fromLocals, validate } from "../crud-controller";
+import { CrudController, ensureBody, ensureID, excludeKeys, validate } from "../crud-controller";
 import RejectKeys from "../crud-controller/reject-keys";
-import { signHandler } from "../lic";
+import { signMiddleware } from "../lic";
 import licenses from "./repo";
 import validatePut from "./validate-put";
 /**
@@ -30,7 +30,7 @@ export default function configureCrud(app: Express) {
       ensureBody(),
       ensureID(uuid),
       validate(validatePut),
-      signHandler(/* {}: Options */),
+      signMiddleware(/* {}: Options */),
       ((req, _res, next) => {
         // include user
         try {
