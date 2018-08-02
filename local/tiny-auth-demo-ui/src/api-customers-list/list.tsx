@@ -8,7 +8,7 @@ import { CrudApiState } from "../crud-api";
 
 const selector = createSelector(adapter.selector, apiState => apiState);
 
-class View extends Component<CrudApiState> {
+class View extends Component<CrudApiState<{}[]>> {
   renderError = (error: string) => {
     return <span style={{ color: "red" }}>{error}</span>;
   };
@@ -16,7 +16,7 @@ class View extends Component<CrudApiState> {
     return <span style={{ color: "blue" }}>Busy</span>;
   };
   rendeItems(items: any[]) {
-    return items.map((value, index, array) => {});
+    return items.map((value, index, array) => { });
   }
   toFields = (item: {}) => {
     return Object.keys(item)
@@ -31,7 +31,7 @@ class View extends Component<CrudApiState> {
     if (busy) return this.renderBusy();
     if (error) return this.renderError(error);
     if (!data) return null;
-    if(!Array.isArray(data)) {
+    if (!Array.isArray(data)) {
       return this.renderError("Wrong Data type");
     }
     return (

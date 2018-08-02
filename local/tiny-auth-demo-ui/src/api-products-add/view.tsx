@@ -32,7 +32,7 @@ export type ViewActions = StoreActions &
   };
 export interface ApiContext {
   api: CrudApiActions;
-  apiState: CrudApiState;
+  apiState: CrudApiState<any>;
 }
 export type ViewProps = ViewState & { formData: ViewFormData } & ViewActions &
   ApiContext & {

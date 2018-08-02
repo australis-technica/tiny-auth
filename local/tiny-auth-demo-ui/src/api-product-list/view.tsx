@@ -4,7 +4,7 @@ import { Component } from "react";
 
 import { CrudApiState } from "../crud-api";
 
-export default class View extends Component<CrudApiState> {
+export default class View extends Component<CrudApiState<any>> {
   renderError = (error: string) => {
     return <span style={{ color: "red" }}>{error}</span>;
   };

@@ -11,6 +11,7 @@ import { routerReducer, routerMiddleware } from "react-router-redux";
 import reducers from "./reducers";
 import views from "./views";
 import middleware from "./middleware";
+import apis from "./apis";
 /** */
 const promiseMiddleware = require("redux-promise").default as Middleware;
 
@@ -34,7 +35,8 @@ export const store = createStore(
   combineReducers({
     router: routerReducer,
     ...reducers,
-    ...views
+    ...views,
+    ...apis
   }),
   composeEnhancers(applyMiddleware(
     thunk.withExtraArgument(actionContext),

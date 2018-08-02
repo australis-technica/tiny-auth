@@ -1,8 +1,8 @@
 /** */
-export type CrudApiState = { [key: string]: any } & {
+export type CrudApiState<T> = { [key: string]: any } & {
   busy: boolean;
   error: string | undefined;
-  data?: any;
+  data: T;
 };
 /** */
 export type CrudAPiVerb = "GET" | "PUT" | "POST" | "DEL";

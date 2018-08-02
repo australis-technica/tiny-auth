@@ -8,7 +8,7 @@ export interface ApiItem {
     features: string;
 };
 
-export type ApiState = CrudApiState & {
+export type ApiState = CrudApiState<ApiItem[]> & {
     data: ApiItem[]
 }
 

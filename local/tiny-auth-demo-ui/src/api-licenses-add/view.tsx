@@ -43,11 +43,11 @@ export type ViewActions = StoreActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
-    setBusy(busy: boolean): any;
-  };
+  setBusy(busy: boolean): any;
+};
 interface ApiContext {
   api: CrudApiActions;
-  apiState: CrudApiState;
+  apiState: CrudApiState<any>;
 }
 interface FormState {
   formData: ViewFormData;
@@ -56,8 +56,8 @@ export type ViewProps = ViewState &
   FormState &
   ViewActions &
   ApiContext & {
-    classes: ClassNameMap;
-  };
+  classes: ClassNameMap;
+};
 /** */
 class View extends Component<ViewProps> {
   componentDidMount() {
@@ -88,7 +88,7 @@ class View extends Component<ViewProps> {
   };
   requestPreview = () => {
     const { body } = propsToRequest(this.props);
-    return <CheapPreview data={body||{}} />;
+    return <CheapPreview data={body || {}} />;
   };
 
   resetFormActionMessage = () => {

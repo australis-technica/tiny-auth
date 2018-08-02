@@ -6,9 +6,9 @@ import defaultOptions from "./default-options";
  *
  * @param endpoint
  */
-export default function (
+export default function <T>(
   endpoint: string,
-  defaultState: CrudApiState,
+  defaultState: CrudApiState<T>,
   options: Partial<CrudApiOptions> = defaultOptions
 ): Reducer {
   const { CLEAR_ERROR, CLEAR_RESULT, CLEAR_SUCCESS, FETCH, SET_BUSY, SET_ERROR, SET_RESULT } = actionTypes(endpoint);
@@ -17,7 +17,7 @@ export default function (
   /**
    *
    */
-  return (state: CrudApiState = defaultState, action: AnyAction) => {
+  return (state: CrudApiState<T> = defaultState, action: AnyAction) => {
     switch (action.type) {
       case SET_BUSY: {
         const { payload } = action;

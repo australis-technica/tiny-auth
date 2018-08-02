@@ -1,31 +1,27 @@
+import { store as customersView } from "../api-customers";
+import { formStore as customresAddForm, store as customersAddView } from "../api-customers-add";
+import { store as licenseView } from "../api-licenses";
+import { formStore as licenseAddFormView, store as licenseAddView } from "../api-licenses-add";
+import { store as productsView } from "../api-products";
+import { formStore as apiProductsAddForm, store as apiProductsAdd } from "../api-products-add";
 import { adapter as rootAdapter } from "../app";
-import { store as customersViewState } from "../api-customers";
-import { store } from "../api-products";
-import * as api_lic_add from "../api-licenses-add";
 import { adapter as home } from "../home";
-import {
-  store as apiProductsAdd,
-  formStore as apiProductsAddForm
-} from "../api-products-add";
-import {
-  store as apiCustomersAddStore,
-  formStore as apiCustomersAddFormStore
-} from "../api-customers-add";
 /**
  *
  */
 export default {
   [rootAdapter.storeKey]: rootAdapter.reducer,
   [home.storeKey]: home.reducer,
-  [customersViewState.storeKey]: customersViewState.reducer,
-  [apiCustomersAddStore.storeKey]: apiCustomersAddStore.reducer,
-  // [store.storeKey]: store.reducer,
-  [store.storeKey]: store.reducer,
-  [apiCustomersAddFormStore.storeKey]: apiCustomersAddFormStore.reducer,
+  [customersView.storeKey]: customersView.reducer,
+  [customersAddView.storeKey]: customersAddView.reducer,
+  [customresAddForm.storeKey]: customresAddForm.reducer,
+  // ...
+  [productsView.storeKey]: productsView.reducer,
   // ...
   [apiProductsAdd.storeKey]: apiProductsAdd.reducer,
   [apiProductsAddForm.storeKey]: apiProductsAddForm.reducer,
   // ...
-  [api_lic_add.store.storeKey]: api_lic_add.store.reducer,
-  [api_lic_add.formStore.storeKey]: api_lic_add.formStore.reducer
+  [licenseAddView.storeKey]: licenseAddView.reducer,
+  [licenseAddFormView.storeKey]: licenseAddFormView.reducer,
+  [licenseView.storeKey]: licenseView.reducer
 };

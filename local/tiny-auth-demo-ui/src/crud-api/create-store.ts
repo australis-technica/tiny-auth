@@ -8,9 +8,9 @@ import resolveEndPoint from "./resolve-endpoint";
  *
  * @param storeKey @description api endpoitn and store key suffix
  */
-export default function createStore(
+export default function createStore<T>(
   sufix: string,
-  defaultState: CrudApiState,
+  defaultState: CrudApiState<T>,
   options?: Partial<CrudApiOptions>
 ) {
   const prefix = options && options.prefix ? options.prefix : "crud-api";
@@ -24,6 +24,9 @@ export default function createStore(
     middleware: middleware(storeKey, endPoint),
     reducer: reducer(storeKey, defaultState, options),
     actions: _actions,
-    selector: (state: {}) => state[storeKey]
+    selector: (state: {}) => {
+      const _state = state[storeKey]
+      return _state;
+    }
   };
 }
