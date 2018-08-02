@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import api from "./api";
-import ListView, { ListViewParams } from "./view";
+import ListView, { ListViewParams } from "./list-view";
 import { ComponentType } from "react";
 import { Dispatch } from "redux";
 /** */

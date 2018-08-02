@@ -1,5 +1,4 @@
 import crudApi, { CrudApiState, CrudApiActions } from "../crud-api";
-import { ApiItem } from "../api-customer-lookup-field/api";
 /** */
 export type ApiItem = {
   /** @description license ID */
