@@ -7,6 +7,7 @@ import { ViewFormData } from "./form-store";
 import { Connected as CustomerLookupField } from "../api-customer-lookup-field";
 import { Connected as ProductLookupField } from "../api-product-lookup-field";
 import { LicenseFeatures } from "../api-license-features";
+import { DateField } from "../date-field";
 
 export interface FormParams {
   validation: FormDataValidationResult;
@@ -27,7 +28,7 @@ export type FormViewProps = FormParams & FormState & FormActions;
  */
 export default class FormView extends Component<
   FormViewProps & { classes: ClassNameMap }
-> {
+  > {
   /**
    *
    */
@@ -89,35 +90,16 @@ export default class FormView extends Component<
             setFormState({ description: e.target.value });
           }}
         />
-        <TextField
+        <DateField
           className={classes.textFieldDate}
-          type="date"
           label="Expiration"
-          value={((exp: number) => {
-            const date = new Date(exp);
-            const mm = date.getMonth();
-            const dd = date.getDate();
-            const s = `${date.getFullYear()}-${mm < 10 ? `0${mm}` : mm}-${
-              dd < 10 ? `0${dd}` : dd
-            }`;
-            console.log("exp: %s", s);
-            return s;
-          })(formData.exp)}
-          onChange={e => {
-            const parts = e.target.value.split("-");
-            const date = new Date(
-              Number(parts[0]),
-              Number(parts[1]),
-              Number(parts[2])
-            );
-            console.log(date);
-            setFormState({ exp: date.valueOf() });
-          }}
+          dateValue={formData.exp}
+          onDateChange={date =>setFormState({ exp: date.valueOf() })}
           InputLabelProps={{
             shrink: true
           }}
         />
-        
+
         <FormControlLabel
           className={classes.textFieldCheckbox}
           label="Enabled"
