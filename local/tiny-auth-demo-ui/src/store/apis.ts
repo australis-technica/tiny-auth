@@ -6,6 +6,7 @@ import { api as apiLicenseList } from "../api-license-list";
 import { api as productsListApi } from "../api-product-list";
 import { api as apiProductLookupField } from "../api-product-lookup-field";
 import { api as apiProductsAdd } from "../api-products-add";
+import { api as apiLicDeliver } from "../api-license-deliver";
 
 export default {
     // ...
@@ -18,5 +19,6 @@ export default {
     [apiProductLookupField.storeKey]: apiProductLookupField.reducer,
     // ...
     [apiLicenseAdd.storeKey]: apiLicenseAdd.reducer,
-    [apiLicenseList.storeKey]: apiLicenseList.reducer
+    [apiLicenseList.storeKey]: apiLicenseList.reducer,
+    [apiLicDeliver.storeKey]: apiLicDeliver.reducer
 };
