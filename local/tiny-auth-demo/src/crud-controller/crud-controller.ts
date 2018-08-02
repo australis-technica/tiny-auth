@@ -31,6 +31,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     clean = noClean
   ) => async (req, res, next) => {
     try {
+      clean = clean || noClean;
       const { id } = req.params;
       const data = await table.remove(id);
       return res.json(clean(data));
@@ -50,6 +51,8 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     next
   ) => {
     try {
+      payload = payload || fromBody;
+      clean = clean || noClean;
       const data = await table.add(payload(req, res));
       return res.json(clean(data));
     } catch (error) {
@@ -68,6 +71,8 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     next
   ) => {
     try {
+      payload = payload || fromBody;
+      clean = clean || noClean;
       const data = await table.update(payload(req, res));
       return res.json(clean(data));
     } catch (error) {

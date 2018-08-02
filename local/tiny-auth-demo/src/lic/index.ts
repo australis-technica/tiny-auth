@@ -1,4 +1,4 @@
-export { default as createLicRequest } from "./create-lic-request";
-export { default as add } from "./add";
+export { default as createREquest } from "./create-request";
 export { default as sign } from "./sign";
-export { default as controller } from "./controller";
+export { default as signHandler } from "./sign-handler";
+export { default as validate } from "./validate";

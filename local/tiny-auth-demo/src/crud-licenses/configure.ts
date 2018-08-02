@@ -1,19 +1,11 @@
-import { Express, RequestHandler } from "express-serve-static-core";
-import {
-  CrudController,
-  ensureID,
-  validate,
-  ensureBody,
-  fromLocals,
-  excludeKeys
-} from "../crud-controller";
-
-import licenses from "./repo";
-import auth from "../auth";
-import uuid from "uuid";
 import { json } from "body-parser";
-import * as lic from "../lic";
+import { Express, RequestHandler } from "express-serve-static-core";
+import uuid from "uuid";
+import auth from "../auth";
+import { CrudController, ensureBody, ensureID, excludeKeys, fromLocals, validate } from "../crud-controller";
 import RejectKeys from "../crud-controller/reject-keys";
+import { signHandler } from "../lic";
+import licenses from "./repo";
 import validatePut from "./validate-put";
 /**
  *
@@ -38,30 +30,18 @@ export default function configureCrud(app: Express) {
       ensureBody(),
       ensureID(uuid),
       validate(validatePut),
-      ((req, res, next) => {
-        // re shape body
-        try {
-          const { features, exp, ...body } = req.body;
-          // inseconds           
-          const timeToExpire = new Date(exp as number).getTime() / 1000;
-          const token = lic.sign(lic.createLicRequest({ token_id: body.id, timeToExpire }), features);
-          res.locals.body = Object.assign(body, { token, features: JSON.stringify(features), exp });
-          next();
-        } catch (error) {
-          return next(error);
-        }
-      }) as RequestHandler,
-      ((req, res, next) => {
+      signHandler(/* {}: Options */),
+      ((req, _res, next) => {
         // include user
         try {
-          res.locals.body.userid = req.user.id
+          req.body.userid = req.user.id
           return next();
         } catch (error) {
           return next(error);
         }
       }) as RequestHandler,
       // send to crud
-      crud.put(fromLocals, excludeKeys("token"))
+      crud.put(null, excludeKeys("token"))
     ]);
     /**
      * Modify Update

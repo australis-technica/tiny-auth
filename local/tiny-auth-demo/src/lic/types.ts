@@ -1,8 +1,8 @@
-export interface LicRequest {
+export interface SignRequest {
     /**
      * Seconds to Expire, from now
-     */
-    timeToExpire: number,
+     */    
+    expiresIn: number,
     /**
      * internal identifier
      */
