@@ -1,4 +1,19 @@
-import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListItemText, Menu, MenuItem, Paper, Toolbar, Typography, withStyles, DialogTitle } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Icon,
+  IconButton,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Paper,
+  Toolbar,
+  Typography,
+  withStyles,
+  DialogTitle
+} from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
@@ -28,16 +43,21 @@ export type ViewActions = StoreActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
-  setBusy(busy: boolean): any;
-};
+    setBusy(busy: boolean): any;
+  };
 interface ApiContext {
   api: CrudApiActions;
   apiState: CrudApiState;
 }
-interface FormState { formData: ViewFormData };
-export type ViewProps = ViewState & FormState & ViewActions & ApiContext & {
-  classes: ClassNameMap;
-};
+interface FormState {
+  formData: ViewFormData;
+}
+export type ViewProps = ViewState &
+  FormState &
+  ViewActions &
+  ApiContext & {
+    classes: ClassNameMap;
+  };
 /** */
 class View extends Component<ViewProps> {
   componentDidMount() {
@@ -62,17 +82,13 @@ class View extends Component<ViewProps> {
   };
   requestPreviewShow = () => {
     this.props.setState({ previewRequest: true });
-  }
+  };
   requestPreviewClose = () => {
     this.props.setState({ previewRequest: false });
-  }
+  };
   requestPreview = () => {
-    const { formData } = this.props;
-    const { features, ...view } = formData;
-    return <CheapPreview data={{
-      ...view,
-      // features: this.props.featureValues
-    }} />;
+    const { body } = propsToRequest(this.props);
+    return <CheapPreview data={body||{}} />;
   };
 
   resetFormActionMessage = () => {
@@ -140,7 +156,7 @@ class View extends Component<ViewProps> {
       handleActionToConfirm,
       handleMenuAction,
       setWarning,
-      setConfirmAction,
+      setConfirmAction
     } = this.props;
     let { validation } = this.props;
     validation = validation || {};
@@ -168,17 +184,21 @@ class View extends Component<ViewProps> {
                 >
                   <ListItemText primary="Reset/Clear Form" />
                 </MenuItem>
-                <MenuItem
-                  onClick={handleMenuAction(this.requestPreviewShow)}
-                >
+                <MenuItem onClick={handleMenuAction(this.requestPreviewShow)}>
                   <ListItemText primary="Preview Request" />
                 </MenuItem>
               </Menu>
             </Fragment>
           </Toolbar>
           {/* Form */}
-          <FormView formData={formData} setFormState={setFormState} classes={classes} validation={validation} busy={this.props.busy} />
-          
+          <FormView
+            formData={formData}
+            setFormState={setFormState}
+            classes={classes}
+            validation={validation}
+            busy={this.props.busy}
+          />
+
           {/* Actions  */}
           <div className={classes.actions}>
             <Button
@@ -199,13 +219,16 @@ class View extends Component<ViewProps> {
             </Button>
           </div>
         </Paper>
-        <Dialog open={this.props.previewRequest} onClose={this.requestPreviewClose}>
+        <Dialog
+          open={this.props.previewRequest}
+          onClose={this.requestPreviewClose}
+        >
           <DialogTitle title="Preview" />
-          <DialogContent >
-            {this.requestPreview()}
-          </DialogContent>
+          <DialogContent>{this.requestPreview()}</DialogContent>
           <DialogActions>
-            <Button onClick={this.requestPreviewClose} variant="raised">Close</Button>
+            <Button onClick={this.requestPreviewClose} variant="raised">
+              Close
+            </Button>
           </DialogActions>
         </Dialog>
         <ConfirmAction

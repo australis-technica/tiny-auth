@@ -9,9 +9,10 @@ export default function propsToRequest(props: ViewProps): CrudApiRequest {
         description,
         displayName,
         enabled,
+        featureValues,
         notes,
         product,
-        featureValues
+        exp
     } = formData;
     const features = featureValues; // JSON.stringify(featureValues);
     const body = {
@@ -20,9 +21,9 @@ export default function propsToRequest(props: ViewProps): CrudApiRequest {
         displayName,
         enabled,
         features,
-        name,
         notes,
-        product
+        product,
+        exp
     };
     return {
         method: "PUT",

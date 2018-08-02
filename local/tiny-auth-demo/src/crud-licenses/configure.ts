@@ -44,8 +44,8 @@ export default function configureCrud(app: Express) {
           const { features, exp, ...body } = req.body;
           // inseconds           
           const timeToExpire = new Date(exp as number).getTime() / 1000;
-          const token = lic.sign(lic.createLicRequest({}), { ...features, token_id: body.id, timeToExpire });
-          res.locals.body = Object.assign(body, { token, features: JSON.stringify(features) });
+          const token = lic.sign(lic.createLicRequest({ token_id: body.id, timeToExpire }), features);
+          res.locals.body = Object.assign(body, { token, features: JSON.stringify(features), exp });
           next();
         } catch (error) {
           return next(error);
