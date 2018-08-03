@@ -1,15 +1,9 @@
+import { Button, CircularProgress, Typography } from "@material-ui/core";
+import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component } from "react";
-import {
-  Dialog,
-  Typography,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button
-} from "@material-ui/core";
-import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
-import { ApiState, ApiActions } from "./api";
+import { Modal } from "../modal";
+import { ApiActions, ApiState } from "./api";
 import styles from "./styles";
 export interface DeliverParams {
   onClose(): any;
@@ -54,55 +48,57 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
     }
     this.deliver();
   };
-  render() {
-    const { classes, item, isOpen, onClose, apiState } = this.props;
-    const { onCancel, onOk } = this;
-    if (!item || !isOpen) return null;
-    const { displayName } = item;
-    const error = this.state.error || apiState.error;
-    const busy = !!apiState.busy;
+  onAgain = () => {
+    this.deliver();    
+  }
+  renderMessage = () => {
+    const error = this.state.error || this.props.apiState.error || undefined;
+    const busy = this.props.apiState.busy;
+    const displayName = this.props.item && this.props.item.displayName || undefined;
     const success = !!this.props.apiState.success;
+    return (<div>
+      <Typography variant="headline">{displayName}</Typography>
+      {busy && <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}><Typography variant="headline">Please wait...</Typography><CircularProgress /></div>}
+      {!!error && (<Typography variant="title" color="error">{error}</Typography>)}
+      {success && <Typography variant="headline" color="primary">Success</Typography>}
+    </div>)
+  }
+  renderActions = () => {
+    const { item, isOpen, apiState, classes } = this.props;
+    const { onOk, onAgain } = this;
+    if (!item || !isOpen) return null;
+    const busy = !!apiState.busy;
+    const success = !!apiState.success;
+    return <>
+      {success && <Button 
+        style={{ color: "orange" }}
+        className={classes.button}
+        disabled={busy}
+        variant="outlined"
+        onClick={onAgain}
+      >
+        Again
+        </Button>}
+      <Button
+        className={classes.button}
+        disabled={busy}
+        variant="outlined"
+        onClick={onOk}
+      >
+        OK
+        </Button>
+    </>
+  }
+  render() {
+    const { item, isOpen } = this.props;
+    const { onCancel } = this;
+    if (!item || !isOpen) return null;
     return (
-      <Dialog open={isOpen} onClose={onClose}>
-        <DialogTitle>
-          <Typography variant="title">Deliver</Typography>
-          {!!error && (
-            <Typography variant="title" color="error">
-              {error}
-            </Typography>
-          )}
-        </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          {!success && (
-            <Typography
-              className={classes.dialogContentTitle}
-              variant="headline"
-            >
-              Deliver "{displayName}" license?
-            </Typography>
-          )}
-          {success && <Typography variant="headline">Delivered</Typography>}
-          {busy && <span>...busy</span>}
-        </DialogContent>
-        <DialogActions className={classes.dialogActions}>
-          <Button
-            className={classes.buttonCancel}
-            variant="raised"
-            onClick={onCancel}
-            disabled={busy}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={classes.buttonOk}
-            disabled={busy}
-            variant="raised"
-            onClick={onOk}
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Modal isOpen={isOpen} onClose={onCancel}
+        dialogTitle={"Deliver"}
+        dialogContent={this.renderMessage()}
+        dialogActions={this.renderActions()}
+      />
     );
   }
 }

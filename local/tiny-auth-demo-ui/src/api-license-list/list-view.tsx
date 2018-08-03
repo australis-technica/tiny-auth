@@ -1,12 +1,4 @@
-import {
-  CircularProgress,
-  Icon,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar
-} from "@material-ui/core";
+import { CircularProgress, Icon, IconButton, List, ListItem, ListItemText, Toolbar } from "@material-ui/core";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
@@ -15,7 +7,7 @@ import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
 import ListViewItem, { ActionType } from "./list-view-item";
 import styles from "./list-view-styles";
-export interface ListViewParams {}
+export interface ListViewParams { }
 
 export type ApiContext = {
   apiState: ApiState;
@@ -105,7 +97,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                       }}
                     />
                   ))}
-                </List>
+                </List>              
                 <Deliver
                   isOpen={this.state.actionType === "deliver"}
                   onClose={() => {
