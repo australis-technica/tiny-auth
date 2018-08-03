@@ -94,7 +94,6 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                       <ListViewItem
                         key={`list_item_${i}`}
                         item={item}
-                        index={i}
                         onRequestAction={(actionType, item) => {
                           this.setState({ actionType, item });
                         }}

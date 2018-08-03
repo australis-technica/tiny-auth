@@ -6,9 +6,9 @@ import { Icon, IconButton, Menu } from "@material-ui/core";
  * @param props 
  */
 export default class QuickMenu extends Component<{
-    openMenu(): any,
-    closeMenu(): any,
-    busy?: boolean,
+    onRequestOpen(): any,
+    onClose?(): any,
+    disabled?: boolean,
     isOpen: boolean,
     menuIcon?: ReactNode
 }>  {
@@ -18,16 +18,16 @@ export default class QuickMenu extends Component<{
         return (
             <Fragment>
                 <IconButton
-                    onClick={this.props.openMenu}
+                    onClick={this.props.onRequestOpen}
                     buttonRef={x => (this.menuButton = x)}
-                    disabled={!!this.props.busy}
+                    disabled={!!this.props.disabled}
                 >
                     {typeof menuIcon === "string" ? <Icon children={menuIcon} /> : menuIcon}
                 </IconButton>
                 <Menu
                     open={!!this.props.isOpen}
-                    onClose={this.props.closeMenu}
-                    anchorEl={this.menuButton}
+                    onClose={this.props.onClose}
+                    anchorEl={this.menuButton}                    
                 >
                     {this.props.children}
                 </Menu>

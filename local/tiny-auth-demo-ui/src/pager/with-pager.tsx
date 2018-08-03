@@ -21,6 +21,7 @@ export interface WithPagerState<T> {
     nextPage: number;
     dataSize: number;
     pageSize: number;
+    sliceLength: number;
 }
 export default class WithPager<T> extends Component<WithPagerProps<T>, WithPagerState<T>>{
 
@@ -32,7 +33,8 @@ export default class WithPager<T> extends Component<WithPagerProps<T>, WithPager
         pageEnd: 0,
         nextPage: 0,
         dataSize: 0,
-        pageSize: this.props.pageSize
+        pageSize: this.props.pageSize,
+        sliceLength: 0
     }
 
     static getDerivedStateFromProps(props: WithPagerProps<any>, state: WithPagerState<any>) {
@@ -49,10 +51,11 @@ export default class WithPager<T> extends Component<WithPagerProps<T>, WithPager
             paged: sliced,
             pageStart,
             pageEnd,
-            pageCount: sliced.length,
+            pageSize,
+            pageCount: Math.ceil(dataSize / pageSize),
             nextPage,
             dataSize,
-            pageSize,
+            sliceLength: sliced.length,            
         }
     }
     /** */
@@ -71,7 +74,7 @@ export default class WithPager<T> extends Component<WithPagerProps<T>, WithPager
     }
     /** */
     setPageSize = (pageSize: number) => {
-        if (!this.props.data || !pageSize || (pageSize >= this.props.data.length)) return;
+        // if (!this.props.data || !pageSize || (pageSize >= this.props.data.length)) return;
         this.setState({
             pageSize
         })

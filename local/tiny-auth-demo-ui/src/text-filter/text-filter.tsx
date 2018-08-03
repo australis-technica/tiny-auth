@@ -21,7 +21,7 @@ export default class TextFilter<T> extends Component<TextFilterProps<T>> {
       <TextField
         InputProps={{
           startAdornment: empty && (
-            <Icon title="filter" children={"filter_list"} />
+            <Icon title="filter" children={"search"} />
           ),
           endAdornment: !empty && (
             <Icon
