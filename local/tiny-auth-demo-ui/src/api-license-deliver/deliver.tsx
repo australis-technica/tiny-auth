@@ -18,6 +18,9 @@ export interface ApiContext {
 export type DeliverProps = DeliverParams & ApiContext;
 
 class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
+  clearError = () => {
+    this.setState({ error: undefined });
+  }
   state = {
     error: undefined as string | undefined
   };
@@ -26,6 +29,7 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
       throw new Error("No Item");
     }
     try {
+      this.clearError();
       const action = await this.props.api.deliver(this.props.item.id);
       if (action && action.payload instanceof Error) {
         throw action.payload;
@@ -46,10 +50,13 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
     if (!!this.props.apiState.success) {
       return this.props.onClose();
     }
+    if (!!this.state.error || !!this.props.apiState.error) {
+      return this.props.onClose();
+    }
     this.deliver();
   };
   onAgain = () => {
-    this.deliver();    
+    this.deliver();
   }
   renderMessage = () => {
     const error = this.state.error || this.props.apiState.error || undefined;
@@ -69,8 +76,9 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
     if (!item || !isOpen) return null;
     const busy = !!apiState.busy;
     const success = !!apiState.success;
+    const error = !!(this.state.error || this.props.apiState.error);
     return <>
-      {success && <Button 
+      {(success || error) && <Button
         style={{ color: "orange" }}
         className={classes.button}
         disabled={busy}
