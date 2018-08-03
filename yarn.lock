@@ -21,6 +21,14 @@
     "@australis/create-debug" "^1.0.0-0"
     tedious "^2.3.1"
 
+"@australis/send-grid-mail@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@australis/send-grid-mail/-/send-grid-mail-0.1.0.tgz#2af65d73075f5e9e5944c8916e7fd8f2276f8fe1"
+  dependencies:
+    "@sendgrid/mail" "^6.3.1"
+    react "^16.4.1"
+    react-dom "^16.4.1"
+
 "@australis/tiny-sql-batch-script@1.0.0-12":
   version "1.0.0-12"
   resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-12.tgz#9b048a4659c5b02993e02c41d52fa5b9b54ac1f6"
@@ -7355,6 +7363,15 @@ react-dom@16.4.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-dom@^16.4.1:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.2.tgz#4afed569689f2c561d2b8da0b819669c38a0bda4"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-error-overlay@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-4.0.0.tgz#d198408a85b4070937a98667f500c832f86bd5d4"
@@ -7479,6 +7496,15 @@ react-transition-group@^2.2.1:
 react@16.4.1:
   version "16.4.1"
   resolved "https://registry.npmjs.org/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.4.1:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.4.2.tgz#2cd90154e3a9d9dd8da2991149fdca3c260e129f"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"

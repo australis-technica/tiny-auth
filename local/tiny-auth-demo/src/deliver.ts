@@ -5,7 +5,7 @@ import users from "./users";
 import { repo as licenses } from "./crud-licenses";
 import { License } from "./crud-licenses/types";
 import verify from "./lic/verify";
-import { renderTemplate, sendMail } from "./mail";
+import { sendMail, renderTemplate } from "@australis/send-grid-mail";
 /** */
 function send(data: { license: License, user: User }) {
   const { user, license } = data;
