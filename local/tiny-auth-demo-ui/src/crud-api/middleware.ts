@@ -37,8 +37,11 @@ export default function (storeKey: string, endpoint: string): Middleware {
                         if (isDev) await delay(FETCH_DELAY);
                         const x = await callAPi(payload);
                         return next(setResult(x));
-                    } catch (error) {
-                        return next(setError(error));
+                    } catch (err) {
+                        if (err instanceof TypeError || err.name === "TypeError") {
+                            return next(setError("Network Error"));
+                        }
+                        return next(setError(err));
                     } finally {
                         next(setBusy(false));
                     }
