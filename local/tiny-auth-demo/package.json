@@ -29,7 +29,7 @@
   "dependencies": {
     "@australis/load-env": "^1.0.0",
     "@australis/tiny-sql": "1.0.0-12",
-    "@sendgrid/mail": "^6.2.1",
+    "@sendgrid/mail": "^6.3.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "cors": "^2.8.4",
@@ -45,7 +45,8 @@
   },
   "scripts": {
     "test": "jest --env=node",
-    "build": "tsc -p .",
+    "build:templates": "tsc -p ./templates",
+    "build": "npm run build:templates && tsc -p .",
     "watch": "tsc -p . --watch",
     "clean": "rimraf build",
     "rebuild": "npm run clean && npm run build",

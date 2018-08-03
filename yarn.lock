@@ -189,7 +189,7 @@
     chalk "^2.0.1"
     deepmerge "^2.1.1"
 
-"@sendgrid/mail@^6.2.1":
+"@sendgrid/mail@^6.3.1":
   version "6.3.1"
   resolved "https://registry.npmjs.org/@sendgrid/mail/-/mail-6.3.1.tgz#e5003af167ca4dd358f04075aad4cfc30cef6c34"
   dependencies:

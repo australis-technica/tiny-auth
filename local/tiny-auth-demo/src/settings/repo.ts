@@ -16,7 +16,8 @@ export default async function repo(
     let con: Connection;
     try {
       con = isConnection(connect) ? connect : await connect();
-      return callback(con);
+      const result = await callback(con)
+      return result;
     } catch (error) {
       return Promise.reject(error);
     } finally {

@@ -1,44 +1,61 @@
+import { User } from "@australis/tiny-auth-core";
 import { json } from "body-parser";
 import { RequestHandler } from "express-serve-static-core";
-import { repo } from "./crud-licenses";
+import users from "./users";
+import { repo as licenses } from "./crud-licenses";
+import { License } from "./crud-licenses/types";
 import verify from "./lic/verify";
+import { renderTemplate, sendMail } from "./mail";
 /** */
-export default function() {
+function send(data: { license: License, user: User }) {
+  const { user, license } = data;
+  const subject = renderTemplate("deliver-subject", { license, user });
+  const html = renderTemplate("deliver", { license, user });
+  const mailData = {
+    to: user.email,
+    subject,
+    html
+  };
+  return sendMail(mailData);
+}
+/** */
+export default function () {
   /** */
   const deliver: RequestHandler = async (req, res, next) => {
     try {
       const { body } = req as { body: { id?: string } };
-      const validation: string[] = [];
+
       if (!body) {
-        validation.push("json body required");
+        return next(new Error("json body required"));
       }
       const { id } = body;
       if (typeof id !== "string") {
-        validation.push("id required");
+        return next(new Error("id required"));
       }
-      const { user } = req;
+      const user = await users.byId(req.user.id);
       if (!user) {
-        validation.push("user not found");
+        return next(new Error("user not found"));
       }
       const { email } = user;
       if ((user && !email) || !email.trim()) {
-        validation.push("destination not found");
+        return next(new Error("destination not found"));
       }
-      const license = await repo.byId(id);
+      const license = await licenses.byId(id);
       if (!license) {
-        validation.push("No such license");
+        return next(new Error("No such license"));
       }
       const verified = verify(license.token);
       if (!verified) {
-        validation.push("verification failed");
-      }
-      if (validation && validation.length) {
-        return next(new Error(`Can't deliver: ${validation.join(",")}`));
+        return next(new Error("verification failed"));
+      }      // do  not stop becasue there isn't template          
+      const x = await send({ license, user });
+      if (x instanceof Error) {
+        return next(x);
       }
       return res.json("ok");
     } catch (error) {
       return next(error);
     }
-  };  
-  return [ json(), deliver];
+  };
+  return [json(), deliver];
 }
