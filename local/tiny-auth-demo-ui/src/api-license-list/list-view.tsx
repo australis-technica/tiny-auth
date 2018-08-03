@@ -1,20 +1,20 @@
 import {
+  CircularProgress,
   Icon,
   IconButton,
   List,
   ListItem,
   ListItemText,
-  TextField,
-  Toolbar,
-  Typography
+  Toolbar
 } from "@material-ui/core";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
+import { Connected as Deliver } from "../api-license-deliver";
+import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
 import ListViewItem, { ActionType } from "./list-view-item";
 import styles from "./list-view-styles";
-import { Connected as Deliver } from "../api-license-deliver";
 export interface ListViewParams {}
 
 export type ApiContext = {
@@ -27,7 +27,6 @@ export type ListViewProps = ApiContext & ListViewParams;
 interface ListViewState {
   actionType: ActionType | undefined;
   item: ApiItem | undefined;
-  filterText: string | undefined;
 }
 
 /** */
@@ -35,8 +34,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
   /** */
   state: ListViewState = {
     actionType: undefined,
-    item: undefined,
-    filterText: ""
+    item: undefined
   };
   /** */
   clearActionType = () => {
@@ -56,27 +54,15 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
   renderError = (error: string) => {
     return <span style={{ color: "red" }}>{error}</span>;
   };
-  renderBusy = () => {
-    return <span style={{ color: "blue" }}>Busy</span>;
+  /** */
+  onFilterChanged = (filtered: ApiItem[]) => {
+    this.setState({ filtered });
   };
-
-  filter = (regex: RegExp) => {
-    return (x: {}) => {
-      return regex.test(
-        Object.keys(x)
-          .map(k => `${x[k]}`)
-          .join(" ")
-      );
-    };
-  };
+  /** */
   render() {
     const { busy, error, data } = this.props.apiState;
     const { classes } = this.props;
-    const { filterText, item } = this.state;
-    const filtered = (data || []).filter(
-      this.filter(new RegExp(filterText || ""))
-    );
-    if (busy) return this.renderBusy();
+    const { item } = this.state;
     if (error) return this.renderError(error);
     if (!data) return null;
     if (!Array.isArray(data)) {
@@ -84,50 +70,56 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
     }
     return (
       <div className={classes.root}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="title" className={classes.toolbarTitle}>
-            List
-          </Typography>
-          <TextField
-            className={classes.searchField}
-            fullWidth
-            value={filterText}
-            onChange={e => this.setState({ filterText: e.target.value })}
-            InputProps={{
-              startAdornment: <Icon children={"search"} />,
-              endAdornment: <Icon children={"clear"} />
-            }}
-          />
-          <div style={{ flex: "1 0" }} />
-          <IconButton>
-            <Icon>more_vert</Icon>
-          </IconButton>
-        </Toolbar>
-        <List>
-          {!filtered ||
-            (!filtered.length && (
-              <ListItem children={<ListItemText>Not Found</ListItemText>} />
-            ))}
-          {filtered.map((item, i) => (
-            <ListViewItem
-              key={`list_item_${i}`}
-              item={item}
-              onRequestAction={(actionType, item) => {
-                this.setState({ actionType, item });
-              }}
-            />
-          ))}
-        </List>
-        <Deliver
-          onClose={() => {
-            this.setState({ actionType: undefined, item: undefined });
+        <WithTextFilter
+          data={data}
+          render={(filterValue, filtered, setFilter) => {
+            return (
+              <>
+                <Toolbar className={classes.toolbar}>
+                  {busy && <CircularProgress className={classes.busy} />}
+                  <TextFilter
+                    autoFocus={true}
+                    value={filterValue}
+                    className={classes.searchField}
+                    fullWidth
+                    onChange={setFilter}
+                  />
+                  <div style={{ flex: "1 0" }} />
+                  <IconButton>
+                    <Icon>more_vert</Icon>
+                  </IconButton>
+                </Toolbar>
+                <List>
+                  {!filtered ||
+                    (!filtered.length && (
+                      <ListItem
+                        children={<ListItemText>Not Found</ListItemText>}
+                      />
+                    ))}
+                  {filtered.map((item, i) => (
+                    <ListViewItem
+                      key={`list_item_${i}`}
+                      item={item}
+                      onRequestAction={(actionType, item) => {
+                        this.setState({ actionType, item });
+                      }}
+                    />
+                  ))}
+                </List>
+                <Deliver
+                  isOpen={this.state.actionType === "deliver"}
+                  onClose={() => {
+                    this.setState({ actionType: undefined, item: undefined });
+                  }}
+                  item={item}
+                />
+              </>
+            );
           }}
-          isOpen={this.state.actionType === "deliver"}
-          item={item}
         />
       </div>
     );
   }
 }
-
+/** */
 export default withStyles(styles)(ListView) as ComponentType<ListViewParams>;
