@@ -1,14 +1,15 @@
-import { CircularProgress, Icon, IconButton, List, ListItem, ListItemText, Toolbar } from "@material-ui/core";
+import { CircularProgress, List, ListItem, ListItemText, MenuItem, Toolbar } from "@material-ui/core";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import { Connected as Deliver } from "../api-license-deliver";
+import { QuickMenu, WithMenuState } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
 import ListViewItem, { ActionType } from "./list-view-item";
 import styles from "./list-view-styles";
-export interface ListViewParams { }
+export interface ListViewParams {}
 /** */
 export type ApiContext = {
   apiState: ApiState;
@@ -38,10 +39,13 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
       this.setState({ actionType });
     };
   };
-  componentDidMount() {
+  fetch = () => {
     this.props.api.fetch({
       method: "GET"
     });
+  };
+  componentDidMount() {
+    this.fetch();
   }
   renderError = (error: string) => {
     return <span style={{ color: "red" }}>{error}</span>;
@@ -66,51 +70,73 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
         <WithTextFilter
           data={data}
           render={(filterValue, filtered, setFilter) => {
-            return <WithPager data={filtered} pageSize={5} render={(pager) => {
-              return (
-                <>
-                  <Toolbar className={classes.toolbar}>
-                    {busy && <CircularProgress className={classes.busy} />}
-                    <TextFilter
-                      autoFocus={true}
-                      value={filterValue}
-                      className={classes.searchField}
-                      fullWidth
-                      onChange={setFilter}
-                    />
-                    <div style={{ flex: "1 0" }} />
-                    <IconButton>
-                      <Icon>more_vert</Icon>
-                    </IconButton>
-                  </Toolbar>
-                  <List>
-                    {!pager.paged ||
-                      (!pager.paged.length && (
-                        <ListItem
-                          children={<ListItemText>Not Found</ListItemText>}
+            return (
+              <WithPager
+                data={filtered}
+                pageSize={5}
+                render={pager => {
+                  return (
+                    <>
+                      <Toolbar className={classes.toolbar}>
+                        {busy && <CircularProgress className={classes.busy} />}
+                        <TextFilter
+                          disabled={!!busy}
+                          autoFocus={true}
+                          value={filterValue}
+                          className={classes.searchField}
+                          fullWidth
+                          onChange={setFilter}
                         />
-                      ))}
-                    {pager.paged.map((item, i) => (
-                      <ListViewItem
-                        key={`list_item_${i}`}
-                        item={item}
-                        onRequestAction={(actionType, item) => {
-                          this.setState({ actionType, item });
+                        <div style={{ flex: "1 0" }} />
+                        <WithMenuState
+                          render={menu => (
+                            <QuickMenu
+                              disabled={!!busy}
+                              isOpen={menu.isOpen}
+                              onClose={menu.closeMenu}
+                              onRequestOpen={menu.openMenu}
+                            >
+                              <MenuItem onClick={this.fetch} disabled={!!busy}>                                
+                                <ListItemText >Reload</ListItemText>
+                              </MenuItem>
+                            </QuickMenu>
+                          )}
+                        />
+                      </Toolbar>
+                      <List>
+                        {!pager.paged ||
+                          (!pager.paged.length && (
+                            <ListItem
+                              children={<ListItemText>Not Found</ListItemText>}
+                            />
+                          ))}
+                        {pager.paged.map((item, i) => (
+                          <ListViewItem
+                            disabled={!!busy}
+                            key={`list_item_${i}`}
+                            item={item}
+                            onRequestAction={(actionType, item) => {
+                              this.setState({ actionType, item });
+                            }}
+                          />
+                        ))}
+                      </List>
+                      <Pagerbar {...pager} pageSizes={[3, 5, 10]} disabled={!!busy}/>
+                      <Deliver
+                        isOpen={this.state.actionType === "deliver"}
+                        onClose={() => {
+                          this.setState({
+                            actionType: undefined,
+                            item: undefined
+                          });
                         }}
+                        item={item}
                       />
-                    ))}
-                  </List>
-                  <Pagerbar {...pager} pageSizes={[3, 5, 10]} />
-                  <Deliver
-                    isOpen={this.state.actionType === "deliver"}
-                    onClose={() => {
-                      this.setState({ actionType: undefined, item: undefined });
-                    }}
-                    item={item}
-                  />
-                </>
-              )
-            }} />;
+                    </>
+                  );
+                }}
+              />
+            );
           }}
         />
       </div>

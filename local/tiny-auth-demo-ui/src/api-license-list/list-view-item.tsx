@@ -6,6 +6,7 @@ import { ApiItem } from "./api";
 export type ActionType = "deliver" | "edit" | "delete" | "view";
 
 export interface ListViewItemProps {
+    disabled?:boolean;
     index?: number;
     item: ApiItem;
     onRequestAction(action: ActionType, item: ApiItem): any;
@@ -15,8 +16,8 @@ export default class ListViewItem extends Component<ListViewItemProps>{
 
     /** */
     render() {
-        const { item, index } = this.props;
-        return <ListItem>
+        const { item, index, disabled } = this.props;
+        return <ListItem disabled={disabled}>
             <ListItemAvatar>
                 <Avatar style={{ backgroundColor: "transparent" }}>
                     <IconButton onClick={() => { this.props.onRequestAction("view", item) }}

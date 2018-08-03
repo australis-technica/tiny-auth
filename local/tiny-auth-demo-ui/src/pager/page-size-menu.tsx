@@ -6,10 +6,11 @@ import Icon from "@material-ui/core/Icon";
 import { Typography, Menu, Button } from "@material-ui/core";
 export default class PageSizeMenu extends Component<{
   label?: React.ReactNode;
-  page:number;
+  page: number;
   pageSize: number;
   pageSizes: number[];
   dataSize: number;
+  disabled?: boolean;
   setPageSize(n: number): any;
 }> {
   /** */
@@ -22,18 +23,20 @@ export default class PageSizeMenu extends Component<{
     return (
       <WithMenuState
         render={menuState => {
-          let { label, pageSize, dataSize} = this.props;
-          if(!dataSize) return null;
-          label = label || (
-            <span>Page Size: {pageSize}</span>
-          );
+          let { label, pageSize, dataSize, disabled } = this.props;
+          if (!dataSize) return null;
+          label = label || <span>Page Size: {pageSize}</span>;
           return (
             <>
               <Button
+                disabled={disabled}
                 buttonRef={x => (this.el = x)}
                 onClick={menuState.openMenu}
               >
-                <Icon children="expand_more" style={{marginRight:"0.5rem"}}/>
+                <Icon
+                  children="expand_more"
+                  style={{ marginRight: "0.5rem" }}
+                />
                 {typeof label !== "string" ? (
                   label
                 ) : (

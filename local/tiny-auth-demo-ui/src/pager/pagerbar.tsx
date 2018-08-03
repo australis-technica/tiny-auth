@@ -9,6 +9,7 @@ import { Typography } from "@material-ui/core";
 /** */
 export type PagerbarProps = RenderProps<any> & {
   pageSizes: number[];
+  disabled?:boolean;
 };
 /** */
 export default class Pagerbar extends Component<PagerbarProps> {
@@ -20,11 +21,13 @@ export default class Pagerbar extends Component<PagerbarProps> {
       pageSizes,
       pageSize,
       dataSize,
-      page
+      page,
+      disabled
     } = this.props;
     return (
       <Toolbar>
         <PageSizeMenu
+          disabled={disabled}
           page={page}
           setPageSize={setPageSize}
           pageSizes={pageSizes}
@@ -42,10 +45,10 @@ export default class Pagerbar extends Component<PagerbarProps> {
           </Typography>
         </div>
         <div style={{ flex: "1 0" }} />
-        <Button onClick={prev}>
+        <Button onClick={prev} disabled={disabled}>
           <Icon children={"keyboard_arrow_left"} />Prev
         </Button>
-        <Button onClick={next}>
+        <Button onClick={next} disabled={disabled}>
           Next<Icon children={"keyboard_arrow_right"} />
         </Button>
       </Toolbar>
