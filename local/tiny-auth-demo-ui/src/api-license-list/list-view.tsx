@@ -3,24 +3,24 @@ import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import { Connected as Deliver } from "../api-license-deliver";
+import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
 import ListViewItem, { ActionType } from "./list-view-item";
 import styles from "./list-view-styles";
 export interface ListViewParams { }
-
+/** */
 export type ApiContext = {
   apiState: ApiState;
   api: ApiActions;
 };
-
+/** */
 export type ListViewProps = ApiContext & ListViewParams;
 /** private */
 interface ListViewState {
   actionType: ActionType | undefined;
   item: ApiItem | undefined;
 }
-
 /** */
 class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
   /** */
@@ -60,53 +60,58 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
     if (!Array.isArray(data)) {
       return this.renderError("Wrong Data type");
     }
+
     return (
       <div className={classes.root}>
         <WithTextFilter
           data={data}
           render={(filterValue, filtered, setFilter) => {
-            return (
-              <>
-                <Toolbar className={classes.toolbar}>
-                  {busy && <CircularProgress className={classes.busy} />}
-                  <TextFilter
-                    autoFocus={true}
-                    value={filterValue}
-                    className={classes.searchField}
-                    fullWidth
-                    onChange={setFilter}
-                  />
-                  <div style={{ flex: "1 0" }} />
-                  <IconButton>
-                    <Icon>more_vert</Icon>
-                  </IconButton>
-                </Toolbar>
-                <List>
-                  {!filtered ||
-                    (!filtered.length && (
-                      <ListItem
-                        children={<ListItemText>Not Found</ListItemText>}
+            return <WithPager data={filtered} pageSize={5} render={(pager) => {
+              return (
+                <>
+                  <Toolbar className={classes.toolbar}>
+                    {busy && <CircularProgress className={classes.busy} />}
+                    <TextFilter
+                      autoFocus={true}
+                      value={filterValue}
+                      className={classes.searchField}
+                      fullWidth
+                      onChange={setFilter}
+                    />
+                    <div style={{ flex: "1 0" }} />
+                    <IconButton>
+                      <Icon>more_vert</Icon>
+                    </IconButton>
+                  </Toolbar>
+                  <List>
+                    {!pager.paged ||
+                      (!pager.paged.length && (
+                        <ListItem
+                          children={<ListItemText>Not Found</ListItemText>}
+                        />
+                      ))}
+                    {pager.paged.map((item, i) => (
+                      <ListViewItem
+                        key={`list_item_${i}`}
+                        item={item}
+                        index={i}
+                        onRequestAction={(actionType, item) => {
+                          this.setState({ actionType, item });
+                        }}
                       />
                     ))}
-                  {filtered.map((item, i) => (
-                    <ListViewItem
-                      key={`list_item_${i}`}
-                      item={item}
-                      onRequestAction={(actionType, item) => {
-                        this.setState({ actionType, item });
-                      }}
-                    />
-                  ))}
-                </List>              
-                <Deliver
-                  isOpen={this.state.actionType === "deliver"}
-                  onClose={() => {
-                    this.setState({ actionType: undefined, item: undefined });
-                  }}
-                  item={item}
-                />
-              </>
-            );
+                  </List>
+                  <Pagerbar {...pager} pageSizes={[3, 5, 10]} />
+                  <Deliver
+                    isOpen={this.state.actionType === "deliver"}
+                    onClose={() => {
+                      this.setState({ actionType: undefined, item: undefined });
+                    }}
+                    item={item}
+                  />
+                </>
+              )
+            }} />;
           }}
         />
       </div>

@@ -6,6 +6,7 @@ import { ApiItem } from "./api";
 export type ActionType = "deliver" | "edit" | "delete" | "view";
 
 export interface ListViewItemProps {
+    index?: number;
     item: ApiItem;
     onRequestAction(action: ActionType, item: ApiItem): any;
 }
@@ -14,7 +15,7 @@ export default class ListViewItem extends Component<ListViewItemProps>{
 
     /** */
     render() {
-        const { item } = this.props;
+        const { item, index } = this.props;
         return <ListItem>
             <ListItemAvatar>
                 <Avatar style={{ backgroundColor: "transparent" }}>
@@ -25,7 +26,7 @@ export default class ListViewItem extends Component<ListViewItemProps>{
             </ListItemAvatar>
             <ListItemText
                 style={{ marginRight: "1rem", paddingRight: "1rem" }}
-                primary={item.displayName} secondary={item.description} />
+                primary={(typeof index === "number" ? `${index}: ` : "") + item.displayName} secondary={item.description} />
             <div style={{ flex: "1 0" }} />
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 <IconButton onClick={() => { this.props.onRequestAction("edit", item) }}

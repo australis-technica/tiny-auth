@@ -1,13 +1,20 @@
 import * as React from "react";
-import { Fragment, Component } from "react";
+import { Fragment, Component, ReactNode } from "react";
 import { Icon, IconButton, Menu } from "@material-ui/core";
 /**
  * 
  * @param props 
  */
-export default class extends Component<{ openMenu(): any, closeMenu(): any, busy?: boolean, isOpen: boolean }>  {
+export default class QuickMenu extends Component<{
+    openMenu(): any,
+    closeMenu(): any,
+    busy?: boolean,
+    isOpen: boolean,
+    menuIcon?: ReactNode
+}>  {
     menuButton: any;
     render() {
+        const menuIcon = this.props.menuIcon || "more_vert";
         return (
             <Fragment>
                 <IconButton
@@ -15,7 +22,7 @@ export default class extends Component<{ openMenu(): any, closeMenu(): any, busy
                     buttonRef={x => (this.menuButton = x)}
                     disabled={!!this.props.busy}
                 >
-                    <Icon children="more_vert" />
+                    {typeof menuIcon === "string" ? <Icon children={menuIcon} /> : menuIcon}
                 </IconButton>
                 <Menu
                     open={!!this.props.isOpen}
