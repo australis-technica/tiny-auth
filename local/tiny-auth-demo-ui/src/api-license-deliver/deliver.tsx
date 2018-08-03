@@ -31,27 +31,37 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
     if (!this.props.item) {
       throw new Error("No Item");
     }
-    try {      
-      const action = await this.props.api.deliver(this.props.item.id);      
-      if(action && action.payload instanceof Error){
-          throw action.payload;
+    try {
+      const action = await this.props.api.deliver(this.props.item.id);
+      if (action && action.payload instanceof Error) {
+        throw action.payload;
       }
-      if(action && action.error instanceof Error){
+      if (action && action.error instanceof Error) {
         throw action.error;
-    }
-      this.props.onClose();
+      }
     } catch (error) {
       this.setState({
         error: error.message
       });
     }
   };
+  onCancel = () => {
+    this.props.onClose();
+  };
+  onOk = () => {
+    if (!!this.props.apiState.success) {
+      return this.props.onClose();
+    }
+    this.deliver();
+  };
   render() {
     const { classes, item, isOpen, onClose, apiState } = this.props;
+    const { onCancel, onOk } = this;
     if (!item || !isOpen) return null;
     const { displayName } = item;
     const error = this.state.error || apiState.error;
     const busy = !!apiState.busy;
+    const success = !!this.props.apiState.success;
     return (
       <Dialog open={isOpen} onClose={onClose}>
         <DialogTitle>
@@ -63,16 +73,22 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
           )}
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
-          <Typography className={classes.dialogContentTitle} variant="headline">
-            Deliver "{displayName}" license?
-          </Typography>
+          {!success && (
+            <Typography
+              className={classes.dialogContentTitle}
+              variant="headline"
+            >
+              Deliver "{displayName}" license?
+            </Typography>
+          )}
+          {success && <Typography variant="headline">Delivered</Typography>}
           {busy && <span>...busy</span>}
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
           <Button
             className={classes.buttonCancel}
             variant="raised"
-            onClick={onClose}
+            onClick={onCancel}
             disabled={busy}
           >
             Cancel
@@ -81,7 +97,7 @@ class Deliver extends Component<DeliverProps & { classes: ClassNameMap }> {
             className={classes.buttonOk}
             disabled={busy}
             variant="raised"
-            onClick={this.deliver}
+            onClick={onOk}
           >
             OK
           </Button>
