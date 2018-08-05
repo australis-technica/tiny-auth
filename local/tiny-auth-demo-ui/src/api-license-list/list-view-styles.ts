@@ -17,7 +17,6 @@ const styles: StyleRulesCallback = (theme) => {
         },
         searchField: {
             marginLeft: "2rem",
-            
         }
     };
 }

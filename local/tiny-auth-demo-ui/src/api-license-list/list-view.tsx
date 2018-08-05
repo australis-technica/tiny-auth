@@ -1,9 +1,16 @@
-import { CircularProgress, List, ListItem, ListItemText, MenuItem, Toolbar } from "@material-ui/core";
+import {
+  CircularProgress,
+  Icon,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar
+} from "@material-ui/core";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import { Connected as Deliver } from "../api-license-deliver";
-import { QuickMenu, WithMenuState } from "../menu";
+import { MenuResponsive, ResponsiveMenuItem } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
@@ -64,7 +71,6 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
     if (!Array.isArray(data)) {
       return this.renderError("Wrong Data type");
     }
-
     return (
       <div className={classes.root}>
         <WithTextFilter
@@ -84,23 +90,48 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                           autoFocus={true}
                           value={filterValue}
                           className={classes.searchField}
-                          fullWidth
                           onChange={setFilter}
+                          fullWidth
                         />
                         <div style={{ flex: "1 0" }} />
-                        <WithMenuState
-                          render={menu => (
-                            <QuickMenu
-                              disabled={!!busy}
-                              isOpen={menu.isOpen}
-                              onClose={menu.closeMenu}
-                              onRequestOpen={menu.openMenu}
-                            >
-                              <MenuItem onClick={this.fetch} disabled={!!busy}>                                
-                                <ListItemText >Reload</ListItemText>
-                              </MenuItem>
-                            </QuickMenu>
-                          )}
+                        <MenuResponsive
+                          disabled={busy}
+                          renderChildren={state => {
+                            return (
+                              <>
+                                <ResponsiveMenuItem
+                                  {...state}
+                                  action={{
+                                    title: "Reload",
+                                    onClick: state.handleMenuAction(this.fetch),
+                                    disabled: !!busy
+                                  }}
+                                >
+                                  <Icon>refresh</Icon>
+                                </ResponsiveMenuItem>
+                                <ResponsiveMenuItem
+                                  {...state}
+                                  action={{
+                                    title: "filter",
+                                    onClick: state.handleMenuAction(()=>{}),
+                                    disabled: !!busy
+                                  }}
+                                >
+                                  <Icon>filter_list</Icon>
+                                </ResponsiveMenuItem>
+                                <ResponsiveMenuItem
+                                  {...state}
+                                  action={{
+                                    title: "search",
+                                    onClick: state.handleMenuAction(()=>{}),
+                                    disabled: !!busy
+                                  }}
+                                >
+                                  <Icon>search</Icon>
+                                </ResponsiveMenuItem>
+                              </>
+                            );
+                          }}
                         />
                       </Toolbar>
                       <List>
@@ -121,7 +152,11 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                           />
                         ))}
                       </List>
-                      <Pagerbar {...pager} pageSizes={[3, 5, 10]} disabled={!!busy}/>
+                      <Pagerbar
+                        {...pager}
+                        pageSizes={[3, 5, 10]}
+                        disabled={!!busy}
+                      />
                       <Deliver
                         isOpen={this.state.actionType === "deliver"}
                         onClose={() => {
