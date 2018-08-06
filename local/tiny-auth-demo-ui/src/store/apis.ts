@@ -7,6 +7,8 @@ import { api as productsListApi } from "../api-product-list";
 import { api as apiProductLookupField } from "../api-product-lookup-field";
 import { api as apiProductsAdd } from "../api-products-add";
 import { api as apiLicDeliver } from "../api-license-deliver";
+import { api as apiLicDelete } from "../api-license-delete";
+import { api as apiLicEdit } from "../api-license-edit";
 
 export default {
     // ...
@@ -20,5 +22,7 @@ export default {
     // ...
     [apiLicenseAdd.storeKey]: apiLicenseAdd.reducer,
     [apiLicenseList.storeKey]: apiLicenseList.reducer,
-    [apiLicDeliver.storeKey]: apiLicDeliver.reducer
+    [apiLicDeliver.storeKey]: apiLicDeliver.reducer,
+    [apiLicDelete.storeKey]: apiLicDelete.reducer,
+    [apiLicEdit.storeKey]: apiLicEdit.reducer
 };

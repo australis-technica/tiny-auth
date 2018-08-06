@@ -11,13 +11,18 @@ import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import { Connected as Deliver } from "../api-license-deliver";
+import { Connected as Delete } from "../api-license-delete";
 import { MenuResponsive, MenuResponsiveItem } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
 import ListViewItem, { ActionType } from "./list-view-item";
 import styles from "./list-view-styles";
-export interface ListViewParams {}
+import { Connected as Edit} from "../api-license-edit";
+/** */
+export interface ListViewParams {
+  // ...
+}
 /** */
 export type ApiContext = {
   apiState: ApiState;
@@ -37,10 +42,12 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
     actionType: undefined,
     item: undefined
   };
-  /** */
-  clearActionType = () => {
-    this.setState({ actionType: undefined });
-  };
+  clearAction = () => {
+    this.setState({
+      actionType: undefined,
+      item: undefined
+    });
+  }
   /** */
   setActionType = (actionType: ActionType) => {
     return () => {
@@ -138,13 +145,22 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                         disabled={!!busy}
                       />
                       <Deliver
+                        title={"Deliver"}
                         isOpen={this.state.actionType === "deliver"}
-                        onClose={() => {
-                          this.setState({
-                            actionType: undefined,
-                            item: undefined
-                          });
-                        }}
+                        onClose={this.clearAction}
+                        item={item}
+                      />
+                      <Delete
+                        title="Delete"
+                        isOpen={this.state.actionType === "delete"}
+                        onClose={this.clearAction}
+                        item={item}
+                        onSuccess={this.fetch}
+                      />
+                      <Edit
+                        title="Update"
+                        isOpen={this.state.actionType === "edit"}
+                        onClose={this.clearAction}
                         item={item}
                       />
                     </>

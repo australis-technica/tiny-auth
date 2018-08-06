@@ -6,6 +6,7 @@ export default function (storeKey: string) {
     const SET_RESULT = `${storeKey}/set-result`;
     const CLEAR_RESULT = `${storeKey}/clear-result`;
     const SET_ERROR = `@${storeKey}/set-error`;
+    const SET_STATE = `@${storeKey}/set-state`;
     return {
         CLEAR_ERROR,
         CLEAR_RESULT,
@@ -13,6 +14,7 @@ export default function (storeKey: string) {
         SET_BUSY,
         SET_ERROR,
         FETCH,
-        SET_RESULT
+        SET_RESULT,
+        SET_STATE,
     }
 }

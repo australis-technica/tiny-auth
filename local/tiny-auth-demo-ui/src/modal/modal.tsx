@@ -19,11 +19,12 @@ export interface ModalProps {
     dialogTitle: ReactNode;
     dialogActions?: ReactNode;
     onClose?(): any;
+    disabled?: boolean;    
 }
 /** */
 class Modal extends Component<ModalProps & { classes: ClassNameMap }> {
     render() {
-        const { classes } = this.props;
+        const { classes, disabled } = this.props;
         return <Dialog open={this.props.isOpen} onClose={this.props.onClose}>
             <AppBar className={classes.appbar}>
                 <Toolbar className={classes.toolbar}>
@@ -33,7 +34,11 @@ class Modal extends Component<ModalProps & { classes: ClassNameMap }> {
                             : this.props.dialogTitle
                     }
                     <div className={classNames(classes.toolbarSpacer, classes.toolbarExpander)} />
-                    <Button color="inherit" className={classes.toolbarButton} onClick={this.props.onClose} >
+                    <Button
+                        color="inherit"
+                        className={classes.toolbarButton}
+                        onClick={this.props.onClose}
+                        disabled={disabled} >
                         <Icon children="close" className={classes.toolbarButtonIcon} />
                     </Button>
                 </Toolbar>

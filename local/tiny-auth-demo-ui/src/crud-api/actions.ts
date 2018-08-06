@@ -8,7 +8,7 @@ log("crud-api-actions");
  */
 export default function (storeKey: string) {
 
-    const { CLEAR_ERROR, CLEAR_RESULT, CLEAR_SUCCESS, FETCH, SET_BUSY, SET_ERROR, SET_RESULT } = actionTypes(storeKey);
+    const { CLEAR_ERROR, CLEAR_RESULT, CLEAR_SUCCESS, FETCH, SET_BUSY, SET_ERROR, SET_RESULT, SET_STATE } = actionTypes(storeKey);
     /**
      * Actions
      */
@@ -46,6 +46,11 @@ export default function (storeKey: string) {
         clearSuccess: (): FluxStandardAction<undefined> => ({
             type: CLEAR_SUCCESS,
             payload: undefined,
+            meta: undefined
+        }),
+        setState: (payload: {}): FluxStandardAction<{}> => ({
+            type: SET_STATE,
+            payload,
             meta: undefined
         })
     }

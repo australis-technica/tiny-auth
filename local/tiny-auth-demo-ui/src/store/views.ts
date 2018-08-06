@@ -23,5 +23,5 @@ export default {
   // ...
   [licenseAddView.storeKey]: licenseAddView.reducer,
   [licenseAddFormView.storeKey]: licenseAddFormView.reducer,
-  [licenseView.storeKey]: licenseView.reducer
+  [licenseView.storeKey]: licenseView.reducer,
 };

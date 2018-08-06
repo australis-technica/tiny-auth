@@ -32,4 +32,5 @@ export interface CrudApiActions {
   clearSuccess(): any;
   setBusy(busy: boolean): any;
   setError(error: string | Error): any;
+  setState(payload: {}): any;
 }
