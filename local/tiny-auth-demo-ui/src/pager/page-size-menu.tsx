@@ -33,10 +33,6 @@ export default class PageSizeMenu extends Component<{
                 buttonRef={x => (this.el = x)}
                 onClick={menuState.openMenu}
               >
-                <Icon
-                  children="expand_more"
-                  style={{ marginRight: "0.5rem" }}
-                />
                 {typeof label !== "string" ? (
                   label
                 ) : (
@@ -44,6 +40,10 @@ export default class PageSizeMenu extends Component<{
                     {label}
                   </Typography>
                 )}
+                <Icon
+                  children="expand_more"
+                  style={{ marginRight: "0.5rem" }}
+                />
               </Button>
               <Menu
                 open={menuState.isOpen}
@@ -56,7 +56,7 @@ export default class PageSizeMenu extends Component<{
                     key={`page_size_menu_item_${i}`}
                     onClick={menuState.handleMenuAction(this.setPageSize(n))}
                   >
-                    {n}
+                    Show {n}
                   </MenuItem>
                 ))}
               </Menu>

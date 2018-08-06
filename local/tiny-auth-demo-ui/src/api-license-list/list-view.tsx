@@ -98,38 +98,16 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                           disabled={busy}
                           renderChildren={state => {
                             return (
-                              <>
-                                <ResponsiveMenuItem
-                                  {...state}
-                                  action={{
-                                    title: "Reload",
-                                    onClick: state.handleMenuAction(this.fetch),
-                                    disabled: !!busy
-                                  }}
-                                >
-                                  <Icon>refresh</Icon>
-                                </ResponsiveMenuItem>
-                                <ResponsiveMenuItem
-                                  {...state}
-                                  action={{
-                                    title: "filter",
-                                    onClick: state.handleMenuAction(()=>{}),
-                                    disabled: !!busy
-                                  }}
-                                >
-                                  <Icon>filter_list</Icon>
-                                </ResponsiveMenuItem>
-                                <ResponsiveMenuItem
-                                  {...state}
-                                  action={{
-                                    title: "search",
-                                    onClick: state.handleMenuAction(()=>{}),
-                                    disabled: !!busy
-                                  }}
-                                >
-                                  <Icon>search</Icon>
-                                </ResponsiveMenuItem>
-                              </>
+                              <ResponsiveMenuItem
+                                {...state}
+                                action={{
+                                  title: "Reload",
+                                  onClick: state.handleMenuAction(this.fetch),
+                                  disabled: !!busy
+                                }}
+                              >
+                                <Icon>refresh</Icon>
+                              </ResponsiveMenuItem>
                             );
                           }}
                         />
