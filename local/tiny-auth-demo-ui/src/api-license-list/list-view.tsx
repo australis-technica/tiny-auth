@@ -10,7 +10,7 @@ import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import { Connected as Deliver } from "../api-license-deliver";
-import { MenuResponsive, ResponsiveMenuItem } from "../menu";
+import { MenuResponsive, MenuResponsiveItem } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
 import { ApiActions, ApiItem, ApiState } from "./api";
@@ -98,7 +98,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                           disabled={busy}
                           renderChildren={state => {
                             return (
-                              <ResponsiveMenuItem
+                              <MenuResponsiveItem
                                 {...state}
                                 action={{
                                   title: "Reload",
@@ -107,7 +107,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                                 }}
                               >
                                 <Icon>refresh</Icon>
-                              </ResponsiveMenuItem>
+                              </MenuResponsiveItem>
                             );
                           }}
                         />
