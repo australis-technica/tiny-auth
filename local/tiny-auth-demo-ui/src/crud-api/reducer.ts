@@ -6,12 +6,20 @@ import defaultOptions from "./default-options";
  *
  * @param endpoint
  */
-export default function <T>(
+export default function<T>(
   endpoint: string,
   defaultState: CrudApiState<T>,
   options: Partial<CrudApiOptions> = defaultOptions
 ): Reducer {
-  const { CLEAR_ERROR, CLEAR_RESULT, CLEAR_SUCCESS, FETCH, SET_BUSY, SET_ERROR, SET_RESULT } = actionTypes(endpoint);
+  const {
+    CLEAR_ERROR,
+    CLEAR_RESULT,
+    CLEAR_SUCCESS,
+    FETCH,
+    SET_BUSY,
+    SET_ERROR,
+    SET_RESULT
+  } = actionTypes(endpoint);
   const o: CrudApiOptions = Object.assign({}, defaultOptions, options);
   const { resultKey } = o;
   /**
@@ -31,22 +39,30 @@ export default function <T>(
         return state; // catched by Middleware
       }
       case SET_RESULT: {
-        const {
-          payload
-        } = action;
-        return Object.assign({}, state, { [resultKey]: payload, success: true });
+        const { payload } = action;
+        return Object.assign({}, state, {
+          [resultKey]: payload,
+          success: true
+        });
       }
       case CLEAR_RESULT: {
-        return Object.assign({}, state, { [resultKey]: defaultState[resultKey] });
+        return Object.assign({}, state, {
+          [resultKey]: defaultState[resultKey]
+        });
       }
       case SET_ERROR: {
         const { payload } = action;
-        const error =
-          typeof payload === "string"
-            ? payload
-            : payload && payload.message
-              ? payload.message
-              : payload;
+        let error: string;
+        if (payload instanceof TypeError || payload.name === "TypeError") {
+          error = "Network Error";
+        } else {
+          error =
+            typeof payload === "string"
+              ? payload
+              : payload && payload.message
+                ? payload.message
+                : payload;
+        }
         const error_code = payload && payload.code ? payload.code : 0;
         return Object.assign({}, state, { error, error_code, success: false });
       }
