@@ -2,18 +2,21 @@ import { Avatar, Icon, IconButton, ListItem, ListItemAvatar, ListItemText } from
 import * as React from "react";
 import { Component } from "react";
 import { ApiItem } from "./api";
+import { MenuResponsive } from "../menu/";
 
-export type ActionType = "deliver" | "edit" | "delete" | "view";
+export type ActionType = "deliver" | "edit" | "delete" | "view" | "download";
 
 export interface ListViewItemProps {
-    disabled?:boolean;
+    disabled?: boolean;
     index?: number;
     item: ApiItem;
     onRequestAction(action: ActionType, item: ApiItem): any;
 }
 
 export default class ListViewItem extends Component<ListViewItemProps>{
-
+    onRequestAction(action: ActionType, item: ApiItem): any {
+        return () => this.props.onRequestAction(action, item);
+    }
     /** */
     render() {
         const { item, index, disabled } = this.props;
@@ -28,15 +31,19 @@ export default class ListViewItem extends Component<ListViewItemProps>{
             <ListItemText
                 style={{ marginRight: "1rem", paddingRight: "1rem" }}
                 primary={(typeof index === "number" ? `${index}: ` : "") + item.displayName} secondary={item.description} />
-            <div style={{ flex: "1 0" }} />
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <IconButton onClick={() => { this.props.onRequestAction("edit", item) }}
+            <div style={{ flex: "1 0" }} />           
+            <MenuResponsive breakpoint="md" renderChildren={(menu) => <>
+                <IconButton onClick={menu.handleMenuAction(this.onRequestAction("edit", item))}
                     title={"Edit"}><Icon>edit</Icon></IconButton>
                 <IconButton onClick={() => { this.props.onRequestAction("delete", item) }}
                     title={"Delete"}><Icon>delete</Icon></IconButton>
+                <IconButton onClick={() => { this.props.onRequestAction("download", item) }}
+                    title={"Download"}><Icon>cloud_download</Icon></IconButton>
                 <IconButton onClick={() => { this.props.onRequestAction("deliver", item) }}
                     title={"Deliver"}><Icon>send</Icon></IconButton>
-            </div>
+            </>}>
+            </MenuResponsive>
+            {this.props.children}
         </ListItem>
     }
 }

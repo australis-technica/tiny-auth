@@ -4,7 +4,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Toolbar
+  Toolbar,
+  Typography
 } from "@material-ui/core";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
@@ -84,6 +85,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                   return (
                     <>
                       <Toolbar className={classes.toolbar}>
+                        <Typography>LIST LONG TITLE ...</Typography>
                         {busy && <CircularProgress className={classes.busy} />}
                         <TextFilter
                           disabled={!!busy}
