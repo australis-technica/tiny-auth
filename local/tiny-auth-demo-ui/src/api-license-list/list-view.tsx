@@ -162,6 +162,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                         isOpen={this.state.actionType === "edit"}
                         onClose={this.clearAction}
                         item={item}
+                        onSuccess={this.fetch}
                       />
                     </>
                   );

@@ -62,5 +62,8 @@ export default function configureCrud(app: Express) {
       ]),
       crud.post()
     ]);
+    app.delete(route, (_req, res) => {
+      res.status(400).send("Not Allowed");
+    })
   }
 }
