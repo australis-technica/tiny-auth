@@ -2,7 +2,7 @@ import { Component, Fragment } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import * as React from "react";
 import { View as Add } from "../api-customers-add";
-import { List } from "../api-customers-list";
+import { Connected as ListView } from "../api-customers-list";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import withStyles, {
@@ -46,7 +46,7 @@ class View extends Component<ViewProps> {
   content = (tabIndex: number) => {
     switch (tabIndex) {
       case 0: {
-        return <List />;
+        return <ListView />;
       }
       case 1: {
         return <Add />;

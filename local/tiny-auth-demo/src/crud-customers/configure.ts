@@ -1,4 +1,4 @@
-import { Express , RequestHandler } from "express-serve-static-core";
+import { Express, RequestHandler } from "express-serve-static-core";
 import {
     CrudController,
     ensureID,
@@ -34,12 +34,12 @@ export default function configureCrud(app: Express) {
             ((req, _res, next) => {
                 // include user
                 try {
-                  req.body.userid = req.user.id
-                  return next();
+                    req.body.userid = req.user.id
+                    return next();
                 } catch (error) {
-                  return next(error);
+                    return next(error);
                 }
-              }) as RequestHandler,
+            }) as RequestHandler,
             crud.put()
         ]);
         app.post(route, [
@@ -49,6 +49,14 @@ export default function configureCrud(app: Express) {
             ensureBody(),
             ensureID(), // reject missing id
             crud.post()
+        ]);
+        app.delete(route, [
+            authorize,
+            json(),
+            ensureBody(),
+            ensureID(), // reject no id
+            requireRole(["admin", "delete"]),
+            crud.dlete()
         ]);
     }
 }
