@@ -17,9 +17,10 @@ import { Connected as Edit } from "../api-license-edit";
 import { MenuResponsive, MenuResponsiveItem } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
-import { ApiActions, ApiItem, ApiState, ActionType } from "./api";
+import { ApiActions, ApiItem, ApiState, ActionType, downloadUrl } from "./api";
 import ListViewItem from "./list-view-item";
 import styles from "./list-view-styles";
+import { Connected as Download } from "../download";
 /** */
 export interface ListViewParams {
   // ...
@@ -112,6 +113,15 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
           />
         );
       }
+      case "download": {
+        return <Download
+          title="License"
+          linkText="Click to Download"
+          onClose={this.clearAction}
+          fileName="license.lic"
+          url={downloadUrl + "/" + item.id}
+        />
+      }
       default: {
         return null;
       }
@@ -195,28 +205,31 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                                     <Icon>edit</Icon>
                                   </IconButton>
                                   <IconButton
-                                    onClick={this.createAction(
-                                      "delete",
-                                      item
-                                    )}
+                                    onClick={menu.handleMenuAction(
+                                      this.createAction(
+                                        "delete",
+                                        item
+                                      ))}
                                     title={"Delete"}
                                   >
                                     <Icon>delete</Icon>
                                   </IconButton>
                                   <IconButton
-                                    onClick={this.createAction(
-                                      "download",
-                                      item
-                                    )}
+                                    onClick={menu.handleMenuAction(
+                                      this.createAction(
+                                        "download",
+                                        item
+                                      ))}
                                     title={"Download"}
                                   >
                                     <Icon>cloud_download</Icon>
                                   </IconButton>
                                   <IconButton
-                                    onClick={this.createAction(
-                                      "deliver",
-                                      item
-                                    )}
+                                    onClick={menu.handleMenuAction(
+                                      this.createAction(
+                                        "deliver",
+                                        item
+                                      ))}
                                     title={"Deliver"}
                                   >
                                     <Icon>send</Icon>

@@ -24,8 +24,8 @@ export default function configureCrud(app: Express) {
   const endpoint = "licenses";
   const route = `/api/${endpoint}/:id?`;
   app.get(route + "/download/:id?", [
-    // authorize,
-    // requireRole(["admin", "download"]),
+    authorize,
+    requireRole(["admin", "download"]),
     (async (req, res, next) => {
       try {
         if (!req.params.id) {

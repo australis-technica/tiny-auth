@@ -40,4 +40,5 @@ const { REACT_APP_API_BASE, REACT_APP_API_LICENSES } = process.env;
 const api = crudApi<ApiItem[]>("license-list", defaultState, {
   endpoint: `${REACT_APP_API_BASE}/${REACT_APP_API_LICENSES}`
 });
+export const downloadUrl =  `${REACT_APP_API_BASE}/${REACT_APP_API_LICENSES}/download`;
 export default api;
