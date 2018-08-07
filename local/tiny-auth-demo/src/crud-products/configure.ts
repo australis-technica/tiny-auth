@@ -1,8 +1,8 @@
 import { Express, RequestHandler } from "express-serve-static-core";
 import {
     CrudController,
-    ensureID,    
-    ensureBody,    
+    ensureID,
+    ensureBody,
 } from "../crud-controller";
 import repo from "./repo";
 import auth from "../auth";
@@ -13,7 +13,7 @@ import { json } from "body-parser";
  * @param app
  */
 export default function configureCrud(app: Express) {
-    const { authorize, requireRole } = auth.middleware;    
+    const { authorize, requireRole } = auth.middleware;
     {
         const crud = CrudController(repo);
         const endpoint = "products";
@@ -28,12 +28,12 @@ export default function configureCrud(app: Express) {
             ((req, _res, next) => {
                 // include user
                 try {
-                  req.body.userid = req.user.id
-                  return next();
+                    req.body.userid = req.user.id
+                    return next();
                 } catch (error) {
-                  return next(error);
+                    return next(error);
                 }
-              }) as RequestHandler,
+            }) as RequestHandler,
             crud.put()
         ]);
         app.post(route, [
@@ -43,6 +43,14 @@ export default function configureCrud(app: Express) {
             ensureBody(),
             ensureID(), // reject missing id
             crud.post()
+        ]);
+        app.delete(route, [
+            authorize,
+            json(),
+            ensureBody(),
+            ensureID(), // reject no id
+            requireRole(["admin", "delete"]),
+            crud.dlete()
         ]);
     }
 }

@@ -1,12 +1,27 @@
-import api from "./api";
 import { connect } from "react-redux";
-const selector = createSelector(api.selector, apiState => apiState);
 import { createSelector } from "reselect";
-import View from "./view";
+import api from "./api";
+import ListView, { ListViewParams } from "./list-view";
+import { ComponentType } from "react";
+import { Dispatch } from "redux";
 /** */
-const Connected = connect(
+const selector = createSelector(api.selector, (apiState) => {
+  return { apiState };
+});
+/** */
+const bindActions = (dispatch: Dispatch) => {
+  const a = api.bindActions(dispatch);
+  return {
+    api: {
+      ...a
+    }
+  }
+}
+const Connected: ComponentType<ListViewParams> = connect(
   selector,
-  api.bindActions
-)(View);
-/** */
+  bindActions
+)(ListView);
+/**
+ *
+ */
 export default Connected;
