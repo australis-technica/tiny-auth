@@ -16,6 +16,7 @@ export default function<T>(
     CLEAR_RESULT,
     CLEAR_SUCCESS,
     FETCH,
+    RESET,
     SET_BUSY,
     SET_ERROR,
     SET_RESULT
@@ -45,10 +46,26 @@ export default function<T>(
           success: true
         });
       }
+      case CLEAR_ERROR: {
+        return Object.assign({}, state, { error: undefined });
+      }
       case CLEAR_RESULT: {
         return Object.assign({}, state, {
           [resultKey]: defaultState[resultKey]
         });
+      }
+      case CLEAR_SUCCESS: {
+        return Object.assign({}, state, { success: false });
+      }
+      case RESET: {
+        return {
+          ...state,
+          ...{
+            [resultKey]: defaultState[resultKey],
+            success: false,
+            error: undefined
+          }
+        };
       }
       case SET_ERROR: {
         const { payload } = action;
@@ -65,12 +82,6 @@ export default function<T>(
         }
         const error_code = payload && payload.code ? payload.code : 0;
         return Object.assign({}, state, { error, error_code, success: false });
-      }
-      case CLEAR_ERROR: {
-        return Object.assign({}, state, { error: undefined });
-      }
-      case CLEAR_SUCCESS: {
-        return Object.assign({}, state, { success: false });
       }
       default:
         return state;

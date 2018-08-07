@@ -132,7 +132,7 @@ export default class CreateFeaturesView extends PureComponent<
             )
           }
         />
-        <ListItemSecondaryAction>          
+        <ListItemSecondaryAction>
           <IconButton aria-label="Edit" title="Edit" disabled={isEditing}>
             <Icon children="edit" onClick={() => this.startEdit(key)} />
           </IconButton>
@@ -144,9 +144,11 @@ export default class CreateFeaturesView extends PureComponent<
   renderNoFeatures() {
     return (
       <ListItem key="no-features">
-        <ListItemAvatar
-          children={<Avatar children={<Icon children="warning" />} />}
-        />
+        <ListItemAvatar>
+          <Avatar>
+            <Icon children="warning" />
+          </Avatar>
+        </ListItemAvatar>
         <ListItemText primary={"No Features"} />
       </ListItem>
     );
@@ -164,7 +166,7 @@ export default class CreateFeaturesView extends PureComponent<
           <Icon>more_vert</Icon>
         </IconButton>
         <Menu
-          open={isMenuOpen}
+          open={!!isMenuOpen}
           anchorEl={this.menuButton}
           onClose={this.closeMenu}
         >

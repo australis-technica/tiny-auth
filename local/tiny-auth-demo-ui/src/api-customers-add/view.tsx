@@ -94,7 +94,7 @@ class View extends Component<ViewProps> {
           </Dialog>
         )}
         {renderError && (
-          <Dialog open={!!this.props.apiState.error}>
+          <Dialog open={renderError}>
             <DialogContent>
               <Typography color="error" variant="headline">
                 {this.props.apiState.error}
@@ -110,7 +110,7 @@ class View extends Component<ViewProps> {
           </Dialog>
         )}
         {renderSuccess && (
-          <Dialog open={!!this.props.apiState.success}>
+          <Dialog open={renderSuccess}>
             <DialogContent>
               <Typography variant="headline">Saved</Typography>
             </DialogContent>

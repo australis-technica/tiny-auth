@@ -33,4 +33,8 @@ export interface CrudApiActions {
   setBusy(busy: boolean): any;
   setError(error: string | Error): any;
   setState(payload: {}): any;
+  /**
+   * clear error, success, result
+   */
+  reset():any
 }

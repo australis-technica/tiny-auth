@@ -64,8 +64,7 @@ class ActionView extends Component<
     };
   }
   componentDidMount() {
-    this.props.api.clearError();
-    this.props.api.clearSuccess();
+    this.props.api.reset();    
   }
   /** */
   send = async (item: ApiItem) => {

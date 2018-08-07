@@ -4,7 +4,7 @@ import { CrudApiRequest, CrudApiActions } from "./types";
 /** */
 export default function actionBinder(storeKey: string) {
     const a = actions(storeKey);
-    const { fetch, clearError, clearResult, setResult, setBusy, setError, clearSuccess, setState } = a;
+    const { fetch, clearError, clearResult,reset, setResult, setBusy, setError, clearSuccess, setState } = a;
     return function bindActions(dispatch: Dispatch): CrudApiActions {
         return {
             fetch: (payload: CrudApiRequest) => dispatch(fetch(payload)),
@@ -15,6 +15,7 @@ export default function actionBinder(storeKey: string) {
             setError: (error: string | Error) => dispatch(setError(error)),
             setResult: (data: any) => dispatch(setResult(data)),
             setState: (payload:{}) => dispatch(setState(payload)),
+            reset: ()=> dispatch(reset())
         }
     }
 }

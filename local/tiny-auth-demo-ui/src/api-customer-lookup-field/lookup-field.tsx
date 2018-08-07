@@ -144,7 +144,7 @@ export default class LookupField extends Component<LookupFieldsProps, LookupFiel
                     endAdornment: <IconButton onClick={this.openDialog}><Icon style={{}}>keyboard_arrow_down</Icon></IconButton>
                 }}
             />
-            <Dialog open={isDialogOpen} onClose={this.closeDialog}>
+            <Dialog open={!!isDialogOpen} onClose={this.closeDialog}>
                 <DialogTitle style={{ marginTop: 0, paddingTop: 0 }}>
                     <Toolbar style={{ margin: 0, padding: 0 }}>
                         <Typography variant="subheading" style={{ textTransform: "uppercase" }}>Select</Typography>
