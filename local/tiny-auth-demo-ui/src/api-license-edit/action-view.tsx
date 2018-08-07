@@ -23,12 +23,12 @@ export interface ApiContext {
 export type ActionViewProps<T> = ActionViewParams<T> & ApiContext;
 /** */
 export interface ActionViewState<T> {
-  error: string|undefined;
+  error: string | undefined;
   isBusy: boolean;
   isError: boolean;
   isSuccess: boolean;
   isOpen: boolean;
-  item: T | undefined;  
+  item: T | undefined;
 }
 /** */
 class ActionView extends Component<
@@ -37,22 +37,21 @@ class ActionView extends Component<
 > {
   /** */
   state: ActionViewState<ApiItem> = {
-    error: undefined,
+    error: this.props.apiState.error,
     isBusy: false,
     isError: false,
     isSuccess: false,
     isOpen: false,
-    item: undefined    
+    item: undefined
   };
   /** */
   static getDerivedStateFromProps(
     props: ActionViewProps<any>,
-    state: ActionViewState<any>
+    _state: ActionViewState<any>
   ) {
     const { apiState, isOpen, item } = props;
     const isBusy = !!apiState.busy;
-    const isSuccess =
-      !!apiState.success ;
+    const isSuccess = !!apiState.success;
     const isError = !!apiState.error;
     return {
       error: apiState.error,
@@ -64,7 +63,7 @@ class ActionView extends Component<
     };
   }
   componentDidMount() {
-    this.props.api.reset();    
+    this.props.api.reset();
   }
   /** */
   send = async (item: ApiItem) => {

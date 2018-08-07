@@ -29,73 +29,59 @@ export interface ActionViewState<T> {
   isSuccess: boolean;
   isOpen: boolean;
   item: T | undefined;
-  /** @description transcient, completed ids */
-  completed: string[];
 }
 /** */
-class ActionView<T extends ApiItem = ApiItem> extends Component<ActionViewProps<T> & { classes: ClassNameMap }, ActionViewState<T>> {
+class ActionView<T extends ApiItem = ApiItem> extends Component<
+  ActionViewProps<T> & { classes: ClassNameMap },
+  ActionViewState<T>
+> {
   /** */
   state: ActionViewState<T> = {
-    error: undefined as string | undefined,
+    error: this.props.apiState.error,
     isBusy: false,
     isError: false,
     isSuccess: false,
     isOpen: false,
-    item: undefined,
-    completed: [],
+    item: undefined
   };
   /** */
-  static getDerivedStateFromProps(props: ActionViewProps<any>, state: ActionViewState<any>) {
-    let { error, completed } = state;
+  static getDerivedStateFromProps(
+    props: ActionViewProps<any>,
+    _state: ActionViewState<any>
+  ) {
     const { apiState, isOpen, item } = props;
-    error = error || apiState.error;
     const isBusy = !!apiState.busy;
-    const isSuccess = !!apiState.success && !!item && (completed.indexOf(item.id) !== -1);
-    const isError = !!error;
+    const isSuccess = !!apiState.success;
+    const isError = !!apiState.error;
     return {
-      completed,
-      error,
+      error: apiState.error,
       isBusy,
       isError,
       isSuccess,
       isOpen,
-      item,
-    }
+      item
+    };
   }
-  clearError = () => {
-    this.setState({ error: undefined });
+  componentDidMount() {
+    this.props.api.reset();
   }
-  setCompleted = (item: T) => {
-    const { completed } = this.state;
-    this.setState({
-      completed: completed.concat(item.id)
-    })
-  }
-  send = async () => {
-    if (!this.props.item) {
-      throw new Error("No Item");
+  /** */
+  send = async (item: ApiItem) => {
+    const action = await this.props.api.dlete(item.id);
+    if (action && action.payload instanceof Error) {
+      return;
     }
-    try {
-      this.clearError();
-      const action = await this.props.api.dlete(this.props.item.id);
-      if (action && action.payload instanceof Error) {
-        throw action.payload;
-      }
-      if (action && action.error instanceof Error) {
-        throw action.error;
-      }
-      this.setCompleted(this.props.item);
-      this.props.onSuccess && this.props.onSuccess();
-    } catch (error) {
-      this.setState({
-        error: error.message
-      });
+    if (action && action.error instanceof Error) {
+      return;
     }
+    this.props.onSuccess && this.props.onSuccess();
   };
+  /** */
   onCancel = () => {
     this.props.onClose();
   };
-  onOk = () => {
+  /** */
+  onOk = (item: ApiItem) => {
     const { isSuccess, isError } = this.state;
     if (isSuccess) {
       return this.props.onClose();
@@ -103,42 +89,50 @@ class ActionView<T extends ApiItem = ApiItem> extends Component<ActionViewProps<
     if (isError) {
       return this.props.onClose();
     }
-    this.send();
+    this.send(item);
   };
-  onAgain = () => {
-    this.send();
-  }
+  /** */
+  onAgain = (item: ApiItem) => {
+    this.send(item);
+  };
   /** */
   renderActions = () => {
     const { classes } = this.props;
-    const { onOk, onAgain, } = this;
+    const { onOk, onAgain } = this;
     const { isSuccess, isError, isBusy, item, isOpen } = this.state;
     if (!item || !isOpen) return null;
-    return <>
-      {(isSuccess || isError) && <Button
-        style={{ color: "orange" }}
-        className={classes.button}
-        disabled={isBusy}
-        variant="outlined"
-        onClick={onAgain}
-      >
-        Again
-        </Button>}
-      <Button
-        className={classes.button}
-        disabled={isBusy}
-        variant="outlined"
-        onClick={onOk}
-      >
-        OK
+    return (
+      <>
+        {(isSuccess || isError) && (
+          <Button
+            style={{ color: "orange" }}
+            className={classes.button}
+            disabled={isBusy}
+            variant="outlined"
+            onClick={() => onAgain(item)}
+          >
+            Again
+          </Button>
+        )}
+        <Button
+          className={classes.button}
+          disabled={isBusy}
+          variant="outlined"
+          onClick={() => onOk(item)}
+        >
+          OK
         </Button>
-    </> 
-  }
+      </>
+    );
+  };
+  /** */
   render() {
     const { isOpen } = this.props;
     const { onCancel } = this;
     return (
-      <Modal isOpen={isOpen} onClose={onCancel}
+      <Modal
+        isOpen={isOpen}
+        onClose={onCancel}
         dialogTitle={this.props.title}
         dialogContent={<ActionBody {...this.state} />}
         dialogActions={this.renderActions()}

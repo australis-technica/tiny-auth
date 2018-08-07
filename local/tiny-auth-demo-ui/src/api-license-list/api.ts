@@ -31,6 +31,8 @@ export type ApiState = CrudApiState<ApiItem[]> & {
 export type ApiActions = CrudApiActions & {
 
 }
+/** */
+export type ActionType = "deliver" | "edit" | "delete" | "view" | "download";
 // ...
 const defaultState = { busy: false, error: undefined, data: [] };
 const { REACT_APP_API_BASE, REACT_APP_API_LICENSES } = process.env;

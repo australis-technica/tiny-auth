@@ -1,6 +1,7 @@
 import {
   CircularProgress,
   Icon,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -10,15 +11,15 @@ import {
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, ComponentType } from "react";
-import { Connected as Deliver } from "../api-license-deliver";
 import { Connected as Delete } from "../api-license-delete";
+import { Connected as Deliver } from "../api-license-deliver";
+import { Connected as Edit } from "../api-license-edit";
 import { MenuResponsive, MenuResponsiveItem } from "../menu";
 import { Pagerbar, WithPager } from "../pager";
 import { TextFilter, WithTextFilter } from "../text-filter";
-import { ApiActions, ApiItem, ApiState } from "./api";
-import ListViewItem, { ActionType } from "./list-view-item";
+import { ApiActions, ApiItem, ApiState, ActionType } from "./api";
+import ListViewItem from "./list-view-item";
 import styles from "./list-view-styles";
-import { Connected as Edit} from "../api-license-edit";
 /** */
 export interface ListViewParams {
   // ...
@@ -42,12 +43,16 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
     actionType: undefined,
     item: undefined
   };
+  /** */
+  createAction = (actionType: ActionType, item: ApiItem) => {
+    return () => this.setState({ actionType, item });
+  };
   clearAction = () => {
     this.setState({
       actionType: undefined,
       item: undefined
     });
-  }
+  };
   /** */
   setActionType = (actionType: ActionType) => {
     return () => {
@@ -69,11 +74,54 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
   onFilterChanged = (filtered: ApiItem[]) => {
     this.setState({ filtered });
   };
+  renderAction = (
+    actionType: ActionType | undefined,
+    item: ApiItem | undefined
+  ) => {
+    if (!actionType || !item) return null;
+    switch (actionType) {
+      case "edit": {
+        return (
+          <Edit
+            title="Update"
+            isOpen={true}
+            onClose={this.clearAction}
+            item={item}
+            onSuccess={this.fetch}
+          />
+        );
+      }
+      case "deliver": {
+        return (
+          <Deliver
+            title={"Deliver"}
+            isOpen={true}
+            onClose={this.clearAction}
+            item={item}
+          />
+        );
+      }
+      case "delete": {
+        return (
+          <Delete
+            title="Delete"
+            isOpen={true}
+            onClose={this.clearAction}
+            item={item}
+            onSuccess={this.fetch}
+          />
+        );
+      }
+      default: {
+        return null;
+      }
+    }
+  };
   /** */
   render() {
     const { busy, error, data } = this.props.apiState;
     const { classes } = this.props;
-    const { item } = this.state;
+    const { item, actionType } = this.state;
     if (error) return this.renderError(error);
     if (!data) return null;
     if (!Array.isArray(data)) {
@@ -133,10 +181,50 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                             disabled={!!busy}
                             key={`list_item_${i}`}
                             item={item}
-                            onRequestAction={(actionType, item) => {
-                              this.setState({ actionType, item });
-                            }}
-                          />
+                          >
+                            <MenuResponsive
+                              breakpoint="md"
+                              renderChildren={menu => (
+                                <>
+                                  <IconButton
+                                    onClick={menu.handleMenuAction(
+                                      this.createAction("edit", item)
+                                    )}
+                                    title={"Edit"}
+                                  >
+                                    <Icon>edit</Icon>
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={this.createAction(
+                                      "delete",
+                                      item
+                                    )}
+                                    title={"Delete"}
+                                  >
+                                    <Icon>delete</Icon>
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={this.createAction(
+                                      "download",
+                                      item
+                                    )}
+                                    title={"Download"}
+                                  >
+                                    <Icon>cloud_download</Icon>
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={this.createAction(
+                                      "deliver",
+                                      item
+                                    )}
+                                    title={"Deliver"}
+                                  >
+                                    <Icon>send</Icon>
+                                  </IconButton>
+                                </>
+                              )}
+                            />
+                          </ListViewItem>
                         ))}
                       </List>
                       <Pagerbar
@@ -144,26 +232,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                         pageSizes={[3, 5, 10]}
                         disabled={!!busy}
                       />
-                      <Deliver
-                        title={"Deliver"}
-                        isOpen={this.state.actionType === "deliver"}
-                        onClose={this.clearAction}
-                        item={item}
-                      />
-                      <Delete
-                        title="Delete"
-                        isOpen={this.state.actionType === "delete"}
-                        onClose={this.clearAction}
-                        item={item}
-                        onSuccess={this.fetch}
-                      />
-                      {this.state.actionType === "edit" && <Edit
-                        title="Update"
-                        isOpen={this.state.actionType === "edit"}
-                        onClose={this.clearAction}
-                        item={item}
-                        onSuccess={this.fetch}
-                      />}
+                      {this.renderAction(actionType, item)}
                     </>
                   );
                 }}
