@@ -2,7 +2,13 @@ import { json } from "body-parser";
 import { Express, RequestHandler } from "express-serve-static-core";
 import uuid from "uuid";
 import auth from "../auth";
-import { CrudController, ensureBody, ensureID, excludeKeys, validate } from "../crud-controller";
+import {
+  CrudController,
+  ensureBody,
+  ensureID,
+  excludeKeys,
+  validate
+} from "../crud-controller";
 import RejectKeys from "../crud-controller/reject-keys";
 import { signMiddleware } from "../lic";
 import licenses from "./repo";
@@ -34,7 +40,7 @@ export default function configureCrud(app: Express) {
       ((req, _res, next) => {
         // include user
         try {
-          req.body.userid = req.user.id
+          req.body.userid = req.user.id;
           return next();
         } catch (error) {
           return next(error);
@@ -62,8 +68,13 @@ export default function configureCrud(app: Express) {
       ]),
       crud.post()
     ]);
-    app.delete(route, (_req, res) => {
-      res.status(400).send("Not Allowed");
-    })
+    app.delete(route, [
+      authorize,
+      json(),
+      ensureBody(),
+      ensureID(), // reject no id
+      requireRole(["admin", "delete"]),
+      crud.dlete()
+    ]);
   }
 }

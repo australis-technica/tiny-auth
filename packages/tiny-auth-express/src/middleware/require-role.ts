@@ -5,9 +5,11 @@ const debug = debugModule(module);
 const requireRole: (roles: string[]) => RequestHandler = (roles) => (req, _res, next) => {
     try {
         const { user } = req;
-        const found = user.roles.split(',').find((role: string) => roles.indexOf(role) !== -1);
-        if (!found) {
-            throw new Error("Unauthorized (role)");
+        for(const role of roles) {
+            const userRoles = user.roles.split(',');
+            if(userRoles.indexOf(role) === -1){
+                return next(new Error(`${role} Role required`));
+            }
         }
         return next();
     } catch (error) {

@@ -8,7 +8,7 @@ export default function(dispatch: Dispatch) {
       ...actions,
       dlete: (id: string) => {
         return dispatch(
-          actions.fetch({ method: "DEL", body: { id }})
+          actions.fetch({ method: "DELETE", body: { id }})
         );
       }
     }

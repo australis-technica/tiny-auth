@@ -20,7 +20,8 @@ export default function configure(app: Express) {
         try {
             /** Middleware */
             app.use(cors({
-                origin: process.env.CORS_ORIGIN || "*"
+                origin: process.env.CORS_ORIGIN || "*",
+                methods:"*"
             }));
             app.use(helmet())
             app.use(fingerPrint);

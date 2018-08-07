@@ -32,7 +32,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
   ) => async (req, res, next) => {
     try {
       clean = clean || noClean;
-      const { id } = req.params;
+      const { id } = req.body;
       const data = await table.remove(id);
       return res.json(clean(data));
     } catch (error) {

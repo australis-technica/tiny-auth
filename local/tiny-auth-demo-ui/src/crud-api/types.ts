@@ -5,9 +5,9 @@ export type CrudApiState<T> = { [key: string]: any } & {
   data: T;
 };
 /** */
-export type CrudAPiVerb = "GET" | "PUT" | "POST" | "DEL";
+export type CrudAPiVerb = "GET" | "PUT" | "POST" | "DELETE";
 /** */
-export const verbs: CrudAPiVerb[] = ["GET", "PUT", "POST", "DEL"];
+export const verbs: CrudAPiVerb[] = ["GET", "PUT", "POST", "DELETE"];
 /** */
 export interface CrudApiRequest {
   params?: string[];
