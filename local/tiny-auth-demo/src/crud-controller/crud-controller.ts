@@ -25,7 +25,7 @@ export default function CrudController<TTable extends Table>(table: TTable) {
     }
   };
   /**
-   * DLETE/REMOVE
+   * DELETE/REMOVE
    */
   const dlete: (clean?: (x: any) => any) => RequestHandler = (
     clean = noClean
