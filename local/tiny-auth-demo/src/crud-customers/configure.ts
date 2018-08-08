@@ -18,7 +18,7 @@ import { Customer } from "./types";
 export default function configureCrud(app: Express) {
     const { authorize, requireRole } = auth.middleware;
     {
-        // Licenses
+        // 
         const crud = CrudController(repo);
         const endpoint = "customers";
         const route = `/api/${endpoint}/:id?`;
