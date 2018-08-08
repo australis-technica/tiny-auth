@@ -1,7 +1,9 @@
 import { RequestHandler, Request, Response } from "express-serve-static-core";
 import { Table } from "./types";
 import fromBody from "./from-body";
-/** */
+/** 
+ * TODO: paged
+ */
 export default function CrudController<TTable extends Table>(table: TTable) {
   //
   const noClean = (x: any) => x;
