@@ -11,8 +11,9 @@ export default function sign(req: SignRequest, features: {} = {}) {
     if (conflicts && conflicts.length > 0) {
         throw new Error(`Lic Request/Feature conflict: ${conflicts.join(", ")}`);
     }
-    const { expiresIn, iss, aud, validator, secret } = req;
+    const { expiresIn, iss, aud, validator, secret, token_id } = req;
     const payload = {
+        token_id,
         iat: Date.now(),
         iss,
         aud,

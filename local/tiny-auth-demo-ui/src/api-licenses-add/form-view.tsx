@@ -94,7 +94,10 @@ export default class FormView extends Component<
           className={classes.textFieldDate}
           label="Expiration"
           dateValue={formData.exp}
-          onDateChange={date =>setFormState({ exp: date.valueOf() })}
+          onDateChange={date =>{
+            let exp = date.getTime();                      
+            setFormState({ exp })
+          }}
           InputLabelProps={{
             shrink: true
           }}

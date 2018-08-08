@@ -8,7 +8,7 @@ export type DateFieldProps = Exclude<TextFieldProps, "value" | "onChange"> & {
 };
 
 export function fromDate(date: Date) {
-  const mm = date.getMonth();
+  const mm = date.getMonth() ;
   const dd = date.getDate();
   const s = `${date.getFullYear()}-${mm < 10 ? `0${mm}` : mm}-${
     dd < 10 ? `0${dd}` : dd
@@ -29,7 +29,11 @@ export function convert(value: number | Date) {
 export function toDate(value: string): Date {
   if (!value || !value.trim() || value.indexOf("-") === -1) return new Date();
   const parts = value.split("-");
-  return new Date(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  const year = Number(parts[0]);
+  const month = Number(parts[1]);
+  const day = Number(parts[2]);
+  const d = new Date(year, month - 1 , day);
+  return d;
 }
 
 const DateField: StatelessComponent<DateFieldProps> = props => {

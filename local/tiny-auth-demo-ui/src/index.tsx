@@ -16,6 +16,7 @@ import {
   ChangePassword
 } from "./auth";
 import { ConnectedRouter } from "react-router-redux";
+import { View as Validate } from "./api-validate";
 /** */
 ReactDOM.render(
   <StoreProvider store={store}>
@@ -56,6 +57,16 @@ ReactDOM.render(
                   </RequireAuth>
                 )}
               />
+              <Route exact path="/validate/:token?" render={(props) => {
+                return <RequireAuth
+                  redirectTo="/login"
+                  renderBusy={() => (
+                    <span>.... Auth busy, please wait </span>
+                  )}
+                >
+                  <Validate />
+                </RequireAuth>
+              }} />
             </Switch>
           </ConnectedRouter>
         </App>
