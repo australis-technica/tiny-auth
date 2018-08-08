@@ -8,7 +8,7 @@ const getter: Getter = req => req.body || {};
 /**
  *
  */
-export default function ReqjectKeys(
+export default function RejectKeys(
   keys: string[],
   get: Getter = getter
 ): RequestHandler {
