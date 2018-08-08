@@ -4,6 +4,6 @@ export { default as ensureID } from "./ensure-id";
 export { default as excludeKeys } from "./exclude-keys";
 export { default as fromBody } from "./from-body";
 export { default as fromLocals } from "./from-locals";
-export { default as rejecKeys } from "./reject-keys";
+export { default as rejectKeys } from "./reject-keys";
 export { default as validate } from "./validate";
 export * from "./types";

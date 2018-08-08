@@ -7,9 +7,10 @@ import {
   ensureBody,
   ensureID,
   excludeKeys,
-  validate
-} from "../crud-controller";
-import RejectKeys from "../crud-controller/reject-keys";
+  validate,
+  rejectKeys
+} from "@australis/tiny-crud-controller";
+
 import { signMiddleware } from "../lic";
 import licenses from "./repo";
 import validatePut from "./validate-put";
@@ -77,7 +78,7 @@ export default function configureCrud(app: Express) {
     ensureBody(),
     ensureID(), // reject no id
     requireRole(["admin"]),
-    RejectKeys([
+    rejectKeys([
       "token",
       "customer",
       "product",

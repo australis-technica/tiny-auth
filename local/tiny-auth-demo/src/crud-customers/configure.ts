@@ -4,7 +4,7 @@ import {
     ensureID,
     validate,
     ensureBody,
-} from "../crud-controller";
+} from "@australis/tiny-crud-controller";
 import repo from "./repo";
 import auth from "../auth";
 import uuid from "uuid";

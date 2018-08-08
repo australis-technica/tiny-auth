@@ -114,13 +114,15 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
         );
       }
       case "download": {
-        return <Download
-          title="License"
-          linkText="Click to Download"
-          onClose={this.clearAction}
-          fileName="license.lic"
-          url={downloadUrl + "/" + item.id}
-        />
+        return (
+          <Download
+            title="License"
+            linkText="Click to Download"
+            onClose={this.clearAction}
+            fileName="license.lic"
+            url={downloadUrl + "/" + item.id}
+          />
+        );
       }
       default: {
         return null;
@@ -206,30 +208,24 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
                                   </IconButton>
                                   <IconButton
                                     onClick={menu.handleMenuAction(
-                                      this.createAction(
-                                        "delete",
-                                        item
-                                      ))}
+                                      this.createAction("delete", item)
+                                    )}
                                     title={"Delete"}
                                   >
                                     <Icon>delete</Icon>
                                   </IconButton>
                                   <IconButton
                                     onClick={menu.handleMenuAction(
-                                      this.createAction(
-                                        "download",
-                                        item
-                                      ))}
+                                      this.createAction("download", item)
+                                    )}
                                     title={"Download"}
                                   >
                                     <Icon>cloud_download</Icon>
                                   </IconButton>
                                   <IconButton
                                     onClick={menu.handleMenuAction(
-                                      this.createAction(
-                                        "deliver",
-                                        item
-                                      ))}
+                                      this.createAction("deliver", item)
+                                    )}
                                     title={"Deliver"}
                                   >
                                     <Icon>send</Icon>
