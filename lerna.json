@@ -18,6 +18,7 @@
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",        
     "packages/tiny-auth-handler",
+    "packages/tiny-crud-controller",
     "local/demo-ui"
   ],
   "npmClient": "yarn",
