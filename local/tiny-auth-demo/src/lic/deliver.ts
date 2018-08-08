@@ -1,11 +1,11 @@
+import { renderTemplate, sendMail } from "@australis/send-grid-mail";
 import { User } from "@australis/tiny-auth-core";
 import { json } from "body-parser";
 import { RequestHandler } from "express-serve-static-core";
-import users from "./users";
-import { repo as licenses } from "./crud-licenses";
-import { License } from "./crud-licenses/types";
-import verify from "./lic/verify";
-import { sendMail, renderTemplate } from "@australis/send-grid-mail";
+// TODO: decouple
+import { License, repo as licenses } from "../crud-licenses";
+import users from "../users";
+import verify from "./verify";
 /** */
 function send(data: { license: License, user: User }) {
   const { user, license } = data;
@@ -19,7 +19,7 @@ function send(data: { license: License, user: User }) {
   return sendMail(mailData);
 }
 /** */
-export default function () {
+export default function Deliver() {
   /** */
   const deliver: RequestHandler = async (req, res, next) => {
     try {

@@ -11,7 +11,7 @@ const defaultOptions: Options = {
 /**
  * Middleware
  */
-export default function createMiddleware(options: Options = {}) {
+export default function signMiddleware(options: Options = {}) {
     options = { ...defaultOptions, ...options }
     return ((req, _res, next) => {
         // re-shape body
