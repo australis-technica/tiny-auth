@@ -1,0 +1,4 @@
+ 
+ #!/usr/bin/env bash
+ DEBUG=local*,build*,/build*,admin* NODE_ENV=development node ./app
+ 

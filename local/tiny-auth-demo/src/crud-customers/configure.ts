@@ -11,6 +11,8 @@ import uuid from "uuid";
 import { json } from "body-parser";
 import validatePut from "./vaildate-put";
 import { Customer } from "./types";
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /**
  *
  * @param app
@@ -58,5 +60,6 @@ export default function configureCrud(app: Express) {
             requireRole(["admin", "delete"]),
             crud.dlete()
         ]);
+        debug("configured");
     }
 }

@@ -10,11 +10,12 @@ import {
   validate,
   rejectKeys
 } from "@australis/tiny-crud-controller";
-
 import { signMiddleware } from "../lic";
 import licenses from "./repo";
 import validatePut from "./validate-put";
 import repo from "./repo";
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /**
  * Licenses
  * @param app
@@ -97,4 +98,5 @@ export default function configureCrud(app: Express) {
     requireRole(["admin", "delete"]),
     crud.dlete()
   ]);
+  debug("configured");
 }

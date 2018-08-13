@@ -8,6 +8,8 @@ import repo from "./repo";
 import auth from "../auth";
 import uuid from "uuid";
 import { json } from "body-parser";
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /**
  *
  * @param app
@@ -52,5 +54,6 @@ export default function configureCrud(app: Express) {
             requireRole(["admin", "delete"]),
             crud.dlete()
         ]);
+        debug("configured");
     }
 }

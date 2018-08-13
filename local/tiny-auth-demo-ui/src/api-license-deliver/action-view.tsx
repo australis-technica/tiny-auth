@@ -132,11 +132,11 @@ class ActionView<T extends ApiItem = ApiItem> extends Component<
   renderActions = () => {
     const { classes } = this.props;
     const { onOk, onAgain } = this;
-    const { isSuccess, isError, isBusy, item, isOpen } = this.state;
+    const { isError, isBusy, item, isOpen } = this.state;
     if (!item || !isOpen) return null;
     return (
       <>
-        {(isSuccess || isError) && (
+        {(isError) && (
           <Button
             style={{ color: "orange" }}
             className={classes.button}
