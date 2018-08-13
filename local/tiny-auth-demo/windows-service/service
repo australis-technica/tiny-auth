@@ -6,9 +6,9 @@
 const { isNullOrUndefined } = require("util");
 const path = require("path");
 const Service = require("node-windows").Service;
-const { SERVICE_NAME, SERVICE_DESCRIPTION } = require("./constants");
+const { SERVICE_NAME, SERVICE_DESCRIPTION, ENTRY_POINT } = require("./constants");
 
-let scriptPath = `${path.join(__dirname, "../", "app.js")}`;
+let scriptPath = `${path.join(__dirname, "../", ENTRY_POINT)}`;
 
 console.log("scriptPath: " + scriptPath);
 
@@ -17,7 +17,7 @@ const svc = new Service({
     name: SERVICE_NAME,
     description: SERVICE_DESCRIPTION,
     script: scriptPath,
-    env:{
+    env: {
         DEBUG: "australis*,build/*",
         NODE_ENV: "production"
     }
