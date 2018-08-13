@@ -1,19 +1,23 @@
-import { Component, CSSProperties } from "react";
-import * as React from "react";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Typography, CircularProgress, Snackbar } from "@material-ui/core";
-import SnackbarContentWrapper from "../snackbar-content-with-satus/snackbar-content-with-satus";
-import * as jwt from "jsonwebtoken";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
+import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import { isError } from "flux-standard-action";
-
+import * as jwt from "jsonwebtoken";
+import * as React from "react";
+import { Component } from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import SnackbarContentWrapper from "../snackbar-content-with-satus/snackbar-content-with-satus";
+import styles from "./styles";
+/** */
 const log =
-  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
-
+  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
+/** */
 type Indexer = { [key: string]: any };
-
+/** */
 function tryDecode(token: string): Indexer {
   try {
     let value = jwt.decode(token);
@@ -23,7 +27,6 @@ function tryDecode(token: string): Indexer {
     return {};
   }
 }
-
 /** */
 interface ValidateState {
   token: string;
@@ -36,36 +39,11 @@ interface ValidateState {
   canValidate: boolean;
 }
 /** */
-const paperStyle: CSSProperties = {
-  marginTop: "15px",
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  // textAlign: "center",
-  alignItems: "center",
-  padding: "1rem"
-};
-const textFieldStyle: CSSProperties = {
-  width: "350px"
-};
-const progressStyle: CSSProperties = {
-  margin: "1rem",
-  width: "1rem",
-  height: "1rem"
-};
-const buttonStyle: CSSProperties = {
-  height: "4rem",
-  display: "flex",
-  flexDirection: "row",
-  // justifyContent: "flex-start",
-  width: "10rem"
-};
-
 export type ValidateProps = {
   // ...
 } & RouteComponentProps<{ token: string }>;
-
-class Validate extends Component<ValidateProps, ValidateState> {
+/** */
+class Validate extends Component<ValidateProps & { classes: ClassNameMap }, ValidateState> {
   /** */
   state = {
     token: "",
@@ -83,14 +61,15 @@ class Validate extends Component<ValidateProps, ValidateState> {
     token = props.match.params.token || token;
     isEmpty = !token || !token.trim();
     decoded = tryDecode(token);
-    return {
+    const _state = {
       ...rest,
       token,
       isEmpty,
       decoded,
       validator: decoded.validator,
       canValidate: !!decoded.validator && !!decoded.validator.trim()
-    };
+    }
+    return _state;
   }
   /** */
   componentDidMount() {
@@ -209,7 +188,7 @@ class Validate extends Component<ValidateProps, ValidateState> {
         >
           {text}
         </pre>
-        <div style={{display: "flex", flexDirection: "column", marginTop: "1rem"}}>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: "1rem" }}>
           <Typography variant="subheading" style={{}}>Exp. Date</Typography>
           <Typography>{expDate.toString()}</Typography>
         </div>
@@ -225,11 +204,12 @@ class Validate extends Component<ValidateProps, ValidateState> {
       busy,
       success,
       decoded,
-      canValidate
+      canValidate,
     } = this.state;
     const helperText = `Place token here ${isEmpty ? "(Required)" : "..."}`;
+    const { classes } = this.props;
     return (
-      <Paper style={paperStyle}>
+      <Paper className={classes.paper}>
         <Typography
           style={{ textTransform: "uppercase", marginBottom: "1.5rem" }}
           variant="title"
@@ -237,7 +217,7 @@ class Validate extends Component<ValidateProps, ValidateState> {
           Validate
         </Typography>
         <TextField
-          style={textFieldStyle}
+          className={classes.textField}
           label="Token"
           helperText={helperText}
           value={token}
@@ -258,14 +238,14 @@ class Validate extends Component<ValidateProps, ValidateState> {
           }}
         >
           <Button
-            style={buttonStyle}
+            className={classes.button}
             color="primary"
             variant="raised"
             onClick={this.validate}
             disabled={isEmpty || busy || !canValidate}
           >
             <span>Validate</span>
-            {busy && <CircularProgress style={progressStyle} />}
+            {busy && <CircularProgress className={classes.progress} />}
           </Button>
         </div>
         <Snackbar
@@ -294,4 +274,4 @@ class Validate extends Component<ValidateProps, ValidateState> {
     );
   }
 }
-export default withRouter(Validate);
+export default withStyles(styles)(withRouter(Validate));

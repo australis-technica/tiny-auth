@@ -34,7 +34,7 @@ export interface ActionViewState<T> {
 class ActionView<T extends ApiItem = ApiItem> extends Component<
   ActionViewProps<T> & { classes: ClassNameMap },
   ActionViewState<T>
-> {
+  > {
   /** */
   state: ActionViewState<T> = {
     error: this.props.apiState.error,
@@ -99,11 +99,11 @@ class ActionView<T extends ApiItem = ApiItem> extends Component<
   renderActions = () => {
     const { classes } = this.props;
     const { onOk, onAgain } = this;
-    const { isSuccess, isError, isBusy, item, isOpen } = this.state;
+    const { isError, isBusy, item, isOpen } = this.state;
     if (!item || !isOpen) return null;
     return (
       <>
-        {(isSuccess || isError) && (
+        {(isError) && (
           <Button
             style={{ color: "orange" }}
             className={classes.button}
@@ -111,7 +111,7 @@ class ActionView<T extends ApiItem = ApiItem> extends Component<
             variant="outlined"
             onClick={() => onAgain(item)}
           >
-            Again
+            Retry
           </Button>
         )}
         <Button

@@ -49,6 +49,7 @@ export default function configureCrud(app: Express) {
     requireRole(["admin"]),
     crud.get(excludeKeys("token"))
   ]);
+  /** ADD/PUT/INSERT */
   app.put(route, [
     authorize,
     requireRole(["admin"]),

@@ -8,4 +8,5 @@ export interface License {
     token: string;
     createdAt: number;
     updatedAt: number;
+    exp: string|Date
 }

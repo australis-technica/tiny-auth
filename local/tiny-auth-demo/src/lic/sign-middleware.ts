@@ -1,6 +1,5 @@
 import { RequestHandler } from "express-serve-static-core";
 import sign from "./sign";
-import createRequest from "./create-request";
 /** */
 export interface Options {
     // TODO:
@@ -16,14 +15,13 @@ export default function signMiddleware(options: Options = {}) {
     return ((req, _res, next) => {
         // re-shape body
         try {
-            const { features, exp, ...body } = req.body;
-            // exp = number
-            const token = sign(createRequest({ token_id: body.id, exp }), features);
+            const { features, ...body } = req.body;
+            const signed = sign({ token_id: body.id, exp: body.exp, features }, );
             req.body = {
                 ...body,
-                token,
+                token: signed.token,
                 features: JSON.stringify(features),
-                exp: new Date(exp)
+                exp: new Date(signed.exp)
             }
             next();
         } catch (error) {
