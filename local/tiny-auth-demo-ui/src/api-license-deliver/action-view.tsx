@@ -78,6 +78,7 @@ class ActionView<T extends ApiItem = ApiItem> extends Component<
   };
   /** */
   onCancel = () => {
+    if(this.state.isBusy) return;
     this.props.onClose();
   };
   /** */

@@ -101,6 +101,7 @@ class ActionView extends Component<
   };
   /** */
   onCancel = () => {
+    if(this.state.isBusy) return;
     this.props.onClose();
   };
   /** */
