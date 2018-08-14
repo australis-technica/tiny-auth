@@ -39,6 +39,6 @@
     "@types/react-router-dom": "*",
     "@types/react-router-redux": "*",
     "@types/webfontloader": "^1.6.29",
-    "typescript": "2.9.2"
+    "typescript": "3.0.1"
   }
 }
