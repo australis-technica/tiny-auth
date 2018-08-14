@@ -14,10 +14,10 @@ export type Plugin = (app: Express) => any;
 export default function configure(app: Express, plugins: Plugin[]) {
     /** */
     return new Promise(async (resolve, reject) => {
-        try {
+        try {            
             /** Middleware */
             app.use(cors({
-                origin: process.env.CORS_ORIGIN || "*",
+                origin: process.env.CORS_ORIGIN,
                 methods: "*"
             }));
             app.use(helmet());

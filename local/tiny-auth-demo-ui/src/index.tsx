@@ -15,8 +15,12 @@ import {
   AuthMenu,
   ChangePassword
 } from "./auth";
-import { ConnectedRouter } from "react-router-redux";
+import { ConnectedRouter as Router } from "react-router-redux";
+import { RouterProps, StaticRouterProps } from "react-router";
 import { View as Validate } from "./api-validate";
+// Hack to avoid editing/extending/adding-new  definition
+const ConnectedRouter: React.ComponentType<RouterProps & StaticRouterProps> = Router;
+const { PUBLIC_URL } = process.env;
 /** */
 ReactDOM.render(
   <StoreProvider store={store}>
@@ -28,15 +32,15 @@ ReactDOM.render(
             <AuthMenu changePassword={() => history.push("/change-password")} />
           }
         >
-          <ConnectedRouter history={history}>
+          <ConnectedRouter history={history} basename={PUBLIC_URL}>
             <Switch>
               <Route
                 exact
-                path="/"
+                path={`${PUBLIC_URL}/`}
                 render={() => {
                   return (
                     <RequireAuth
-                      redirectTo="/login"
+                      redirectTo={`${PUBLIC_URL}/login`}
                       renderBusy={() => (
                         <span>.... Auth busy, please wait </span>
                       )}
@@ -46,20 +50,20 @@ ReactDOM.render(
                   );
                 }}
               />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/logout" component={Login} />
+              <Route exact path={`${PUBLIC_URL}/login`} component={Login} />
+              <Route exact path={`${PUBLIC_URL}/logout`} component={Login} />
               <Route
                 exact
-                path="/change-password"
+                path={`${PUBLIC_URL}/change-password`}
                 render={() => (
-                  <RequireAuth redirectTo="/login">
+                  <RequireAuth redirectTo={`${PUBLIC_URL}/login`}>
                     <ChangePassword />
                   </RequireAuth>
                 )}
               />
-              <Route exact path="/validate/:token?" render={(props) => {
+              <Route exact path={`${PUBLIC_URL}/validate/:token?`} render={(props) => {
                 return <RequireAuth
-                  redirectTo="/login"
+                  redirectTo={`${PUBLIC_URL}/login`}
                   renderBusy={() => (
                     <span>.... Auth busy, please wait </span>
                   )}

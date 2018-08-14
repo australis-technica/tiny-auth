@@ -9,7 +9,7 @@ const debug = debugModule(module);
 export default function (app: Express) {
   const { authorize, requireRole } = auth.middleware;  
   app.post(
-    "/api/v1/deliver",
+    "/api/deliver",
     authorize,
     requireRole(['user']),
     json(),

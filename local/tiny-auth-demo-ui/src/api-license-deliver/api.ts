@@ -13,9 +13,9 @@ export interface ApiItem {
 }
 // ...
 const defaultState = { busy: false, error: undefined, data: [] };
-const { REACT_APP_API_BASE } = process.env;
+const { REACT_APP_API_BASE, REACT_APP_API_DELIVER } = process.env;
 /** */
 const api = crudApi<any>("license-deliver", defaultState, {
-    endpoint: `${REACT_APP_API_BASE}/api/v1/deliver`
+    endpoint: `${REACT_APP_API_BASE}/${REACT_APP_API_DELIVER}`
 });
 export default api;

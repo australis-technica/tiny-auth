@@ -3,13 +3,14 @@ import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import { History } from "history";
 import * as React from "react";
 import { Component, ComponentType, Fragment } from "react";
 import { connect } from "react-redux";
+import { Connected as Messages } from "../messages";
 import adapter from "./adapter";
 import styles from "./styles";
-import { History } from "history";
-import { Connected as Messages } from "../messages";
 /**
  *
  */
@@ -26,20 +27,21 @@ export type AppProps = {
 class App extends Component<AppProps & AppState & { classes: ClassNameMap }> {
   /** */
   render() {
-    const { classes, toolbarMenu, rootUrl, title } = this.props;
+    const { classes, toolbarMenu, title } = this.props;
     return (<Fragment>
       <Messages />
       <div className={classes.app}>
         <AppBar>
           <Toolbar>
-            <Typography
-              variant="title"
-              className={classes.appTitle}
-              onClick={e => this.props.history.push(rootUrl)}
-              color="inherit"
-            >
-              {title}
-            </Typography>
+            <Button href={(process.env.PUBLIC_URL || "") + "/"}>
+              <Typography
+                variant="title"
+                className={classes.appTitle}
+                color="inherit"
+              >
+                {title}
+              </Typography>
+            </Button>
             <div style={{ flex: "1 0" }} />
             {toolbarMenu}
           </Toolbar>

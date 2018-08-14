@@ -19,11 +19,15 @@ export default function configure(app: Express) {
             }
             const { authorize, requireRole } = auth.middleware;
             /** Configure Auth */
-            app.post("/auth/login", auth.controllers.login);
-            app.get("/auth/refresh", authorize, auth.controllers.refresh)
-            app.get("/auth/profile", authorize, auth.controllers.getProfile);
-            app.post("/auth/change-password", authorize, requireRole(['user']), auth.controllers.changePassword);
-
+            app.post("/api/auth/login", auth.controllers.login);
+            app.get("/api/auth/refresh", authorize, auth.controllers.refresh)
+            app.get("/api/auth/profile", authorize, auth.controllers.getProfile);
+            app.post("/api/auth/change-password", authorize, requireRole(['user']), auth.controllers.changePassword);
+            if (isDev) {
+                app.get("/api/auth/echo/:what?", (req, res) => {
+                    res.send(req.params.what || req.query.what || "echo...");
+                });
+            }
             debug("configured");
             return resolve();
         } catch (error) {
