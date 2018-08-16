@@ -19,7 +19,8 @@
     "typescript": "3.0.1"
   },
   "dependencies": {
-    "lerna": "^2.11.0"
+    "lerna": "^2.11.0",
+    "node-windows": "^0.1.14"
   },
   "workspaces": [
     "packages/tiny-auth-core",
@@ -37,7 +38,7 @@
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
-    "packages/tiny-auth-token-payload",    
+    "packages/tiny-auth-token-payload",
     "packages/tiny-auth-handler",
     "packages/tiny-crud-controller",
     "local/tiny-auth-demo-ui"
