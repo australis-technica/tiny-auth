@@ -2,8 +2,8 @@ import { add, all, byId, findBy, update } from "@australis/tiny-auth-users-sql";
 import { Users } from "@australis/tiny-auth-core";
 import newConnection from "@australis/tiny-sql-connection-factory";
 import { Connection } from "tedious";
-import Debug from "./debug";
-const debug = Debug(__filename);
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /** */
 const users = {
   add: async (...args: any[]) => {

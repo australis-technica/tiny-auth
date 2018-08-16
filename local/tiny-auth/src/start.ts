@@ -1,6 +1,6 @@
-import Debug from "./debug";
 import { Express } from "express-serve-static-core";
-const debug = Debug(__filename);
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /** START */
 const start = (app: Express, port: number) => new Promise((resolve, reject) => {    
     if (!port) {

@@ -1,15 +1,15 @@
-import createdb from "@australis/tiny-sql-create-db";
+import { debugModule } from "@australis/create-debug";
 import { init as initUsers } from "@australis/tiny-auth-users-sql";
 import connect from "@australis/tiny-sql-connect";
+import createdb from "@australis/tiny-sql-create-db";
 import { Connection } from "tedious";
-import Debug from "./debug";
+import { table as customers } from "./crud-customers";
+import { table as licenses } from "./crud-licenses";
+import { table as products } from "./crud-products";
 import * as settings from "./settings";
 import sqlConnectionConfig from "./sql-connection-config";
 import { init as initTokenBlacklist } from "./token-blacklist";
-import { table as customers } from "./crud-customers";
-import { table as products } from "./crud-products";
-import { table as licenses } from "./crud-licenses";
-const debug = Debug(__filename);
+const debug = debugModule(module);
 /**
  * 
  */

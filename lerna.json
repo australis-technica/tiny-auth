@@ -12,14 +12,14 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
-    "local/demo",
+    "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",        
     "packages/tiny-auth-handler",
     "packages/tiny-crud-controller",
-    "local/demo-ui"
+    "local/tiny-auth-ui"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,

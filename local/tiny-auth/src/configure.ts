@@ -1,10 +1,9 @@
 import cors from "cors";
 import { Express } from "express-serve-static-core";
 import helmet from "helmet";
-
-import Debug from "./debug";
 import errorHandler from "./error-handler";
-const debug = Debug(__filename);
+import { debugModule } from "@australis/create-debug";
+const debug = debugModule(module);
 /** */
 export type Plugin = (app: Express) => any;
 /**

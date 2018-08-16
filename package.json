@@ -4,7 +4,7 @@
   "description": "single token auth",
   "private": true,
   "scripts": {
-    "start": "cd local/tiny-auth-demo-ui && npm start",
+    "start": "cd local/tiny-auth-ui && npm start",
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test"
@@ -34,13 +34,13 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
-    "local/tiny-auth-demo",
+    "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",
     "packages/tiny-auth-handler",
     "packages/tiny-crud-controller",
-    "local/tiny-auth-demo-ui"
+    "local/tiny-auth-ui"
   ]
 }

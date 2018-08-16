@@ -1,1 +1,1 @@
-require("../tiny-auth-demo/build/index");
+require("../tiny-auth/build/index");
