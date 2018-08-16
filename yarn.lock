@@ -2,9 +2,15 @@
 # yarn lockfile v1
 
 
-"@australis/create-debug@^1.0.0-0", "@australis/create-debug@latest":
+"@australis/create-debug@^1.0.0-0":
   version "1.0.0-0"
   resolved "https://registry.npmjs.org/@australis/create-debug/-/create-debug-1.0.0-0.tgz#b6d93fb2f19814838d15e9220992bf082fc5b2a0"
+  dependencies:
+    debug "^3.1.0"
+
+"@australis/create-debug@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@australis/create-debug/-/create-debug-1.0.2.tgz#962dd316b18526505f76473bcf57fc2c61a4a84f"
   dependencies:
     debug "^3.1.0"
 
@@ -29,105 +35,105 @@
     react "^16.4.1"
     react-dom "^16.4.1"
 
-"@australis/tiny-sql-batch-script@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-12.tgz#9b048a4659c5b02993e02c41d52fa5b9b54ac1f6"
+"@australis/tiny-sql-batch-script@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-14.tgz#942d4e30d7717d2f80e87a71bb3971f1f762199a"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-connect-to-server@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect-to-server/-/tiny-sql-connect-to-server-1.0.0-12.tgz#36c13c84fdded16309ebfe96ff48f6afeb94f453"
+"@australis/tiny-sql-connect-to-server@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect-to-server/-/tiny-sql-connect-to-server-1.0.0-14.tgz#6ecf216ad3f53abdace7c9a6ff60e9c9c9d4d040"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-connect@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect/-/tiny-sql-connect-1.0.0-12.tgz#662b4890cc159b8f9a374486a782db5448afc27c"
+"@australis/tiny-sql-connect@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect/-/tiny-sql-connect-1.0.0-14.tgz#75597cb3eb9932c2236b1c51153bd53ce3177d33"
   dependencies:
     debug "^3.1.0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-connection-config@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-12.tgz#678401f9cd3179fda5d5a47e195bc2a0a77036c2"
+"@australis/tiny-sql-connection-config@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-14.tgz#4058c854d38c70d10fcd74f9fca851230a88c6ec"
   dependencies:
     "@australis/parse-sql-connection-string" latest
 
-"@australis/tiny-sql-connection-factory@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-12.tgz#9443802c2f35a6bd76de75710c238e7f042164ae"
+"@australis/tiny-sql-connection-factory@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-14.tgz#02985010846473300d22dc894d2a2ea4fc08317a"
   dependencies:
     tedious "^2.6.3"
 
-"@australis/tiny-sql-connection-string-parse@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-12.tgz#d7c45e44bfbcbf70334b5dc51260425b6a725cb6"
+"@australis/tiny-sql-connection-string-parse@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-14.tgz#f8fe2f0331cf134186c8049bbe2f873d0e33cfe3"
   dependencies:
-    "@australis/create-debug" "^1.0.0-0"
+    "@australis/create-debug" "^1.0.2"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-create-db@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-create-db/-/tiny-sql-create-db-1.0.0-12.tgz#0307c66b1a8afc44d39806866e13103686ade068"
+"@australis/tiny-sql-create-db@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-create-db/-/tiny-sql-create-db-1.0.0-14.tgz#ea8f8be4ba887d9e4320eb33c7d1c0d5ae26b0e7"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-exec-sql@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-12.tgz#3448e850a1f636c20a14bd360b3763252483e310"
+"@australis/tiny-sql-exec-sql@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-14.tgz#a0cd30f6b97c80b43454ed8a3b2eacc643e8c24f"
   dependencies:
     debug "^3.1.0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-json-table@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-json-table/-/tiny-sql-json-table-1.0.0-12.tgz#013935e731bd9a6846c0bf7787d1c71dc739e3ae"
+"@australis/tiny-sql-json-table@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-json-table/-/tiny-sql-json-table-1.0.0-14.tgz#b15158057beb775d6bf08ebbcf6ae006dad82884"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-params@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-12.tgz#0d3d6d2bec4b6d8c6d2f349a2b8350ecb75370f9"
+"@australis/tiny-sql-params@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-14.tgz#80a5a321ee2248e3f8b591b96be738736cb4a8ce"
   dependencies:
     debug "^3.1.0"
     tedious "^2.6.3"
 
-"@australis/tiny-sql-scripts@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-12.tgz#718d0c6696f305f37fb7d6d89928e75d68ac7c6f"
+"@australis/tiny-sql-scripts@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-14.tgz#ed7ad91c1926ef57d3cc9b6d15e8cdbb3f1c87b9"
   dependencies:
-    "@australis/create-debug" "^1.0.0-0"
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-simple-table@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-simple-table/-/tiny-sql-simple-table-1.0.0-12.tgz#9bf5f5f5230124041b150757424af4cedc5af13d"
+"@australis/tiny-sql-simple-table@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-simple-table/-/tiny-sql-simple-table-1.0.0-14.tgz#a711ea9ff12ef31e874c9b9eb84f80f6272404d8"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-with-sql-connection@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-with-sql-connection/-/tiny-sql-with-sql-connection-1.0.0-12.tgz#fc3d3acb254968a1c9bded84ef6bdd7d62922d2c"
+"@australis/tiny-sql-with-sql-connection@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-with-sql-connection/-/tiny-sql-with-sql-connection-1.0.0-14.tgz#0702ec8be12cc784b7433bb1691748fe76fa7248"
   dependencies:
-    "@australis/create-debug" latest
+    "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql@1.0.0-12":
-  version "1.0.0-12"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql/-/tiny-sql-1.0.0-12.tgz#14ea630d3cb2cf8fb32d8f2ec9054fe4e6ee0af4"
+"@australis/tiny-sql@1.0.0-14":
+  version "1.0.0-14"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql/-/tiny-sql-1.0.0-14.tgz#14f675d764984a2b8585606aadf4697eb688c56f"
   dependencies:
-    "@australis/tiny-sql-batch-script" "1.0.0-12"
-    "@australis/tiny-sql-connect" "1.0.0-12"
-    "@australis/tiny-sql-connect-to-server" "1.0.0-12"
-    "@australis/tiny-sql-connection-config" "1.0.0-12"
-    "@australis/tiny-sql-connection-factory" "1.0.0-12"
-    "@australis/tiny-sql-connection-string-parse" "1.0.0-12"
-    "@australis/tiny-sql-create-db" "1.0.0-12"
-    "@australis/tiny-sql-exec-sql" "1.0.0-12"
-    "@australis/tiny-sql-json-table" "1.0.0-12"
-    "@australis/tiny-sql-params" "1.0.0-12"
-    "@australis/tiny-sql-scripts" "1.0.0-12"
-    "@australis/tiny-sql-simple-table" "1.0.0-12"
-    "@australis/tiny-sql-with-sql-connection" "1.0.0-12"
+    "@australis/tiny-sql-batch-script" "1.0.0-14"
+    "@australis/tiny-sql-connect" "1.0.0-14"
+    "@australis/tiny-sql-connect-to-server" "1.0.0-14"
+    "@australis/tiny-sql-connection-config" "1.0.0-14"
+    "@australis/tiny-sql-connection-factory" "1.0.0-14"
+    "@australis/tiny-sql-connection-string-parse" "1.0.0-14"
+    "@australis/tiny-sql-create-db" "1.0.0-14"
+    "@australis/tiny-sql-exec-sql" "1.0.0-14"
+    "@australis/tiny-sql-json-table" "1.0.0-14"
+    "@australis/tiny-sql-params" "1.0.0-14"
+    "@australis/tiny-sql-scripts" "1.0.0-14"
+    "@australis/tiny-sql-simple-table" "1.0.0-14"
+    "@australis/tiny-sql-with-sql-connection" "1.0.0-14"
 
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.54"
