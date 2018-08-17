@@ -9,10 +9,12 @@ export const defautlUser: User = {
     roles: ""
 }
 /** */
+export const TOKEN_KEY = "token";
+/** */
 export const defaultState: AuthState = {
     busy: false,
     profile: defautlUser,
-    token: "",
+    token: localStorage.getItem(TOKEN_KEY) || "",
     error: undefined,
     authenticated: false,
     passwordChanged: false,
