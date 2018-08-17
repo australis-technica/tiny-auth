@@ -50,7 +50,7 @@ export default class Download extends Component<DownloadProps, DownloadState> {
         try {
             this.clearError();
             this.setBusy(true);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // await new Promise(resolve => setTimeout(resolve, 1000));
             const r = await fetch(this.props.url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
