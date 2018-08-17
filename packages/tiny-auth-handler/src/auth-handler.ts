@@ -18,15 +18,11 @@ export type AuthHandlerActions = {
     setPasswordChanging(value: boolean): any;
 }
 /** */
-export default function AuthHandler(getState: () => AuthState, actions: AuthHandlerActions, webApi: WebApi): Auth {
+export default function AuthHandler(
+        getState: () => AuthState, actions: AuthHandlerActions, webApi: WebApi
+    ): Auth {
     const { setBusy, setError, setToken, setProfile, setAuthenticated, clearProfile, clearError, setPasswordChanged, setPasswordChanging } = actions;
-    function readToken() {
-        return localStorage.getItem("token");
-    }
-    function saveToken(token: string) {
-        setToken(token);
-        localStorage.setItem("token", token);
-    }
+    
     /** */
     function getToken(): string {
         const state = getState();
@@ -86,7 +82,7 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
     function loginSuccess(token: string) {
         debug("login success");
         const profile = getTokenPayload(token, "profile");
-        saveToken(token);
+        setToken(token);
         setProfile(profile);
         setAuthenticated(true);
     }
@@ -110,7 +106,7 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
     /** */
     const logout = () => {
         clearProfile()
-        saveToken("");
+        setToken("");
         setAuthenticated(false);
     }
     /** */
@@ -162,7 +158,7 @@ export default function AuthHandler(getState: () => AuthState, actions: AuthHand
     async function init() {
         try {
             setBusy(true)
-            const token = readToken();
+            const token = getToken();
             if (!isValidToken(token)) {
                 throw new Error("can't init: invalid token");
             }
