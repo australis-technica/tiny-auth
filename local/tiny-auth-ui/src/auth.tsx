@@ -16,6 +16,13 @@ const authApi = createAuthApi({
     profileUrl: endPoints.PROFILE,
     refreshUrl: endPoints.REFRESH,
     changePasswordUrl: endPoints.CHANGEPASSWORD
+}, {
+    getToken: ()=> {
+        const authState = selector(store.getState());
+        const token = authState.token;
+        console.log(token);
+        return token;
+    }
 });
 /** */
 const authHandler = AuthHandler(() => selector(store.getState()), bindActions(store), authApi);
