@@ -2,7 +2,7 @@ import { CrudApiRequest } from "./types";
 import actionTypes from "./action-types";
 import { FluxStandardAction } from "flux-standard-action";
 const log =
-  process.env.NODE_ENV === "production" ? console.log.bind(console) : () => {};
+  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
 log("crud-api-actions");
 /**
  * Create Actions

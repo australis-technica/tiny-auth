@@ -17,7 +17,8 @@ export default function configure(app: Express, plugins: Plugin[]) {
             /** Middleware */
             app.use(cors({
                 origin: process.env.CORS_ORIGIN,
-                methods: "*"
+                methods: "*",
+                credentials: true,                
             }));
             app.use(helmet());
             for (const plugin of plugins) {

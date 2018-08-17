@@ -1,4 +1,6 @@
 import warn from "./warn";
+const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : ()=> {};
+log("?");
 /**
  * 
  */
@@ -47,7 +49,7 @@ export default function createAuthApi(endpoints: Endpoints, options?: Partial<Op
             let r = await fetch(loginUrl, {
                 method: "POST",
                 body: JSON.stringify({ username, password }),
-                // credentials: "same-origin",
+                // credentials: "include",
                 headers: {
                     "Cache-Control": "no-cache",
                     "Content-Type": "application/json",
@@ -77,7 +79,7 @@ export default function createAuthApi(endpoints: Endpoints, options?: Partial<Op
         if(!getToken) throw new Error("getToken?");
         try {
             let r = await fetch(profileUrl, {
-                credentials: "same-origin",
+                credentials: "include",
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
                     "Cache-Control": "no-cache",
@@ -109,7 +111,7 @@ export default function createAuthApi(endpoints: Endpoints, options?: Partial<Op
         if(!getToken) throw new Error("getToken?");
         try {
             let r = await fetch(refreshUrl, {
-                credentials: "same-origin",
+                credentials: "include",
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
                     "Cache-Control": "no-cache",
@@ -144,7 +146,7 @@ export default function createAuthApi(endpoints: Endpoints, options?: Partial<Op
         try {
             let r = await fetch(changePasswordUrl, {
                 method: "POST",
-                credentials: "same-origin",
+                credentials: "include",
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
                     "Cache-Control": "no-cache",
