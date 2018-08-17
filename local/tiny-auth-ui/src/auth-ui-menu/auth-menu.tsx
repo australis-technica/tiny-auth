@@ -11,7 +11,7 @@ interface AuthMenuState {
 export interface AuthMenuProps {
     auth: Auth;
     authState: AuthState;
-    changePassword(...args: any[]): any;    
+    onRequestChangePassword(): any;    
 }
 /**
  * 
@@ -37,7 +37,7 @@ export default class AuthMenu extends Component<AuthMenuProps> {
     /** */
     onChangePasswordClick = () => {
         this.close();
-        this.props.changePassword();
+        this.props.onRequestChangePassword();
     }
     /** */
     onMenuIconClick = () => {

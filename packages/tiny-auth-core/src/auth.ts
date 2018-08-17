@@ -2,7 +2,7 @@
  * Client side
  */
 export interface Auth {
-    login(...args: any[]): any;
-    logout(...args: any[]): any;
-    changePassword(...args: any[]): any;
+    login(username: string, password: string): any;
+    logout(): any;
+    changePassword(password: string, newpassword: string): any;
 }

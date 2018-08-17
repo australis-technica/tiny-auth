@@ -1,17 +1,16 @@
-import { Component, ComponentType } from "react";
-import { Auth, AuthState, WebApi } from "@australis/tiny-auth-core";
-import { Card, CardActions, CardContent, CircularProgress, CardHeader } from "@material-ui/core";
+import { Auth, AuthState } from "@australis/tiny-auth-core";
+import { Card, CardActions, CardContent, CardHeader, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import { ClassNameMap } from "@material-ui/core/styles/withStyles";
+import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { Component, ComponentType } from "react";
 import styles from "./styles";
+console.log("?")
 /** */
 export interface ChangePasswordProps {
     auth: Auth,
-    api: WebApi,
     authState: AuthState;
     image?: any;
 }
@@ -21,26 +20,26 @@ interface ChangePasswordState extends Partial<AuthState> {
     newPassword: string;
 }
 /**
-     * 
-     */
-export class ChangePassword extends Component<ChangePasswordProps & { classes: ClassNameMap; }> {
-    /**
-     * 
-     */
+ * 
+ */
+class ChangePassword extends Component<ChangePasswordProps & { classes: ClassNameMap; }> {
+   
     state: ChangePasswordState = {
         oldPassword: "",
         newPassword: "",
     };
+    /** */
     setMessage = (message: string, timeout: number) => {
         this.setState({ message });
         typeof timeout === "number" && timeout > 1 && setTimeout(() => {
             this.setState({ message: undefined });
         }, timeout)
     }
+    /** */
     static getDerivedStateFromProps(props: ChangePasswordProps, state: ChangePasswordState) {
         return Object.assign(state, props.authState);
     }
-
+    /** */
     onKeyUp = (key: string, callback: Function): React.KeyboardEventHandler => {
         return (e) => {
             if (e.key === key) callback();

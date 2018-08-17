@@ -9,12 +9,12 @@ import { history, store } from "./store";
 import theme from "./theme";
 import { Home } from "./home";
 import {
-  Login,
   Provider as AuthProvider,
   RequireAuth,
-  AuthMenu,
-  ChangePassword
 } from "./auth";
+import { WithAuth as Login } from "./auth-ui-login";
+import { WithAuth as AuthMenu } from "./auth-ui-menu";
+import { WithAuth as ChangePassword } from "./auth-ui-change-password";
 import { ConnectedRouter as Router } from "react-router-redux";
 import { RouterProps, StaticRouterProps } from "react-router";
 import { View as Validate } from "./api-validate";
@@ -29,7 +29,7 @@ ReactDOM.render(
         <App
           history={history}
           toolbarMenu={
-            <AuthMenu changePassword={() => history.push("/change-password")} />
+            <AuthMenu onRequestChangePassword={() => history.push("/change-password")} />
           }
         >
           <ConnectedRouter history={history} basename={PUBLIC_URL}>

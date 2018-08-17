@@ -1,4 +1,4 @@
-import { Auth, AuthState, User, WebApi } from "@australis/tiny-auth-core";
+import { Auth, AuthState, User, AuthApi } from "@australis/tiny-auth-core";
 import { getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "@australis/tiny-auth-token-payload";
 import { MIN_TIME_TO_REFRESH } from "./constants";
 /** */
@@ -19,7 +19,9 @@ export type AuthHandlerActions = {
 }
 /** */
 export default function AuthHandler(
-        getState: () => AuthState, actions: AuthHandlerActions, webApi: WebApi
+        getState: () => AuthState, 
+        actions: AuthHandlerActions, 
+        webApi: AuthApi
     ): Auth {
     const { setBusy, setError, setToken, setProfile, setAuthenticated, clearProfile, clearError, setPasswordChanged, setPasswordChanging } = actions;
     
@@ -47,7 +49,7 @@ export default function AuthHandler(
                 warn("Can't auto-refresh Non authenticated state");
                 throw new Error("Can't refresh");
             }
-            loginSuccess(await refresh(getToken()));
+            loginSuccess(await refresh());
             autoRefresh();
         } catch (error) {
             warn("login out due to error %s", error.message)
@@ -110,12 +112,12 @@ export default function AuthHandler(
         setAuthenticated(false);
     }
     /** */
-    const refresh = async (token: string): Promise<string> => {
+    const refresh = async (): Promise<string> => {
         try {
             debug("refresh");
             setBusy(true);
             // 
-            const r = await webApi.refresh(token);
+            const r = await webApi.refresh();
             if (!isValidToken(r.token)) {
                 return Promise.reject("api returned Invalid token");
             }
@@ -138,8 +140,7 @@ export default function AuthHandler(
             clearError();
             setBusy(true);
             setPasswordChanging(true);
-            const token = getToken();
-            await webApi.changePassword(token, password, newPassword);
+            await webApi.changePassword(password, newPassword);
             const { id } = getState().profile;
             await logout();
             login(id, newPassword);
@@ -165,7 +166,7 @@ export default function AuthHandler(
             if (isTokenExpired(token)) {
                 throw new Error("can't init: invalid token expired");
             }
-            loginSuccess(await refresh(token));
+            loginSuccess(await refresh());
             autoRefresh();
         } catch (error) {
             warn(error);
