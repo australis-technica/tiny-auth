@@ -2,7 +2,7 @@ import { join } from "path";
 /** */
 describe(require(join(__dirname, "../package.json")).name, () => {
     /** */
-    it("render-templates", async () => {
-       
+    it("Works", async () => {
+       // TODO:
     });
 })

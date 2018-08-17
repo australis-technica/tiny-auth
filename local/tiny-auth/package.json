@@ -27,7 +27,7 @@
     "typescript": "3.0.1"
   },
   "dependencies": {
-    "@australis/load-env": "^1.0.0",
+    "@australis/load-env": "^1.0.1",
     "@australis/send-grid-mail": "^0.1.0",
     "@australis/tiny-sql": "1.0.0-15",
     "@sendgrid/mail": "^6.3.1",
@@ -45,34 +45,12 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "test": "jest --env=node",
+    "test": "jest --env=node --ci --config=./jest.json",
     "build:templates": "tsc -p ./templates",
     "build": "npm run build:templates && tsc -p .",
     "watch": "tsc -p . --watch",
     "clean": "rimraf build",
     "rebuild": "npm run clean && npm run build",
     "start": "node app"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
-      }
-    },
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
-  "directories": {
-    "test": "test"
-  }
+  } 
 }
