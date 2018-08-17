@@ -7,7 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import styles from "./styles";
-console.log("?")
+const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : ()=> {};
+log("?")
 /** */
 export interface ChangePasswordProps {
     auth: Auth,
