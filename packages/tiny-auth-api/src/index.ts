@@ -10,8 +10,31 @@ export interface Endpoints {
     changePasswordUrl: string;
 }
 /** */
-export default function createAuthApi(endpoints: Endpoints) {
+export interface Options {
+    getToken?: () => string | undefined | null;
+}
+// ...
+const defaultOptions: Options = {
+
+}
+/** */
+export interface AuthApi {
+    login(username: string, password: string): Promise<any>;
+    profile(): Promise<any>;
+    refresh(): Promise<any>
+    logout(): Promise<any>;
+    changePassword(password: string, newPassword: string): Promise<any>;
+}
+/** */
+export default function createAuthApi(endpoints: Endpoints, options?: Partial<Options>): AuthApi {
+
+    let { getToken } = {
+        ...defaultOptions,
+        ...(options || defaultOptions)
+    }
+    getToken = getToken || (() => localStorage.getItem("token"));
     const { loginUrl, logoutUrl, profileUrl, refreshUrl, changePasswordUrl } = endpoints
+
     /**
      * 
      * @param username 
@@ -22,8 +45,9 @@ export default function createAuthApi(endpoints: Endpoints) {
             let r = await fetch(loginUrl, {
                 method: "POST",
                 body: JSON.stringify({ username, password }),
+                // credentials: "same-origin",
                 headers: {
-                    // "Cache-Control": "no-cache",
+                    "Cache-Control": "no-cache",
                     "Content-Type": "application/json",
                 },
             });
@@ -35,6 +59,11 @@ export default function createAuthApi(endpoints: Endpoints) {
             return await r.json();
         } catch (error) {
             warn(error);
+            if (typeof error.message === "string") {
+                if (error.message.toLowerCase() === "failed to fetch") {
+                    error.message = "Network Error";
+                }
+            }
             return Promise.reject(error);
         }
     }
@@ -42,13 +71,15 @@ export default function createAuthApi(endpoints: Endpoints) {
      * 
      * @param token 
      */
-    async function profile(token: string): Promise<any> {
+    async function profile(): Promise<any> {
+        if(!getToken) throw new Error("getToken?");
         try {
             let r = await fetch(profileUrl, {
+                credentials: "same-origin",
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                    // "Cache-Control": "no-cache",
-                    Contentype: "application/json",
+                    Authorization: `Bearer ${getToken()}`,
+                    "Cache-Control": "no-cache",
+                    "Content-Type": "application/json",
                 },
             });
             // TODO: message = await r.json()
@@ -60,6 +91,11 @@ export default function createAuthApi(endpoints: Endpoints) {
             return data;
         } catch (error) {
             warn(error);
+            if (typeof error.message === "string") {
+                if (error.message.toLowerCase() === "failed to fetch") {
+                    error.message = "Network Error";
+                }
+            }
             return Promise.reject(error);
         }
     }
@@ -67,13 +103,15 @@ export default function createAuthApi(endpoints: Endpoints) {
      * 
      * @param token 
      */
-    async function refresh(token: string): Promise<any> {
+    async function refresh(): Promise<any> {
+        if(!getToken) throw new Error("getToken?");
         try {
             let r = await fetch(refreshUrl, {
+                credentials: "same-origin",
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                    // "Cache-Control": "no-cache",
-                    Contentype: "application/json",
+                    Authorization: `Bearer ${getToken()}`,
+                    "Cache-Control": "no-cache",
+                    "Content-Type": "application/json",
                 },
             });
             if (!r.ok) {
@@ -84,8 +122,7 @@ export default function createAuthApi(endpoints: Endpoints) {
         } catch (error) {
             warn(error);
             if (typeof error.message === "string") {
-                const m = error.message.toLowerCase();
-                if (m === "failed to fetch") {
+                if (error.message.toLowerCase() === "failed to fetch") {
                     error.message = "Network Error";
                 }
             }
@@ -99,14 +136,16 @@ export default function createAuthApi(endpoints: Endpoints) {
     /**
      * 
      */
-    async function changePassword(token: string, password: string, newPassword: string) {
-        /** */        
+    async function changePassword(password: string, newPassword: string) {
+        if(!getToken) throw new Error("getToken?");
+        /** */
         try {
             let r = await fetch(changePasswordUrl, {
                 method: "POST",
+                credentials: "same-origin",
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                    // "Cache-Control": "no-cache",
+                    Authorization: `Bearer ${getToken()}`,
+                    "Cache-Control": "no-cache",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
@@ -123,6 +162,11 @@ export default function createAuthApi(endpoints: Endpoints) {
             return data;
         } catch (error) {
             warn(error);
+            if (typeof error.message === "string") {
+                if (error.message.toLowerCase() === "failed to fetch") {
+                    error.message = "Network Error";
+                }
+            }
             return Promise.reject(error);
         }
     }
