@@ -1,9 +1,9 @@
 /** 
  * TODO: move up ../
  */
-import { repo as customers } from "../crud-customers";
-import { repo as licenses } from "../crud-licenses";
-import { repo as products } from "../crud-products";
+import { repo as customers } from "@australis/tiny-auth-customers";
+import { repo as licenses } from "@australis/tiny-auth-licenses";
+import { repo as products } from "@australis/tiny-auth-products";
 import { Validator } from "./types";
 import { debugModule } from "@australis/create-debug";
 import datesAreEqual from "./dates_are_equal";

@@ -1,9 +1,12 @@
 {
   "name": "@local/tiny-auth",
   "private": true,
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "description": "TODO",
-  "main": "app.js",
+  "main": "build/index.js",
+  "bin": {
+    "tiny-auth": "./bin/jest.js"
+  },
   "keywords": [],
   "author": "daniel@australis-technica.com",
   "license": "ISC",

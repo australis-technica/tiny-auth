@@ -12,6 +12,9 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
+    "packages/tiny-auth-customers",
+    "packages/tiny-auth-products",
+    "packages/tiny-auth-licenses",
     "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
@@ -23,7 +26,7 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "command": {
      "init": {
        "exact": true

@@ -1,6 +1,6 @@
 {
   "name": "@local/tiny-auth-ui",
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "private": true,
   "homepage": "http://blink-dev-zero/admin",
   "dependencies": {

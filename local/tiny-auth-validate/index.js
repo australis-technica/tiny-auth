@@ -1,0 +1,1 @@
+require("../tiny-auth/build");

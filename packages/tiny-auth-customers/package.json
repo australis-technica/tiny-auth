@@ -1,0 +1,28 @@
+{
+  "name": "@australis/tiny-auth-customers",
+  "version": "1.0.0-5",
+  "description": "",
+  "private": true,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest --env=node --ci --config=./jest.json",
+    "build": "tsc -p .",
+    "clean": "rimraf lib",
+    "rebuild": "npm run clean && npm run build",
+    "watch": "tsc -p . --watch"
+  },
+  "keywords": [],
+  "author": "daniel@australis-technica.com",
+  "license": "MIT",  
+  "dependencies": {
+    "@australis/create-debug": "^1.0.2"
+  },
+  "devDependencies": {
+    "jest": "22.4.3",
+    "rimraf": "^2.6.2",
+    "ts-jest": "22.4.4",
+    "ts-node": "^5.0.0",
+    "typescript": "3.0.1"
+  }
+}

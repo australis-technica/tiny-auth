@@ -1,13 +1,14 @@
 {
   "name": "@australis/tiny-auth",
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "description": "single token auth",
   "private": true,
   "scripts": {
     "start": "cd local/tiny-auth-ui && npm start",
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
-    "test": "lerna --no-sort run test"
+    "test": "lerna --no-sort run test",
+    "set-version": "./scripts/set-version.js"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
@@ -19,8 +20,7 @@
     "typescript": "3.0.1"
   },
   "dependencies": {
-    "lerna": "^2.11.0",
-    "node-windows": "^0.1.14"
+    "lerna": "^2.11.0"    
   },
   "workspaces": [
     "packages/tiny-auth-core",
@@ -34,6 +34,9 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
+    "packages/tiny-auth-customers",
+    "packages/tiny-auth-products",
+    "packages/tiny-auth-licenses",
     "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
