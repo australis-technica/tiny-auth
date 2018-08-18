@@ -1,1 +1,4 @@
-export default "not-a-module";
+/** not-a-module */
+export default ()=>{
+    return "not-a-module";
+}
