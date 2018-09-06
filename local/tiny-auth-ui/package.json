@@ -40,5 +40,11 @@
     "@types/react-router-redux": "*",
     "@types/webfontloader": "^1.6.29",
     "typescript": "3.0.1"
-  }
+  },
+  "files": [
+    "build/*",
+    ".env.production.env",
+    "package.json",
+    "README.md"
+  ]
 }

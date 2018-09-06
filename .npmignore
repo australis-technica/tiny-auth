@@ -1,0 +1,22 @@
+scripts/
+docs/
+*.log
+lerna.*
+**/src/*
+**/node_modules/
+**/test/*
+# env files
+*.dev.env
+*.test.env
+.env
+jest.*
+tsconfig.*
+tslint.*
+**/daemon/*
+**/not-a-module/*
+**/.vscode/*
+**/.idea/*
+*.test*
+*.tgz
+*.zip
+*.map

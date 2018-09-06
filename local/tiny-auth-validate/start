@@ -1,3 +1,3 @@
  
  #!/usr/bin/env bash
-DEBUG=local/*,@local/*,@australis/* NODE_ENV=development ../tiny-auth/bin/tiny-auth 
+DEBUG=local/*,@local/*,@australis/* NODE_ENV=production ../tiny-auth/bin/tiny-auth 

@@ -25,6 +25,7 @@ scriptcs_packages/
 *.dll
 *.pdb
 *.zip
+*.tgz
 **/lib/*
 .yarnrc
 **/dist/*
