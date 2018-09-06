@@ -30,7 +30,7 @@ export default function configure(app: Express) {
         return Promise.reject("APP_FEATURES is Required!");
       }
       const features = process.env.APP_FEATURES.split(",");
-      if (features.indexOf("admin")!== -1) {
+      if (features.indexOf("admin") !== -1) {
         await configureAuth(app);
         const products = await import("./products");
         await products.configure(app);
@@ -40,6 +40,14 @@ export default function configure(app: Express) {
         await lilcenses.configure(app);
         const deliver = await import("./deliver");
         await deliver.configure(app);
+        /**
+         * Configure UI
+         */
+        const { static: serveStatic } = await import("express");
+        const { resolve: resolvePath } = await import("path");
+        const pathToUi = resolvePath(__dirname, "..", "..", "tiny-auth-ui", "build");
+        app.use("/", serveStatic(pathToUi));
+        app.use("*", serveStatic(resolvePath(pathToUi, "index.html")));
         debug("Feature 'admin' configured");
       }
       if (features.indexOf("validate") !== -1) {

@@ -2,7 +2,6 @@
   "name": "@local/tiny-auth-ui",
   "version": "1.0.0-5",
   "private": true,
-  "homepage": "http://blink-dev-zero/admin",
   "dependencies": {
     "@material-ui/core": "^1.4.2",
     "classnames": "^2.2.6",
