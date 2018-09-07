@@ -4,9 +4,11 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "./templates",
+    "rootDir": "./src"
   },
   "include": [
-    "./**/*.tsx"
+    "src/**/*.tsx"
   ]
 }

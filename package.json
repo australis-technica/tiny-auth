@@ -42,6 +42,7 @@
     "packages/tiny-auth-customers",
     "packages/tiny-auth-products",
     "packages/tiny-auth-licenses",
+    "local/tiny-templates",
     "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
