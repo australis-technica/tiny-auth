@@ -1,7 +1,7 @@
 {
   "name": "@local/tiny-auth",
   "private": true,
-  "version": "1.0.0-5",
+  "version": "1.0.1",
   "description": "TODO",
   "main": "build/index.js",
   "bin": {

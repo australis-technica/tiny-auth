@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-licenses",
-  "version": "1.0.0-5",
+  "version": "1.0.1",
   "private": true,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

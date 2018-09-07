@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-express-fingerprint",
-  "version": "1.0.0-5",
+  "version": "1.0.1",
   "description": "",
   "private": true,
   "main": "lib/index.js",
