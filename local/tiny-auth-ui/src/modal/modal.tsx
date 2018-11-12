@@ -11,7 +11,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import styles from "./styles";
-import * as classNames from "classnames";
+import classNames from "classnames";
 /** */
 export interface ModalProps {
     isOpen: boolean;

@@ -4,8 +4,7 @@ import withStyles, {
   StyleRulesCallback
 } from "@material-ui/core/styles/withStyles";
 import withWidth, {
-  isWidthUp,
-  WithWidthProps
+  isWidthUp,  
 } from "@material-ui/core/withWidth/withWidth";
 import * as React from "react";
 import { Component, ReactNode, ComponentType, ReactHTML } from "react";
@@ -41,7 +40,8 @@ export interface MenuResponsiveParams {
  * @description Menu responsive props
  */
 export type MenuResponsiveProps = MenuResponsiveParams &
-  WithWidthProps & {
+  {
+    width?: any;
     classes: ClassNameMap;
   };
 /**

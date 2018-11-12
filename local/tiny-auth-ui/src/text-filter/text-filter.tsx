@@ -3,11 +3,11 @@ import * as React from "react";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 /** */
-export type TextFilterProps<T extends {}> = {
+export type TextFilterProps = {
   onChange(e: string | React.ChangeEvent<HTMLInputElement>): any;
 } & TextFieldProps;
 /** */
-export default class TextFilter<T> extends Component<TextFilterProps<T>> {
+export default class TextFilter extends Component<TextFilterProps> {
   /** */
   onClear = () => {
     this.props.onChange && this.props.onChange("");
@@ -33,7 +33,7 @@ export default class TextFilter<T> extends Component<TextFilterProps<T>> {
           ),
           ...InputProps
         }}
-        {...rest}
+        {...(rest as any)}
       />
     );
   }
