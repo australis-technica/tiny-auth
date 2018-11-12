@@ -96,12 +96,9 @@ const bindActions = (dispatch: Dispatch, _props: ViewState) => {
     setState: (payload: Partial<ViewActions>) => {
       dispatch(adapter.actions.setState(payload));
     }
-  };
+  } ;
 };
 /**
  *
  */
-export default connect(
-  selector,
-  bindActions
-)(withStyles(styles)(View)) as React.ComponentType<ViewParams>;
+export default connect(selector,bindActions)(withStyles(styles)(View) as any) as any;

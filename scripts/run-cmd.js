@@ -3,12 +3,13 @@
  * @param cmd {string}
  * @param args {string[]}
  */
-const run = (cmd, args) => {
+const run = (cmd, args, cwd) => {
     const cp = require("child_process");
     return new Promise((resolve, reject) => {
       const exec = cp.spawn(cmd, args, {
         stdio: "inherit",
-        shell: true
+        shell: true,
+        cwd
       });
       exec.on("error", error => {
         reject(error);

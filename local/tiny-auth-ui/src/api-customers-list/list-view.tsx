@@ -75,7 +75,7 @@ class ListView extends Component<ListViewProps & { classes: ClassNameMap }> {
   };
   renderAction = (
     actionType: ActionType | undefined,
-    item: ApiItem | undefined
+    item: any
   ) => {
     if (!actionType || !item) return null;
     switch (actionType) {

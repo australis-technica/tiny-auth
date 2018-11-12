@@ -1,1 +1,1 @@
-export { default as SnackbarContentWithSatus, MessageStatus } from "./snackbar-content-with-satus";
+export { default as SnackbarContentWithSatus } from "./snackbar-content-with-satus";

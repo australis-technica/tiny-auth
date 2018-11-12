@@ -3,16 +3,17 @@ import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
 import { ProductFeatures } from "../api-product-features";
-import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
+import { ConfirmAction } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview, FormDataActions } from "../form-data";
-import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { ViewFormData } from "./form-store";
 import FormView from "./form-view";
 import propsToRequest from "./props-to-request";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
+import { ConfirmActionActions } from "../confirm-action/action-binder";
+import { MenuActions } from "../menu/action-binder";
 /**
  * export for external parameters
  */

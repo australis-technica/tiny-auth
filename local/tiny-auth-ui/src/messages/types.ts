@@ -1,5 +1,5 @@
-import { MessageStatus } from "../snackbar-content-with-satus";
-export { MessageStatus } from "../snackbar-content-with-satus";
+import { MessageStatus } from "../snackbar-content-with-satus/snackbar-content-with-satus";
+
 export interface MessagesState {
   message?: string;
   status?: MessageStatus;

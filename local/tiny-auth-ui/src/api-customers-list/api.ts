@@ -1,4 +1,4 @@
-import crudApi, { CrudApiState, CrudApiActions } from "../crud-api";
+import crudApi, { CrudApiActions, CrudApiState } from "../crud-api";
 /** */
 export type ApiItem = {
     id: string;
@@ -11,6 +11,8 @@ export type ApiItem = {
     createdAt: number;
     updatedAt: number;
     userid: string;
+    address?: string;
+    contact?: any;
 }
 /** */
 export type ApiState = CrudApiState<ApiItem[]> & {

@@ -17,7 +17,7 @@ export default function withAuth<P extends AuthProps>(K: ComponentType<P>) {
             auth: propTypes.any
         }
         render() {
-            const { auth } = this.context;
+            const { auth } = (this as any).context;
             return <K {...this.props} auth={auth} />
         }
     }

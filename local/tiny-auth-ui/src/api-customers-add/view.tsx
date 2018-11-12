@@ -2,18 +2,19 @@ import { Button, Dialog, DialogActions, DialogContent, Icon, IconButton, ListIte
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { Component, Fragment } from "react";
-import { ConfirmAction, ConfirmActionActions } from "../confirm-action";
+import { ConfirmAction } from "../confirm-action";
 import { CrudApiActions, CrudApiState } from "../crud-api";
 import { CheapPreview } from "../form-data";
-import { MenuActions } from "../menu";
 import { MessageActions } from "../messages";
 import { FormViewActions, FormViewData } from "./form-store";
 import FormView from "./form-view";
 import propsToRequest from "./props-to-request";
 import { StoreActions, ViewState } from "./store";
 import styles from "./styles";
+import { ConfirmActionActions } from "../confirm-action/action-binder";
+import { MenuActions } from "../menu/action-binder";
 const log =
-  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => {};
+  process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 /**
  * export for external parameters
  */
@@ -29,8 +30,8 @@ export type ViewActions = StoreActions &
   ConfirmActionActions &
   MessageActions &
   MenuActions & {
-    setBusy(busy: boolean): any;
-  };
+  setBusy(busy: boolean): any;
+};
 /** */
 export interface ViewFormDataState {
   formData: FormViewData;
@@ -45,8 +46,8 @@ export type ViewProps = ViewState &
   ViewFormDataState &
   ViewActions &
   ApiContext & {
-    classes: ClassNameMap;
-  };
+  classes: ClassNameMap;
+};
 /** */
 class View extends Component<ViewProps> {
   componentDidMount() {
@@ -60,7 +61,7 @@ class View extends Component<ViewProps> {
         setError("Can't Save");
         return;
       }
-      setBusy(true);      
+      setBusy(true);
       const request = propsToRequest(this.props);
       const r = await api.fetch(request);
       log(r);

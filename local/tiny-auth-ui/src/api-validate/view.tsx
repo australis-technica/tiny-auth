@@ -131,7 +131,7 @@ class Validate extends Component<ValidateProps & { classes: ClassNameMap }, Vali
     try {
       setBusy(true);
       this.reset();
-      const res = await fetch(validator, {
+      const res = await fetch(validator as any, {
         headers: {
           License: `Lic ${token}`
         }
