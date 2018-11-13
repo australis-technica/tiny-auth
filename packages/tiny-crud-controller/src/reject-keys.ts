@@ -1,4 +1,4 @@
-import { RequestHandler, Request } from "express-serve-static-core";
+import { RequestHandler, Request } from "express";
 export type Getter = (req: Request) => {};
 /**
  *

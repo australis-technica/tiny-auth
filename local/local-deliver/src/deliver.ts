@@ -1,5 +1,5 @@
 import { json } from "body-parser";
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import deliverByMail, { validateReceipient } from "./deliver-by-mail";
 /** */
 export default function Deliver(

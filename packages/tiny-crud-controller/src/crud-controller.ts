@@ -1,4 +1,4 @@
-import { RequestHandler, Request, Response } from "express-serve-static-core";
+import { RequestHandler, Request, Response } from "express";
 import { Repo } from "./types";
 import fromBody from "./from-body";
 /** 

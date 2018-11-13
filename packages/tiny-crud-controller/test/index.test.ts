@@ -1,6 +1,6 @@
 import { join } from "path";
 import { CrudController, ensureBody, ensureID, Repo, validate } from "../src"; 
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import { json } from "body-parser";
 import uuid from "uuid";
 import express from "express";

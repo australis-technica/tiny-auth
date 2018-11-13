@@ -1,7 +1,7 @@
 import { debugModule } from "@australis/create-debug";
 import { GetToken } from "@australis/tiny-auth-core";
 import { validate } from "@australis/tiny-auth-token-sign";
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import { fingerPrint } from "@australis/tiny-auth-express-fingerprint";
 const debug = debugModule(module);
 /** */

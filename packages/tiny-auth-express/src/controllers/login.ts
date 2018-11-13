@@ -2,7 +2,7 @@ import { ValidateCredentials } from "@australis/tiny-auth-core";
 import { fingerPrint } from "@australis/tiny-auth-express-fingerprint";
 import { signToken } from "@australis/tiny-auth-token-sign";
 import bodyParser from "body-parser";
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 /** */
 function isString(x: any): x is string {
   return typeof x === "string";

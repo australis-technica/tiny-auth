@@ -1,5 +1,5 @@
 import { json } from "body-parser";
-import { Express, RequestHandler } from "express-serve-static-core";
+import { Express, RequestHandler, Router } from "express";
 import uuid from "uuid";
 import auth from "@local/auth";
 import {
@@ -19,7 +19,7 @@ const debug = debugModule(module);
  * Licenses
  * @param app
  */
-export default function configureCrud(app: Express) {
+export default async function configureCrud<A extends Express | Router>(app: A): Promise<A> {
   const { authorize, requireRole } = auth.middleware;
   const crud = CrudController(repo);
   const endpoint = "licenses";
@@ -98,4 +98,5 @@ export default function configureCrud(app: Express) {
     crud.dlete()
   ]);
   debug("configured");
+  return app;
 }

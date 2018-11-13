@@ -1,5 +1,5 @@
 import { Users } from "@australis/tiny-auth-core";
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 // TODO:
 import { debugModule } from "@australis/create-debug";
 import { withoutPassword } from "./util";

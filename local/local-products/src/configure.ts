@@ -5,7 +5,7 @@ import {
   ensureID
 } from "@australis/tiny-crud-controller";
 import { json } from "body-parser";
-import { Express, RequestHandler } from "express-serve-static-core";
+import { Express, RequestHandler, Router } from "express";
 import uuid from "uuid";
 import auth from "@local/auth";
 import { repo } from "@australis/tiny-auth-products";
@@ -14,7 +14,7 @@ const debug = debugModule(module);
  *
  * @param app
  */
-export default function configureCrud(app: Express) {
+export default async function configureCrud<A extends Express | Router>(app: A): Promise<A> {
   const { authorize, requireRole } = auth.middleware;
   {
     const crud = CrudController(repo);
@@ -55,5 +55,6 @@ export default function configureCrud(app: Express) {
       crud.dlete()
     ]);
     debug("configured");
+    return app;
   }
 }

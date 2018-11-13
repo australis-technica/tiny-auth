@@ -4,9 +4,6 @@
   "version": "1.0.1",
   "description": "TODO",
   "main": "build/index.js",
-  "bin": {
-    "tiny-auth": "./build/run.js"
-  },
   "keywords": [],
   "author": "daniel@australis-technica.com",
   "license": "ISC",

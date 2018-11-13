@@ -1,4 +1,4 @@
-import { Request, Response } from "express-serve-static-core";
+import { Request, Response } from "express";
 
 export default function fromBody(_: Request, res: Response) {
     return res.locals.body;

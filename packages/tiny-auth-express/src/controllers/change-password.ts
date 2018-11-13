@@ -1,4 +1,4 @@
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import bodyParser from "body-parser";
 import { PasswordChanger } from "@australis/tiny-auth-core";
 /**

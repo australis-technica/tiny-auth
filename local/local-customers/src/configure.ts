@@ -1,4 +1,4 @@
-import { Express, RequestHandler } from "express-serve-static-core";
+import { Express, RequestHandler, Router } from "express";
 import {
     CrudController,
     ensureID,
@@ -16,7 +16,7 @@ const debug = debugModule(module);
  *
  * @param app
  */
-export default function configureCrud(app: Express) {
+export default async function configureCrud<A extends Express|Router>(app: A): Promise<A> {
     const { authorize, requireRole } = auth.middleware;
     {
         // 
@@ -61,5 +61,6 @@ export default function configureCrud(app: Express) {
             crud.dlete()
         ]);
         debug("configured");
+        return app;
     }
 }

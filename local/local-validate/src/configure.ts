@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import { Express } from "express-serve-static-core";
+import { Express } from "express";
 import validateHandler from "./validate-handler";
 import validator from "./validator";
 const  isDev = process.env.NODE_ENV !== "production";

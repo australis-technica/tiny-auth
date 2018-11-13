@@ -1,5 +1,5 @@
 import verify from "./verify";
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 // ...

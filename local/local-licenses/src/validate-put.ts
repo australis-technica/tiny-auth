@@ -1,4 +1,4 @@
-import { Request } from "express-serve-static-core";
+import { Request } from "express";
 import { repo as productsRepo } from "@australis/tiny-auth-products";
 import { repo as customersRepo } from "@australis/tiny-auth-customers";
 /**

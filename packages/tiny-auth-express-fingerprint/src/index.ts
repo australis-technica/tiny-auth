@@ -1,4 +1,4 @@
-import { Request, RequestHandler } from "express-serve-static-core";
+import { Request, RequestHandler } from "express";
 /**
  *
  * @param req

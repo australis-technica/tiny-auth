@@ -21,7 +21,7 @@
     "gulp-zip": "^4.1.0",
     "lerna": "^2.11.0",
     "rimraf": "^2.6.2",
-    "typescript": "3.0.1"
+    "typescript": "3.1.6"
   },
   "dependencies": {
     "cross-env": "^5.2.0",
@@ -54,6 +54,12 @@
     "local/local-crypto",
     "local/local-validate",
     "local/local-deliver",
+    "local/local-use-admin",
+    "local/local-use-ui",
+    "local/local-features",
+    "local/local-error-handler",
+    "local/local-start",
+    "local/local-configure",
     "local/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",

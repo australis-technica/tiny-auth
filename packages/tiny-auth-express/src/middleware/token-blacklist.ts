@@ -1,4 +1,4 @@
-import { RequestHandler } from "express-serve-static-core";
+import { RequestHandler } from "express";
 import { TokenBlackList, GetToken } from "@australis/tiny-auth-core";
 /**
  * TODO

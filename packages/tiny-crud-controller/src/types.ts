@@ -1,4 +1,4 @@
-import { Request } from "express-serve-static-core";
+import { Request } from "express";
 /** */
 export interface Repo {
     byId(args: any): Promise<any>;

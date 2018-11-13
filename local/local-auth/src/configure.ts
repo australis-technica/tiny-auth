@@ -1,6 +1,6 @@
 import { debugModule } from "@australis/create-debug";
 import fingerPrint from "@australis/tiny-auth-express-fingerprint";
-import { Express } from "express-serve-static-core";
+import { Express } from "express";
 import auth from "./auth";
 const debug = debugModule(module);
 const isDev = process.env.NODE_ENV !== "production";
