@@ -5,7 +5,7 @@
   "description": "TODO",
   "main": "build/index.js",
   "bin": {
-    "tiny-auth": "./bin/jest.js"
+    "tiny-auth": "./build/run.js"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
@@ -49,10 +49,8 @@
   },
   "scripts": {
     "test": "jest --env=node --ci --config=./jest.json",
-    "build": "tsc -p .",
-    "watch": "tsc -p . --watch",
-    "clean": "rimraf build",
-    "rebuild": "npm run clean && npm run build",
+    "build": "rimraf build && tsc -p .",
+    "watch": "tsc -p . --watch",    
     "start": "node app"
   } 
 }

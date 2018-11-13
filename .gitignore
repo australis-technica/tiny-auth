@@ -32,3 +32,4 @@ scriptcs_packages/
 **/tmp/*
 **/templates/*.js
 **/templates/*.html
+*.local

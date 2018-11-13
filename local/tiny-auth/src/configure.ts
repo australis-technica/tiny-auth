@@ -3,7 +3,7 @@ import { Express } from "express-serve-static-core";
 import helmet from "helmet";
 import errorHandler from "./error-handler";
 import { debugModule } from "@australis/create-debug";
-import configureAuth from "./configure-auth";
+import { configure as configureAuth } from "@local/auth";
 
 const debug = debugModule(module);
 /** */
@@ -32,14 +32,14 @@ export default function configure(app: Express) {
       const features = process.env.APP_FEATURES.split(",");
       if (features.indexOf("admin") !== -1) {
         await configureAuth(app);
-        const products = await import("./products");
-        await products.configure(app);
-        const customers = await import("./customers");
-        await customers.configure(app);
-        const lilcenses = await import("./licenses");
-        await lilcenses.configure(app);
-        const deliver = await import("./deliver");
-        await deliver.configure(app);
+        const { configure: products } = await import("@local/products");
+        await products(app);
+        const { configure: customers } = await import("@local/customers");
+        await customers(app);
+        const { configure: lilcenses } = await import("@local/licenses");
+        await lilcenses(app);
+        const { configure: deliver } = await import("@local/deliver");
+        await deliver(app);
         /**
          * Configure UI
          */
@@ -51,7 +51,7 @@ export default function configure(app: Express) {
         debug("Feature 'admin' configured");
       }
       if (features.indexOf("validate") !== -1) {
-        const validate = await import("./validate");
+        const validate = await import("@local/validate");
         await validate.configure(app);
         debug("Feature 'validate' configured");
       }

@@ -16,6 +16,7 @@ async function run() {
       /** @type {{ name: string , scripts: { [[key: string]: string]}}} */
       wsPkg = require(resolve(cwd, ws, "package.json"));
       if (wsPkg.scripts && "build" in wsPkg.scripts) {
+        console.log("Package: %s", wsPkg.name);
         await runCmd("yarn", ["workspace", wsPkg.name, "build"]);
       }
     } catch (error) {

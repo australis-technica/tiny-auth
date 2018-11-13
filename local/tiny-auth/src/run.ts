@@ -1,6 +1,7 @@
-const express = require("express");
-require("dotenv").load({ path: process.env.ENV_PATH || ".env" });
-const { configure, start } = require("@local/tiny-auth");
+import "@australis/load-env";
+import express from "express";
+import start from "./start";
+import configure from "./configure";
 const port = Number(process.env.PORT);
 //
 const app = express();
