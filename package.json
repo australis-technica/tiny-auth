@@ -50,7 +50,6 @@
     "local/local-customers",
     "local/local-products",
     "local/local-licenses",
-    "local/tiny-templates",
     "local/local-crypto",
     "local/local-validate",
     "local/local-deliver",
