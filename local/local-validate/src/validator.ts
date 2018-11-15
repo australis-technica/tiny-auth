@@ -1,16 +1,43 @@
 /** 
  * TODO: move up ../
  */
-import { repo as customers } from "@australis/tiny-auth-customers";
-import { repo as licenses } from "@australis/tiny-auth-licenses";
-import { repo as products } from "@australis/tiny-auth-products";
-import { Validator } from "./types";
+
 import { debugModule } from "@australis/create-debug";
-import datesAreEqual from "./dates_are_equal";
-const debug = debugModule(module);
-/** 
- * TODO: move up ../
+import customers from "@australis/tiny-auth-customers";
+import licenses from "@australis/tiny-auth-licenses";
+import products from "@australis/tiny-auth-products";
+
+/** TODO: */
+function convert(x: string | Date | number): number {
+    const type = typeof x;
+    switch (type) {
+        case "string": {
+            return new Date(x).getTime();
+        }
+        case "number": {
+            return new Date(x).getTime();
+        }
+        default: {
+            return (x as Date).getTime();
+        }
+    }
+}
+/**
+ * 
+ * @param a a Date
+ * @param b a Date
  */
+function datesAreEqual(a: Date | string | number, b: Date | string | number) {
+    if (!a || !b) return a === b;
+    const date1 = convert(a);
+    const date2 = convert(b);
+    return date1 === date2;
+}
+
+export type Validator = (args: { token: string, token_id: string, verified: { [key: string]: any } }) => Promise<boolean>;
+
+const debug = debugModule(module);
+
 const validator: Validator = async ({ token, token_id, verified }) => {
     const resolve = Promise.resolve.bind(Promise);
     if (!token_id || !verified) return resolve(false);

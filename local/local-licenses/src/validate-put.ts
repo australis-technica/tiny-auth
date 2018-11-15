@@ -1,6 +1,6 @@
+import customersRepo from "@australis/tiny-auth-customers";
+import productsRepo from "@australis/tiny-auth-products";
 import { Request } from "express";
-import { repo as productsRepo } from "@australis/tiny-auth-products";
-import { repo as customersRepo } from "@australis/tiny-auth-customers";
 /**
  * validate PUT/ADD/NEW 
  */

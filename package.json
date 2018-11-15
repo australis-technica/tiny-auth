@@ -30,7 +30,7 @@
   "workspaces": [
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
-    "packages/tiny-auth-users-sql",
+    "packages/tiny-auth-users",
     "packages/tiny-auth-token-sign",
     "packages/tiny-auth-express-fingerprint",
     "packages/tiny-auth-express",
@@ -64,8 +64,7 @@
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",
-    "packages/tiny-auth-handler",
-    "packages/tiny-crud-controller",
+    "packages/tiny-auth-handler",    
     "local/tiny-auth-ui"
   ]
 }

@@ -7,7 +7,7 @@ const debug = debugModule(module);
 /** 
  * 
  */
-export default async function byId (connection: Connection, id: string) {    
+export default (id: string) => async (connection: Connection) => {
     try {
         const execSql = ExecSql(connection);
         const result = await execSql<User>(`select top 1 * from users where id = @id`, { id }).then(x => x.values[0]);
@@ -15,5 +15,5 @@ export default async function byId (connection: Connection, id: string) {
     } catch (error) {
         debug(error);
         throw error;
-    }    
+    }
 }

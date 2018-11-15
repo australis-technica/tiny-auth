@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import { Customer, repo } from "@australis/tiny-auth-customers";
+import repo, { Customer } from "@australis/tiny-auth-customers";
 import { CrudController, ensureBody, ensureID, validate } from "@australis/tiny-crud-controller";
 import auth from "@local/auth";
 import { json } from "body-parser";

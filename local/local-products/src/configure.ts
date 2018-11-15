@@ -8,7 +8,7 @@ import { json } from "body-parser";
 import { Express, RequestHandler, Router } from "express";
 import uuid from "uuid";
 import auth from "@local/auth";
-import { repo } from "@australis/tiny-auth-products";
+import repo from "@australis/tiny-auth-products";
 const debug = debugModule(module);
 /**
  *

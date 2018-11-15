@@ -1,8 +1,13 @@
-import { add, all, byId, findBy, update } from "@australis/tiny-auth-users";
+
+import { debugModule } from "@australis/create-debug";
 import { Users } from "@australis/tiny-auth-core";
 import newConnection from "@australis/tiny-sql-connection-factory";
 import { Connection } from "tedious";
-import { debugModule } from "@australis/create-debug";
+import add from "./add";
+import all from "./all";
+import byId from "./by-id";
+import findBy from "./find-by";
+import update from "./update";
 const debug = debugModule(module);
 /** */
 const users = {

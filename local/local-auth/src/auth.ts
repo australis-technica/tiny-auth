@@ -15,7 +15,7 @@ import validateCredentials from "@australis/tiny-auth-validate-credentials";
 import passwordChanger from "@australis/tiny-auth-password-changer";
 import passwordPolicyEnforcer from "@australis/tiny-auth-password-policy-enforcer";
 /** */
-import users from "./users";
+import users from "@australis/tiny-auth-users";
 import crypto from "@local/crypto";
 /** */
 export default {

@@ -1,19 +1,12 @@
+import { debugModule } from "@australis/create-debug";
+import repo from "@australis/tiny-auth-licenses";
+import { CrudController, ensureBody, ensureID, excludeKeys, rejectKeys, validate } from "@australis/tiny-crud-controller";
+import auth from "@local/auth";
+import { signMiddleware } from "@local/validate";
 import { json } from "body-parser";
 import { Express, RequestHandler, Router } from "express";
 import uuid from "uuid";
-import auth from "@local/auth";
-import {
-  CrudController,
-  ensureBody,
-  ensureID,
-  excludeKeys,
-  validate,
-  rejectKeys
-} from "@australis/tiny-crud-controller";
-import { signMiddleware } from "@local/validate";
-import { repo } from "@australis/tiny-auth-licenses";
 import validatePut from "./validate-put";
-import { debugModule } from "@australis/create-debug";
 const debug = debugModule(module);
 /**
  * Licenses
@@ -59,7 +52,7 @@ export default async function configureCrud<A extends Express | Router>(app: A):
     validate(validatePut),
     signMiddleware(/* {}: Options */),
     ((req, _res, next) => {
-      // include user
+      // include user: why ? 
       try {
         req.body.userid = req.user.id;
         return next();

@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@australis/create-debug@^1.0.0-0", "@australis/create-debug@^1.0.2":
+"@australis/create-debug@^1.0.2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@australis/create-debug/-/create-debug-1.0.2.tgz#962dd316b18526505f76473bcf57fc2c61a4a84f"
   integrity sha512-P3c3N0b6bLY6aK7ZNnGc7UBj/DppWldS5icymvk4BWf9c71H9lj/9pe/+ejqFyeEawoSasCgTEjhSwfixpfikQ==
@@ -15,14 +15,6 @@
   integrity sha512-HoIfA954R/S21tckp4UW5kN1ZpZNZUPaN1f6XevBBtgGac+0Dsjjy1AX/Q2qP2I8adLFMNl66sTt5ZcqCxxGWA==
   dependencies:
     dotenv "^6.0.0"
-
-"@australis/parse-sql-connection-string@latest":
-  version "1.0.0-0"
-  resolved "https://registry.npmjs.org/@australis/parse-sql-connection-string/-/parse-sql-connection-string-1.0.0-0.tgz#659afc5a0e8ba348275d2689d77b92aa6961cbe9"
-  integrity sha512-/GjzDN774mlLBI5vE0EpJpHBXlcCShT+T2DBJrH3qBXODCjkI1aCNM7/2e+1xl/iH0nVO4coHpSB/mVwulbiTw==
-  dependencies:
-    "@australis/create-debug" "^1.0.0-0"
-    tedious "^2.3.1"
 
 "@australis/send-grid-mail@^0.1.0":
   version "0.1.0"
@@ -41,119 +33,139 @@
     express "^4.16.3"
     uuid "^3.3.2"
 
-"@australis/tiny-sql-batch-script@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-15.tgz#ef0f4515fa52c34e22a9a0190329d87582fc1a90"
-  integrity sha512-jv8V1WDGUREtdRiFqPWFpVphE3KMgbYB2LylpUbtumELLt0l6tzziPw169LjxPEyZDzcfags2ki7eiG7hNrStg==
+"@australis/tiny-sql-batch-script@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-17.tgz#3948756643de77857a9ebb596244bd64971fe226"
+  integrity sha512-wD+a1WMxazOe2DEOVwulaz96gr8hEhyMrNhekrquA71gHOjn+lny7o/Tk6rRASqFhzqOtJ94IRNJxliwQDh2og==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-connect-to-server@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect-to-server/-/tiny-sql-connect-to-server-1.0.0-15.tgz#9898abb2349f7e4b89e6f1b9f14355e03c10fb6c"
-  integrity sha512-VHcxweU7+g7AHu3/6IBPtYHAl24Sc5NDY4wGdSWhSA8y8ECWMrq/h57xF9hoD5h2DVT13bY2T+NK+aAlhi8lkg==
+"@australis/tiny-sql-connect-to-server@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect-to-server/-/tiny-sql-connect-to-server-1.0.0-17.tgz#c5871b9215d0884f47be299f85cd7667fc01906e"
+  integrity sha512-BtAdmkfoEiOVS7C8GbVoc81x1CIldh4m9Ze5QEtFS7w8tiqdlQ0gvWfIfFtYV6Nqgw2LflONR0/lNI0hfrBS7Q==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-connect@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect/-/tiny-sql-connect-1.0.0-15.tgz#83f96c0e7f06f837c5b73bd6ac9d74873bd4b8b7"
-  integrity sha512-6kxGemwP3I/GBhaXKIed7Q4qXj+zTOg6BA92+sWfLjiBmJNUniejnv7s1p6A22IV9ekNJxxnMbzpz/k9SlY8Wg==
+"@australis/tiny-sql-connect@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connect/-/tiny-sql-connect-1.0.0-17.tgz#d8cfed4cceea38e1dd504d6258671b922cdd309a"
+  integrity sha512-fjHva59iaMkcGkKnHxbDgoiYOTUWzSV6xTMjS9KHI/qIoEqwnPMA2/b/pMUlx5etltpw77CcrEZxyN8T88AXCA==
   dependencies:
     debug "^3.1.0"
-    tedious "^2.6.3"
+    tedious "^3.0.1"
 
-"@australis/tiny-sql-connection-config@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-15.tgz#78281ae083dc9b253ab639a157af40afbdb6c45e"
-  integrity sha512-jge8gJ7cTQM00xJxJg/INbKbFbmd7q2N7OEmvzfY9FGQ6RV1ekG9V+ZR1FV0M17Jg97GZ1QxGk3o6BeeXFWICg==
+"@australis/tiny-sql-connection-config@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-config/-/tiny-sql-connection-config-1.0.0-17.tgz#e5fbb1dc8ba94398ec42df6352d91ab411cd4ea0"
+  integrity sha512-H4LiQLaha2KY3pDxRNjEaGbhqkYqTEzxuQpVaFvdcK4p5kjPemaz2YMMa1Wl7iVaGSG3OUA0nMmOfLL7OcdiZw==
   dependencies:
-    "@australis/parse-sql-connection-string" latest
+    "@australis/tiny-sql-connection-string-parse" "1.0.0-17"
 
-"@australis/tiny-sql-connection-factory@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-15.tgz#217cedcd38da1ca0932fce532bf498d4503137e6"
-  integrity sha512-+zMqqp1QJl6Tbqjwt5RYYIR7cnU58dxOzxUKAXTkdvG+AEgaulz+FAl7fGoeShe5TtyDbv9O9f/1zwEpQQ8Uhw==
+"@australis/tiny-sql-connection-factory@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-factory/-/tiny-sql-connection-factory-1.0.0-17.tgz#15af7191bc40c76e98a25d41caa8bca4dbffa847"
+  integrity sha512-5/sAFTukGk7J5+pvkgetHbM+OiWv8UFeC+1s683f5yaO0JBH1GMogcTrYoEMmC4z1/W77QVbVuWpR+ER6yIZZw==
   dependencies:
-    tedious "^2.6.3"
+    tedious "^3.0.1"
 
-"@australis/tiny-sql-connection-string-parse@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-15.tgz#1c0f2fdff7237067e77df32f030b36e78e8ff5e4"
-  integrity sha512-0kqV9uHSo2g3xHIKbxZ/mFpsvxESonLR0DuJEaoLqkQqmwSCsVVNYoxgbaroSFXcELE5jXm1l8POU+x/9pifpA==
-  dependencies:
-    "@australis/create-debug" "^1.0.2"
-    tedious "^2.6.3"
-
-"@australis/tiny-sql-create-db@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-create-db/-/tiny-sql-create-db-1.0.0-15.tgz#d2b3084621d220d32c6c67e1448b93bd3280cafb"
-  integrity sha512-//vutQjqeSiZ10ZmxG4tbya1zXuHdQxqwLvgMdafD1ZsJhwNggTaX5cdUUQMDFWzONOtbQnRxfIe0W1uUtqKjQ==
+"@australis/tiny-sql-connection-string-parse@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-connection-string-parse/-/tiny-sql-connection-string-parse-1.0.0-17.tgz#9cd8432c7ac8f7e2f9e1991a42ed29e11d1dc7f7"
+  integrity sha512-NYKxkMsTemd/wrpXl8Wj69yyvvfDmFF1bAYg/BPQXMZ/AifuapOtSAyQJ3GOpt55SGabhl0ktCNTCmWlFJ9+Ig==
   dependencies:
     "@australis/create-debug" "^1.0.2"
+    tedious "^3.0.1"
 
-"@australis/tiny-sql-exec-sql@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-15.tgz#dc871c65ff844e40a5a9f2000958ece5b945fd13"
-  integrity sha512-jTPPUZAMlanOjLU6Fux6/aBLSmCklwrT33vqodEqhLnzmeheaSHr+elkdZjBDV4Mj+xbQCOiAcAARtc9VnxpzA==
+"@australis/tiny-sql-create-db@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-create-db/-/tiny-sql-create-db-1.0.0-17.tgz#b55b10e306204346ec3c8052725e4e227af5c036"
+  integrity sha512-sbrNAZvFkMj6+tPt7VPuzsN9zYX/ylAn/lGhsF5Gxbg4QWl8Mp7XdgChOFtsdzaIGzziLbvhX0d7nBLV5GlIiw==
+  dependencies:
+    "@australis/create-debug" "^1.0.2"
+
+"@australis/tiny-sql-exec-sql@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-exec-sql/-/tiny-sql-exec-sql-1.0.0-17.tgz#778e3897ce0b3a504ec1f8de800d30cf57ac22b1"
+  integrity sha512-8BfqjMhSGoOyUHt+cOcHx5w87nvUE74dQ8z6qQuBImnxc4g/pm8946jGupJ5sFIHzoC5NazRY9Ov1lWpFLJYFw==
   dependencies:
     debug "^3.1.0"
-    tedious "^2.6.3"
+    tedious "^3.0.1"
 
-"@australis/tiny-sql-json-table@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-json-table/-/tiny-sql-json-table-1.0.0-15.tgz#4779b734385727afacf71b449ddba1ba4ea9f386"
-  integrity sha512-rqA2JmChZCUidtcTzuqvzLX9HXcSB0VEpMZRNW9TUgjxS40n6Nm594Zw2oc8NawWnrZ4GchkMvqoNYcfFlylZQ==
+"@australis/tiny-sql-json-table@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-json-table/-/tiny-sql-json-table-1.0.0-17.tgz#08b7fa80e64c7c4e7e9ee5da75e0ed2c97a34183"
+  integrity sha512-JTGfLwRtLnEFPytzbDSAXSTA9MXRviz6iNF69sXnhQzqfn5wrbyFu9RoW4BHgNf7wvx3u/FBHz5Z4rqLJk0ufw==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-params@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-15.tgz#5d85dca492e5da2718453ec72d088c84e7838004"
-  integrity sha512-32QL4zGYtbFXmAijlW/fAa7gWMeBoTst+ua3v5CxW0MuZggz56guuAg9QoDhLu1N6CeIs2f+06cKne9mTw3asA==
+"@australis/tiny-sql-params@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-params/-/tiny-sql-params-1.0.0-17.tgz#395069ad3009f4e41aa8f0d9311d02781ed40a16"
+  integrity sha512-fX1+zPMs0wrv97CY3hl7/REJrRxPrdvRRDTmRfHM1glz3WKvO2ATKqD2+iiBmPILmtAvQsZybgdv00/QDi9x/Q==
   dependencies:
     debug "^3.1.0"
-    tedious "^2.6.3"
+    tedious "^3.0.1"
 
-"@australis/tiny-sql-scripts@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-15.tgz#ad2eeb666770f6693ead0534f8082737e1908f3c"
-  integrity sha512-+EjL+U82gHTo4W3nSWofZB9mwI1+wSM9LLRQ9RszmbyjvhnF+0eegVFi79+smUoLHmck7skOFSr4988cIg4qew==
+"@australis/tiny-sql-scripts@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-scripts/-/tiny-sql-scripts-1.0.0-17.tgz#739bd6307f0d4ab472bdce7747b20693524c472a"
+  integrity sha512-C2QRna9il6A+Kob6WDPwq1OlE/aeyK03dcywN86YCXec477SGGbHQ5ngFQa5kIPQTw0R3r/r+LSXGFkSngXArQ==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-simple-table@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-simple-table/-/tiny-sql-simple-table-1.0.0-15.tgz#5ae48fa8b0837afa9cd0d19d37efded1814423f6"
-  integrity sha512-O3DGRlrZfc+/qJI06HJ/ABXrFrX44Hwj7mYXz9h8ruXwBG/hlUcEtOjeN3Pm9/3MhmPmhrlHf8IRYPvSm6bCpQ==
+"@australis/tiny-sql-simple-repo@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-simple-repo/-/tiny-sql-simple-repo-1.0.0-17.tgz#6cb0e87d892d10c6602abceffb8fe5142cfd7be0"
+  integrity sha512-MGz7D0ocOcCd80QDJ+9zisM2qNjMWI+lYz0V3g43q7y8WhYjgYZYOUnBFbm2ym+ovmRyAEuqlJs9h/wQwNMLRA==
+  dependencies:
+    "@australis/create-debug" "^1.0.2"
+    "@australis/tiny-sql-exec-sql" "1.0.0-17"
+    "@australis/tiny-sql-params" "1.0.0-17"
+    "@types/node" "^10.12.8"
+    tedious "^3.0.1"
+
+"@australis/tiny-sql-simple-table@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-simple-table/-/tiny-sql-simple-table-1.0.0-17.tgz#e50a163a627e71c65ac8db94c18f8dcb0b875a57"
+  integrity sha512-l/zEtC9443D1a/jFVH7gZNssBzGU8BsrCmKHBWQCHtnwQnGH6ZH6PGYzqNPjwhjo4es55EfPbGpJ6NGQ4bbKwQ==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql-with-sql-connection@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql-with-sql-connection/-/tiny-sql-with-sql-connection-1.0.0-15.tgz#0ac7bc88ca85060a1f5695d10a6df02b29d15dee"
-  integrity sha512-hJ+jLrQhdRBrqhFsRsLyyz16j2aP6pJPcJbjsOfIZXGHjneRCxN5iCv1HTq2H1oSAvqaGC/hxcyLiH6kaTLNyQ==
+"@australis/tiny-sql-use-connection@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-use-connection/-/tiny-sql-use-connection-1.0.0-17.tgz#d2906c38b05b595c0a812ffe9c70f04b89c6d7b0"
+  integrity sha512-SzLVkhtME9Vq6kAg6kNGOAFEruuxg+fkMTXbKiu3OBsYgRR+PDbQ1HRYbRQpItq8ipEG54kuRuQp3/oUAckKCg==
   dependencies:
     "@australis/create-debug" "^1.0.2"
 
-"@australis/tiny-sql@1.0.0-15":
-  version "1.0.0-15"
-  resolved "https://registry.npmjs.org/@australis/tiny-sql/-/tiny-sql-1.0.0-15.tgz#ca4067e0018e8a7902a08ad35a8fdf32baf7907f"
-  integrity sha512-DK5kCnNF1xf76E6rezeG0XPA/B4i9KVGWAiBOQIGoz440Bge59fZzuidas5+ypXCMVgWBWZl6xac1QpCfmlg9g==
+"@australis/tiny-sql-with-sql-connection@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql-with-sql-connection/-/tiny-sql-with-sql-connection-1.0.0-17.tgz#a5ed88a78e52e1a45ec667daf7623ef1d4e6064b"
+  integrity sha512-NS/J+fkN2m4Ed7JDWnB/eifkVFiUEs4qwnnMkV/kadx90rnP/jkbY3Wrq1tLU3EaOPnK5t4txYBqP5vjwJkCLA==
   dependencies:
-    "@australis/tiny-sql-batch-script" "1.0.0-15"
-    "@australis/tiny-sql-connect" "1.0.0-15"
-    "@australis/tiny-sql-connect-to-server" "1.0.0-15"
-    "@australis/tiny-sql-connection-config" "1.0.0-15"
-    "@australis/tiny-sql-connection-factory" "1.0.0-15"
-    "@australis/tiny-sql-connection-string-parse" "1.0.0-15"
-    "@australis/tiny-sql-create-db" "1.0.0-15"
-    "@australis/tiny-sql-exec-sql" "1.0.0-15"
-    "@australis/tiny-sql-json-table" "1.0.0-15"
-    "@australis/tiny-sql-params" "1.0.0-15"
-    "@australis/tiny-sql-scripts" "1.0.0-15"
-    "@australis/tiny-sql-simple-table" "1.0.0-15"
-    "@australis/tiny-sql-with-sql-connection" "1.0.0-15"
+    "@australis/create-debug" "^1.0.2"
+
+"@australis/tiny-sql@1.0.0-17":
+  version "1.0.0-17"
+  resolved "https://registry.npmjs.org/@australis/tiny-sql/-/tiny-sql-1.0.0-17.tgz#7811187483d818160a1a49b18c164491d913b85e"
+  integrity sha512-XGhETsqpjoGuY0AcC8O0qvpdb7iKRtyOr3ptXEpwptBaOUa3ol3XWs+iKGdHx2UUdYWRUTs+FmIcfqUYgDaxlg==
+  dependencies:
+    "@australis/tiny-sql-batch-script" "1.0.0-17"
+    "@australis/tiny-sql-connect" "1.0.0-17"
+    "@australis/tiny-sql-connect-to-server" "1.0.0-17"
+    "@australis/tiny-sql-connection-config" "1.0.0-17"
+    "@australis/tiny-sql-connection-factory" "1.0.0-17"
+    "@australis/tiny-sql-connection-string-parse" "1.0.0-17"
+    "@australis/tiny-sql-create-db" "1.0.0-17"
+    "@australis/tiny-sql-exec-sql" "1.0.0-17"
+    "@australis/tiny-sql-json-table" "1.0.0-17"
+    "@australis/tiny-sql-params" "1.0.0-17"
+    "@australis/tiny-sql-scripts" "1.0.0-17"
+    "@australis/tiny-sql-simple-repo" "1.0.0-17"
+    "@australis/tiny-sql-simple-table" "1.0.0-17"
+    "@australis/tiny-sql-use-connection" "1.0.0-17"
+    "@australis/tiny-sql-with-sql-connection" "1.0.0-17"
 
 "@babel/code-frame@7.0.0", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
@@ -1246,6 +1258,11 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-10.12.5.tgz#7e7ea1a9b34d2c8d704cb0b755dffbcda34741ad"
   integrity sha512-GzdHjq3t3eGLMv92Al90Iq+EoLL+86mPfQhuglbBFO7HiLdC/rkt+zrzJJumAiBF6nsrBWhou22rPW663AAyFw==
 
+"@types/node@^10.12.8":
+  version "10.12.8"
+  resolved "https://registry.npmjs.org/@types/node/-/node-10.12.8.tgz#d0a3ab5a6e61458c492304e2776ac136b81db927"
+  integrity sha512-INamyRZG4rW3lDCUmwVd5Xho/bXvQm/v1yP8V0UN1RuInU7RoWoaO570b+yLX4Ia/0szsx1wa8VzcsVlsvbWLA==
+
 "@types/prop-types@*":
   version "15.5.6"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.5.6.tgz#9c03d3fed70a8d517c191b7734da2879b50ca26c"
@@ -2277,11 +2294,6 @@ bfj@6.1.1:
     hoopy "^0.1.2"
     tryer "^1.0.0"
 
-big-number@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.npmjs.org/big-number/-/big-number-0.3.1.tgz#ac73020c0a59bb79eb17c2ce2db77f77d974e013"
-  integrity sha1-rHMCDApZu3nrF8LOLbd/d9l04BM=
-
 big-number@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/big-number/-/big-number-1.0.0.tgz#a0277607a0adb06492d3099546ef0d547785df18"
@@ -2296,14 +2308,6 @@ binary-extensions@^1.0.0:
   version "1.12.0"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.12.0.tgz#c2d780f53d45bba8317a8902d4ceeaf3a6385b14"
   integrity sha512-DYWGk01lDcxeS/K9IHPGWfT8PsJmbXRtRd2Sx72Tnb8pcYZQFF1oSDb8hJtS1vhp212q1Rzi5dUf9+nq0o9UIg==
-
-bl@^1.2.2:
-  version "1.2.2"
-  resolved "http://registry.npmjs.org/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
-  integrity sha512-e8tQYnZodmebYDWGH7KMRvtzKXaJHx3BbilrgZCfvyLUYdKpK1t5PSPmpkny/SgiTSCnjfLW7v5rlONXVFkQEA==
-  dependencies:
-    readable-stream "^2.3.5"
-    safe-buffer "^5.1.1"
 
 bl@^2.0.1:
   version "2.1.2"
@@ -11625,7 +11629,7 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-tedious@3.0.1:
+tedious@3.0.1, tedious@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/tedious/-/tedious-3.0.1.tgz#d3c826b6f08e16faa285061c3b0bda99543480f8"
   integrity sha512-Uugv3CPH1LpYijyBS9qZb0g8k3WYM5EPoZOfYmTj/ubc3/oyXvY2KmR17IUtmLJcGpGDaU3VygYzcihPlGSUug==
@@ -11637,21 +11641,6 @@ tedious@3.0.1:
     native-duplexpair "^1.0.0"
     punycode "^2.1.0"
     readable-stream "^3.0.3"
-    sprintf-js "^1.1.1"
-
-tedious@^2.3.1, tedious@^2.6.3:
-  version "2.7.1"
-  resolved "https://registry.npmjs.org/tedious/-/tedious-2.7.1.tgz#5308edebdd33767ca67b36fc71b2ab9c54675278"
-  integrity sha512-u3ciATGm5byim91b3+c3MVTvY1zKjDmhUhnBQZXKymT2Vb9w322dziPQY6MhBNyBEcNONPsAMR+7/Uub7NYABQ==
-  dependencies:
-    babel-runtime "^6.26.0"
-    big-number "0.3.1"
-    bl "^1.2.2"
-    depd "^1.1.2"
-    iconv-lite "^0.4.23"
-    native-duplexpair "^1.0.0"
-    punycode "^2.1.0"
-    readable-stream "^2.3.6"
     sprintf-js "^1.1.1"
 
 temp-dir@^1.0.0:
