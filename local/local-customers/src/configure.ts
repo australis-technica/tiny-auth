@@ -1,16 +1,11 @@
-import { Express, RequestHandler, Router } from "express";
-import {
-    CrudController,
-    ensureID,
-    validate,
-    ensureBody,
-} from "@australis/tiny-crud-controller";
-import { repo, Customer } from "@australis/tiny-auth-customers";
-import auth from "@local/auth";
-import uuid from "uuid";
-import { json } from "body-parser";
-import validatePut from "./vaildate-put";
 import { debugModule } from "@australis/create-debug";
+import { Customer, repo } from "@australis/tiny-auth-customers";
+import { CrudController, ensureBody, ensureID, validate } from "@australis/tiny-crud-controller";
+import auth from "@local/auth";
+import { json } from "body-parser";
+import { Express, RequestHandler, Router } from "express";
+import uuid from "uuid";
+import validatePut from "./vaildate-put";
 const debug = debugModule(module);
 /**
  *
