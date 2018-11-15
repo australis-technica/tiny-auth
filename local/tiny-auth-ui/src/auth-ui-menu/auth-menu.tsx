@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { IconButton, Icon, Menu, MenuItem, ListItemText } from "@material-ui/core";
 import * as React from "react";
-import { Auth, AuthState } from "@australis/tiny-auth-core";
+import {  AuthState } from "@australis/tiny-auth-core";
 /**
  * 
  */
@@ -9,7 +9,9 @@ interface AuthMenuState {
     isOpen: boolean;
 }
 export interface AuthMenuProps {
-    auth: Auth;
+    auth: {
+        logout(): any
+    };
     authState: AuthState;
     onRequestChangePassword(): any;    
 }

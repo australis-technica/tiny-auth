@@ -1,4 +1,4 @@
-import { Auth, AuthState } from "@australis/tiny-auth-core";
+import { AuthState } from "@australis/tiny-auth-core";
 import { Card, CardActions, CardContent, CardHeader, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
@@ -11,7 +11,9 @@ const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : 
 log("?")
 /** */
 export interface ChangePasswordProps {
-    auth: Auth,
+    auth: {
+        changePassword(old: string, _new: string): any
+    },
     authState: AuthState;
     image?: any;
 }

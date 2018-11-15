@@ -1,1 +1,1 @@
-export { default as AuthHandler } from "./auth-handler";
+export { default as AuthHandler, AuthHandlerActions } from "./auth-handler";

@@ -1,4 +1,4 @@
-import { Auth, AuthState } from "@australis/tiny-auth-core";
+import { AuthState } from "@australis/tiny-auth-core";
 import { Card, CardActions, CardContent, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,12 +8,18 @@ import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { Component, KeyboardEvent, SyntheticEvent } from "react";
 import { Redirect, RouteComponentProps, withRouter } from "react-router";
+// import { AuthHandler } from "@australis/tiny-auth-handler";
+
 import styles from "./styles";
 /** */
 export type LoginViewProps = {
     image?: any;
     authState: AuthState;
-    auth: Auth;
+    auth: {
+        login(username: string, password: string): any,
+        logout(): any,
+        changePassword(old: string, _new: string): any;
+    };
 };
 /** private */
 type ViewProps = LoginViewProps & RouteComponentProps<{}> & { classes: ClassNameMap };

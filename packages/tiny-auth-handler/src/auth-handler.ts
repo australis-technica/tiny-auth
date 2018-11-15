@@ -1,4 +1,4 @@
-import { Auth, AuthState, User, AuthApi } from "@australis/tiny-auth-core";
+import { AuthState, User, AuthApi } from "@australis/tiny-auth-core";
 import { getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "@australis/tiny-auth-token-payload";
 import { MIN_TIME_TO_REFRESH } from "./constants";
 /** */
@@ -22,7 +22,7 @@ export default function AuthHandler(
         getState: () => AuthState, 
         actions: AuthHandlerActions, 
         webApi: AuthApi
-    ): Auth {
+    ) {
     const { setBusy, setError, setToken, setProfile, setAuthenticated, clearProfile, clearError, setPasswordChanged, setPasswordChanging } = actions;
     
     /** */
