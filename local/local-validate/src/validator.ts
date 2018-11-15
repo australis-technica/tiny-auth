@@ -63,7 +63,7 @@ const validator: Validator = async ({ token, token_id, verified }) => {
             continue;
         }
         if (expected !== value) {
-            debug("included Key/value: %s/%s dopesn't match %s", key, value, expected);
+            debug("included Key/value: %s/%s doesn't match %s", key, value, expected);
             return resolve(false);
         }
     }
