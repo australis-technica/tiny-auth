@@ -33,6 +33,14 @@
     react "^16.4.1"
     react-dom "^16.4.1"
 
+"@australis/tiny-crud-controller@^0.1.0-1":
+  version "0.1.0-1"
+  resolved "https://registry.npmjs.org/@australis/tiny-crud-controller/-/tiny-crud-controller-0.1.0-1.tgz#add34007d655c0aed86d66394f7347dd90cfe95a"
+  integrity sha512-MNd+/J2+WNTUL8PCz0wkh3qayOw6wBgMFUUODmlmC1JvGBAL6AFthUBnTc+0XDEoqO8s/Ud5OQzuumiMh1HcvA==
+  dependencies:
+    express "^4.16.3"
+    uuid "^3.3.2"
+
 "@australis/tiny-sql-batch-script@1.0.0-15":
   version "1.0.0-15"
   resolved "https://registry.npmjs.org/@australis/tiny-sql-batch-script/-/tiny-sql-batch-script-1.0.0-15.tgz#ef0f4515fa52c34e22a9a0190329d87582fc1a90"
