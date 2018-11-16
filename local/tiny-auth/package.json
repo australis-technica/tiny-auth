@@ -29,7 +29,7 @@
   "dependencies": {
     "@australis/load-env": "^1.0.1",
     "@australis/send-grid-mail": "^0.1.0",
-    "@australis/tiny-sql": "1.0.0-17",
+    "@australis/tiny-sql": "1.0.0-18",
     "@sendgrid/mail": "^6.3.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
@@ -48,6 +48,6 @@
     "test": "jest --env=node --ci --config=./jest.json",
     "build": "rimraf build && tsc -p .",
     "watch": "tsc -p . --watch",    
-    "start": "node app"
+    "start": "cross-env NODE_ENV=development ENV_PATH=./.env.local DEBUG=@australis*,@d10221* node --inspect build/"
   } 
 }
