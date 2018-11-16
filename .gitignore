@@ -33,3 +33,4 @@ scriptcs_packages/
 **/templates/*.js
 **/templates/*.html
 *.local
+*.lock
