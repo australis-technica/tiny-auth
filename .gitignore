@@ -18,7 +18,6 @@ scriptcs_packages/
 **/daemon/*
 **/testdata/*
 **/.test-data/*
-# too late :)
 **/.vscode/*
 **/.idea/*
 **/.logs/*
