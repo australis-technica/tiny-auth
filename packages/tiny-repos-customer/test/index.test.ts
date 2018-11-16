@@ -4,8 +4,7 @@ import * as src from "../src";
  * 
  */
 describe(require(join(__dirname, "../package.json")).name, ()=> {
-    it("works", ()=> {
-        expect( typeof src.table).toBe("function")
-        expect( typeof src.repo).toBe("function")
+    it("Exports function", ()=> {
+       expect( typeof src.default).toBe("function")
     })
 });

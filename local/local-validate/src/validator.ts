@@ -3,9 +3,9 @@
  */
 
 import { debugModule } from "@australis/create-debug";
-import customers from "@australis/tiny-auth-customers";
-import licenses from "@australis/tiny-auth-licenses";
-import products from "@australis/tiny-auth-products";
+import customers from "@australis/tiny-repos-customer";
+import licenses from "@australis/tiny-repos-license";
+import products from "@australis/tiny-repos-product";
 
 /** TODO: */
 function convert(x: string | Date | number): number {

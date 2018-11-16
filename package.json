@@ -27,6 +27,12 @@
     "typescript": "3.1.6"
   },
   "workspaces": [
+    "packages/tiny-repos-customer",
+    "packages/tiny-repos-product",
+    "packages/tiny-repos-license",
+
+
+    
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
     "packages/tiny-auth-users",
@@ -38,9 +44,6 @@
     "packages/tiny-auth-validate-credentials",
     "packages/tiny-auth-password-changer",
     "packages/tiny-auth-password-policy-enforcer",
-    "packages/tiny-auth-customers",
-    "packages/tiny-auth-products",
-    "packages/tiny-auth-licenses",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",

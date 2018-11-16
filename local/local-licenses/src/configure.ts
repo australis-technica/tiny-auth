@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import repo from "@australis/tiny-auth-licenses";
+import repo from "@australis/tiny-repos-license";
 import { CrudController, ensureBody, ensureID, excludeKeys, rejectKeys, validate } from "@australis/tiny-crud-controller";
 import auth from "@local/auth";
 import { signMiddleware } from "@local/validate";

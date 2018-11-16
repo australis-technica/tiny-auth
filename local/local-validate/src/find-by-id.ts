@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import licenses from "@australis/tiny-auth-licenses";
+import licenses from "@australis/tiny-repos-license";
 import verify from "./verify";
 const debug = debugModule(module);
 /**

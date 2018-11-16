@@ -11,9 +11,9 @@ export default async () => {
     // create db if not exists, before connecting to it
     connection = await connect();
     const { init: users } = await import("@australis/tiny-auth-users");
-    const { default: customers } = await import("@australis/tiny-auth-customers");
-    const { default: licenses } = await import("@australis/tiny-auth-licenses");
-    const { default: products } = await import("@australis/tiny-auth-products");
+    const { default: customers } = await import("@australis/tiny-repos-customer");
+    const { default: licenses } = await import("@australis/tiny-repos-license");
+    const { default: products } = await import("@australis/tiny-repos-product");
     const { init: settings } = await import("@local/settings");
     const { init: tokenBlackList } = await import("@local/token-blacklist");
     await tokenBlackList(connection);

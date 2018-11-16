@@ -1,5 +1,5 @@
-import customersRepo from "@australis/tiny-auth-customers";
-import productsRepo from "@australis/tiny-auth-products";
+import customersRepo from "@australis/tiny-repos-customer";
+import productsRepo from "@australis/tiny-repos-product";
 import { Request } from "express";
 /**
  * validate PUT/ADD/NEW 
