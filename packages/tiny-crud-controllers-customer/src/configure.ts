@@ -55,7 +55,7 @@ export default (o: Options) => <A extends Express | Router>(app: A): A => {
         ensureID(uuid),
         validate(validatePut),
         ((req, _res, next) => {
-            // include user: why ? 
+            // include user: because target database table needs userid field
             try {
                 req.body.userid = req.user.id
                 return next();

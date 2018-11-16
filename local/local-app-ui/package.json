@@ -1,6 +1,6 @@
 {
-  "name": "@local/tiny-auth-ui",
-  "version": "1.0.1",
+  "name": "@local/app-ui",
+  "version": "0.1.0-14",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.4.0",

@@ -1,15 +1,13 @@
 {
-  "name": "@australis/tiny-auth-crypto",
-  "version": "1.0.1",
-  "description": "implements @australis/tiny-auth/crypto",
+  "name": "@australis/tiny-crypto",
+  "version": "0.1.0-14",
+  "description": "simplistic crypto",
   "private": true,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --env=node",
-    "build": "tsc -p .",
-    "clean": "rimraf lib",
-    "rebuild": "npm run clean && npm run build"
+    "build": "rimraf lib && tsc -p ."
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",

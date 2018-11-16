@@ -1,8 +1,10 @@
 import isStringNotEmpty from "./is-string-notempty";
 import { DefaultOptions } from "./types";
 import os from "os";
+
 /** */
-const ENV_KEY = "SECRET";
+const ENV_KEY = "TINY_AUTH_SECRET";
+
 export const defaultOptions: DefaultOptions = {
     envKey: ENV_KEY,
     secret: undefined,

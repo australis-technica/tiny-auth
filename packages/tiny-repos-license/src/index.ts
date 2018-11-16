@@ -2,7 +2,7 @@
 
 import { connected } from "@australis/tiny-sql-simple-repo";
 
-export const TABLE_NAME = "liccenses";
+export const TABLE_NAME = "licenses";
 
 export interface TokenEntry {
     id: string;

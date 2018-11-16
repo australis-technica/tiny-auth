@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-token-blacklist-sql",
-  "version": "1.0.1",
+  "version": "0.1.0-14",
   "description": "",
   "private": true,
   "main": "lib/index.js",

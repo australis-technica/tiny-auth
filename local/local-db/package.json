@@ -1,6 +1,6 @@
 {
   "name": "@local/db",
-  "version": "1.0.0-4",
+  "version": "0.1.0-14",
   "description": "",
   "private": true,
   "main": "lib/index.js",

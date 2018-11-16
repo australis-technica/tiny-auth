@@ -1,10 +1,8 @@
-import { json } from "body-parser";
+import { deliverByMail, findById, validateReceipient } from "@australis/tiny-licenseware";
 import { RequestHandler } from "express";
-import deliverByMail, { validateReceipient } from "./deliver-by-mail";
+
 /** */
-export default function Deliver(
-  findById: (id: string) => Promise<{}>
-) {
+export default function Deliver() {
   /** */
   const deliver: RequestHandler = async (req, res, next) => {
     try {
@@ -39,5 +37,5 @@ export default function Deliver(
       return next(error);
     }
   };
-  return [json(), deliver];
+  return deliver;
 }

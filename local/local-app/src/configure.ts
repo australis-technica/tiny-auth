@@ -16,7 +16,7 @@ export default () => (app: Express) => {
     return new Promise(async (resolve, reject) => {
         try {
             // ...           
-            const { default: getFeatures } = await import("@local/features");
+            const { default: getFeatures } = await import("./features");
             const features = await getFeatures();
             if (!features.length) {
                 return Promise.reject("APP_FEATURES is Required!")
@@ -51,7 +51,7 @@ export default () => (app: Express) => {
             }
 
             if (features.indexOf("validate") !== -1) {
-                const validate = await import("@local/validate");
+                const validate = await import("@australis/tiny-licenseware");
                 await validate.configure(app);
                 debug("Feature 'validate' configured");
             }

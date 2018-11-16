@@ -1,13 +1,9 @@
 {
   "name": "@australis/tiny-tokens",
-  "version": "1.0.1",
-  "description": "Token Stuff",
+  "version": "0.1.0-14",
+  "description": "Token things",
   "private": true,
-  "scripts": {
-    "prestart": "yarn  install --production",
-    "start-admin": "cd local/tiny-auth-admin && cross-env DEBUG=local/*,@local/*,@australis/* NODE_ENV=production node .",
-    "start-validate": "cd local/tiny-auth-validate && cross-env DEBUG=local/*,@local/*,@australis/* NODE_ENV=production node .",
-    "start": "npm-run-all --parallel start-admin start-validate",
+  "scripts": {    
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test",
@@ -27,12 +23,19 @@
     "typescript": "3.1.6"
   },
   "workspaces": [
+    "packages/tiny-crypto",
+    
     "packages/tiny-repos-customer",
     "packages/tiny-repos-product",
     "packages/tiny-repos-license",
-    
+
+    "packages/tiny-licenseware",
+
+    "packages/tiny-crud-controllers-customer",
+    "packages/tiny-crud-controllers-product",
+    "packages/tiny-crud-controllers-license",
+
     "packages/tiny-auth-core",
-    "packages/tiny-auth-crypto",
     "packages/tiny-auth-users",
     "packages/tiny-auth-token-sign",
     "packages/tiny-auth-express-fingerprint",
@@ -47,20 +50,9 @@
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",
     "packages/tiny-auth-handler",
-    "local/local-auth",
-    "local/local-settings",
-    "local/local-token-blacklist",
-    "local/local-db",
-    "local/local-validate",
-    
-    "packages/tiny-crud-controllers-customer",
-    "packages/tiny-crud-controllers-product",
-    "packages/tiny-crud-controllers-license",
         
-    "local/local-crypto",
-    "local/local-validate",
-    "local/local-deliver",
-    "local/local-features",
+    "local/local-db",    
+    "local/local-auth",    
     "local/local-app",
     "local/local-app-ui"
   ]

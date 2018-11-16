@@ -14,12 +14,9 @@ export default async () => {
     const { default: customers } = await import("@australis/tiny-repos-customer");
     const { default: licenses } = await import("@australis/tiny-repos-license");
     const { default: products } = await import("@australis/tiny-repos-product");
-    const { init: settings } = await import("@local/settings");
-    const { init: tokenBlackList } = await import("@local/token-blacklist");
+    const { init: tokenBlackList } = await import("@local/auth/lib/token-blacklist");
     await tokenBlackList(connection);
     await users(connection);
-    await settings(connection);
-    await settings(connection);
     await customers.init();
     await products.init();
     await licenses.init();
