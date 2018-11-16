@@ -41,6 +41,11 @@
     "packages/tiny-auth-customers",
     "packages/tiny-auth-products",
     "packages/tiny-auth-licenses",
+    "packages/tiny-auth-redux",
+    "packages/tiny-auth-react",
+    "packages/tiny-auth-api",
+    "packages/tiny-auth-token-payload",
+    "packages/tiny-auth-handler",
     "local/local-auth",
     "local/local-settings",
     "local/local-token-blacklist",
@@ -52,18 +57,8 @@
     "local/local-crypto",
     "local/local-validate",
     "local/local-deliver",
-    "local/local-use-admin",
-    "local/local-use-ui",
     "local/local-features",
-    "local/local-error-handler",
-    "local/local-start",
-    "local/local-configure",
-    "local/tiny-auth",
-    "packages/tiny-auth-redux",
-    "packages/tiny-auth-react",
-    "packages/tiny-auth-api",
-    "packages/tiny-auth-token-payload",
-    "packages/tiny-auth-handler",
-    "local/tiny-auth-ui"
+    "local/local-app",
+    "local/local-app-ui"
   ]
 }

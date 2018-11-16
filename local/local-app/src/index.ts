@@ -9,8 +9,8 @@ const app = express();
             const { init } = await import("@local/db");
             await init();
         }
-        const { default: configure } = await import("@local/configure");
-        const { default: start } = await import("@local/start");
+        const { default: configure } = await import("./configure");
+        const { default: start } = await import("./start");
         await configure()(app);
         await start()(app);
         debug("Started");

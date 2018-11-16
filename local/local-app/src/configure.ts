@@ -36,13 +36,17 @@ export default () => (app: Express) => {
             await configureAuth(app);
 
             if (features.indexOf("admin") !== -1) {
-                const { default: admin } = await import("@local/use-admin");
+                const { default: admin } = await import("./use-admin");
                 await admin()(app);
             }
 
             if (features.indexOf("ui") !== -1) {
-                const { default: useUi } = await import("@local/use-ui");
-                await useUi()(app);
+                const { default: useUi } = await import("./use-ui");
+                const { resolve } = await import("path");
+                await useUi({
+                    uiPath: resolve(__dirname, "../../local-app-ui/build"),
+                    /* defaultDocument: "index.html" */
+                })(app);
                 debug("Feature 'admin' configured");
             }
 
@@ -53,7 +57,7 @@ export default () => (app: Express) => {
             }
 
             // Errors
-            const { default: errorHandler } = await import("@local/error-handler")
+            const { default: errorHandler } = await import("@australis/express-plain-text-error-handler")
             app.use(errorHandler());
             debug("configured");
             return resolve();
