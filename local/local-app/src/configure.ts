@@ -57,7 +57,10 @@ export default () => (app: Express) => {
             }
 
             // Errors
-            const { default: errorHandler } = await import("@australis/express-plain-text-error-handler")
+            const { default: errorHandler } = await import("@australis/express-plain-text-error-handler");
+            app.use((error: any, _req: any, _res: any, next: any) => {
+                next(error);
+            })
             app.use(errorHandler());
             debug("configured");
             return resolve();

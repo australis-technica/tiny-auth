@@ -30,8 +30,6 @@
     "packages/tiny-repos-customer",
     "packages/tiny-repos-product",
     "packages/tiny-repos-license",
-
-
     
     "packages/tiny-auth-core",
     "packages/tiny-auth-crypto",
@@ -54,9 +52,11 @@
     "local/local-token-blacklist",
     "local/local-db",
     "local/local-validate",
-    "local/local-customers",
-    "local/local-products",
-    "local/local-licenses",
+    
+    "packages/tiny-crud-controllers-customer",
+    "packages/tiny-crud-controllers-product",
+    "packages/tiny-crud-controllers-license",
+        
     "local/local-crypto",
     "local/local-validate",
     "local/local-deliver",
