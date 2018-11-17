@@ -3,7 +3,7 @@ import connect from "@australis/tiny-sql-connection-factory";
 import { Connection } from "tedious";
 const debug = debugModule(module);
 /**
- * 
+ *
  */
 export default async () => {
   let connection: Connection;
@@ -11,10 +11,18 @@ export default async () => {
     // create db if not exists, before connecting to it
     connection = await connect();
     const { init: users } = await import("@australis/tiny-auth-users");
-    const { default: customers } = await import("@australis/tiny-repos-customer");
-    const { default: licenses } = await import("@australis/tiny-repos-license");
-    const { default: products } = await import("@australis/tiny-repos-product");
-    const { init: tokenBlackList } = await import("@local/auth/lib/token-blacklist");
+    const {
+      default: customers,
+    } = await import("@australis/tiny-license-repo-customer");
+    const {
+      default: licenses,
+    } = await import("@australis/tiny-license-repo-license");
+    const {
+      default: products,
+    } = await import("@australis/tiny-license-repo-product");
+    const {
+      init: tokenBlackList,
+    } = await import("../auth/token-blacklist");
     await tokenBlackList(connection);
     await users(connection);
     await customers.init();

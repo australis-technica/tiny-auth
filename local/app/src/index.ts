@@ -6,7 +6,7 @@ const app = express();
     try {
         require("dotenv").load({ path: process.env.ENV_PATH || ".env" });
         if (process.env.INIT_DB && process.env.INIT_DB.toLowerCase() === "true") {
-            const { init } = await import("@local/db");
+            const { init } = await import("./db");
             await init();
         }
         const { default: configure } = await import("./configure");

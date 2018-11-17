@@ -2,7 +2,7 @@ import cors from "cors";
 import { Express } from "express";
 import helmet from "helmet";
 import { debugModule } from "@australis/create-debug";
-import { configure as configureAuth } from "@local/auth";
+import { configure as configureAuth } from "./auth";
 
 const debug = debugModule(module);
 /** */
@@ -49,13 +49,7 @@ export default () => (app: Express) => {
                 })(app);
                 debug("Feature 'admin' configured");
             }
-
-            if (features.indexOf("validate") !== -1) {
-                const validate = await import("@australis/tiny-licenseware");
-                await validate.configure(app);
-                debug("Feature 'validate' configured");
-            }
-
+           
             // Errors
             const { default: errorHandler } = await import("@australis/express-plain-text-error-handler");
             app.use((error: any, _req: any, _res: any, next: any) => {

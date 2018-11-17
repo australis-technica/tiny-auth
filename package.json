@@ -37,10 +37,8 @@
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",
-    "packages/tiny-auth-handler",        
-    "local/local-db",    
-    "local/local-auth",    
-    "local/local-app",
-    "local/local-app-ui"
+    "packages/tiny-auth-handler",            
+    "local/app",
+    "local/app-ui"
   ]
 }

@@ -3,13 +3,13 @@ import { Express, Router } from "express";
  * Configure Admin/Api
  */
 export default () => async <A extends Express | Router>(app: A): Promise<A> => {
-  const { default: auth } = await import("@local/auth");
+  const { default: auth } = await import("./auth");
   const { authorize, requireRole } = auth.middleware;
   // ...
   {
     const {
       configure: products,
-    } = await import("@australis/tiny-crud-controllers-product");
+    } = await import("@australis/tiny-license-controller-product");
     const confgiure = products({
       baseUrl: "/api/products",
       get: {
@@ -34,7 +34,7 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
   {
     const {
       configure: customers,
-    } = await import("@australis/tiny-crud-controllers-customer");
+    } = await import("@australis/tiny-license-controller-customer");
     const configure = customers({
       baseUrl: "/api/customers",
       get: {
@@ -63,7 +63,7 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
     });
     const {
       configure: licenses,
-    } = await import("@australis/tiny-crud-controllers-license");
+    } = await import("@australis/tiny-license-controller-license");
     const configure = licenses({
       baseUrl: "/api/licenses",
       get: {
