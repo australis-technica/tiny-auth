@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-tokens",
-  "version": "0.1.0-14",
+  "version": "0.2.0-1",
   "description": "Token things",
   "private": true,
   "scripts": {    
@@ -22,19 +22,7 @@
     "rimraf": "^2.6.2",
     "typescript": "3.1.6"
   },
-  "workspaces": [
-    "packages/tiny-crypto",
-    
-    "packages/tiny-repos-customer",
-    "packages/tiny-repos-product",
-    "packages/tiny-repos-license",
-
-    "packages/tiny-licenseware",
-
-    "packages/tiny-crud-controllers-customer",
-    "packages/tiny-crud-controllers-product",
-    "packages/tiny-crud-controllers-license",
-
+  "workspaces": [            
     "packages/tiny-auth-core",
     "packages/tiny-auth-users",
     "packages/tiny-auth-token-sign",
@@ -49,8 +37,7 @@
     "packages/tiny-auth-react",
     "packages/tiny-auth-api",
     "packages/tiny-auth-token-payload",
-    "packages/tiny-auth-handler",
-        
+    "packages/tiny-auth-handler",        
     "local/local-db",    
     "local/local-auth",    
     "local/local-app",

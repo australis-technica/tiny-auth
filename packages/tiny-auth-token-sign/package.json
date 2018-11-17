@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-token-sign",
-  "version": "0.1.0-14",
+  "version": "0.2.0-1",
   "description": "",
   "private": true,
   "main": "lib/index.js",

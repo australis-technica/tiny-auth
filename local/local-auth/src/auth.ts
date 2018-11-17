@@ -16,7 +16,7 @@ import passwordChanger from "@australis/tiny-auth-password-changer";
 import passwordPolicyEnforcer from "@australis/tiny-auth-password-policy-enforcer";
 /** */
 import users from "@australis/tiny-auth-users";
-import { Crypto } from "@australis/tiny-crypto";
+import Crypto from "@australis/tiny-crypto";
 
 const crypto = new Crypto(process.env.TINY_AUTH_SECRET);
 /** */

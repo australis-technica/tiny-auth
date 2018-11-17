@@ -1,6 +1,6 @@
 {
   "name": "@local/app-ui",
-  "version": "0.1.0-14",
+  "version": "0.2.0-1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.4.0",
