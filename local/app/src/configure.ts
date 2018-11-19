@@ -14,13 +14,6 @@ export default () => (app: Express) => {
   /** */
   return new Promise(async (resolve, reject) => {
     try {
-      // ...
-      const { default: getFeatures } = await import("./features");
-      const features = await getFeatures();
-      if (!features.length) {
-        return Promise.reject("APP_FEATURES is Required!");
-      }
-
       /** Middleware */
       app.use(
         cors({

@@ -53,7 +53,7 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
         before: [authorize, requireRole(["admin", "dowmload"])],
       },
     });
-    configure(app);
+    configure(app); ``
   }
   // ...
   {
@@ -66,26 +66,30 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
     } = await import("@australis/tiny-license-controller-license");
     const configure = licenses({
       baseUrl: "/api/licenses",
+      before: authorize,
       get: {
-        before: [authorize, requireRole(["admin"])],
+        before: [requireRole(["admin"])],
       },
       put: {
-        before: [authorize, requireRole(["admin"])],
+        before: [requireRole(["admin"])],
       },
       post: {
-        before: [authorize, requireRole(["admin"])],
+        before: [requireRole(["admin"])],
       },
       del: {
-        before: [authorize, requireRole(["admin", "delete"])],
+        before: [requireRole(["admin", "delete"])],
       },
       download: {
-        before: [authorize, requireRole(["admin", "download"])],
+        before: [requireRole(["admin", "download"])],
       },
       deliver: {
-        before: [authorize, requireRole(["user"])],
+        before: [requireRole(["user"])],
       },
+      validate: {
+        before: [requireRole(["user"])],
+      }
     });
     configure(app);
-  }  
+  }
   return app;
 };
