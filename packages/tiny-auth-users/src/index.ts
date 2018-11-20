@@ -4,4 +4,5 @@ export { default as update } from "./update";
 export { default as add } from "./add";
 export { default as findBy } from "./find-by";
 export { default as init } from "./init";
-export { default } from "./repo";
+export { default as repo } from "./repo";
+export { default } from "./default-repo";

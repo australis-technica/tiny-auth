@@ -1,7 +1,7 @@
-import { User } from "@australis/tiny-auth-core";
+import { debugModule } from "@australis/create-debug";
 import ExecSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
-import { debugModule } from "@australis/create-debug";
+import { User } from "./types";
 /** */
 const debug = debugModule(module);
 /**
@@ -10,7 +10,7 @@ const debug = debugModule(module);
  * @param res 
  * @param next 
  */
-export default async function (connection: Connection) {    
+export default async function (connection: Connection) {
     try {
         const execSql = ExecSql(connection);
         const result = await execSql<User>(`select * from users`).then(x => x.values);
@@ -18,5 +18,5 @@ export default async function (connection: Connection) {
     } catch (error) {
         debug(error);
         throw error;
-    }    
+    }
 };

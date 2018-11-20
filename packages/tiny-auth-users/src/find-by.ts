@@ -1,7 +1,7 @@
-import { User } from "@australis/tiny-auth-core";
+import { debugModule } from "@australis/create-debug";
 import ExecSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
-import { debugModule } from "@australis/create-debug";
+import { User } from "./types";
 /** */
 const debug = debugModule(module);
 /** 

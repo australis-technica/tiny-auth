@@ -1,8 +1,8 @@
+import { debugModule } from "@australis/create-debug";
+import ExecSql from "@australis/tiny-sql-exec-sql";
 import { readFileSync } from "fs";
 import { join } from "path";
-import ExecSql from "@australis/tiny-sql-exec-sql";
 import { Connection } from "tedious";
-import { debugModule } from "@australis/create-debug";
 /** */
 const debug = debugModule(module);
 
