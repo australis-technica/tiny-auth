@@ -6,8 +6,8 @@ const requireRole: (roles: string[]) => RequestHandler = (roles) => (req, _res, 
     try {
         const { user } = req;
         for(const role of roles) {
-            const userRoles = user.roles.split(',');
-            if(userRoles.indexOf(role) === -1){
+            const userRoles = user && user.roles.split(',');
+            if(!userRoles || userRoles.indexOf(role) === -1){
                 return next(new Error(`${role} Role required`));
             }
         }

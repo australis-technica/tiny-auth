@@ -5,13 +5,14 @@ import { Express, Router } from "express";
 export default () => async <A extends Express | Router>(app: A): Promise<A> => {
   const { default: auth } = await import("./auth");
   const { authorize, requireRole } = auth.middleware;
+  const prefix = "/api";
   // ...
   {
     const {
       configure: products,
     } = await import("@australis/tiny-license-controller-product");
     const confgiure = products({
-      baseUrl: "/api/products",
+      prefix: `${prefix}/products`,
       get: {
         before: [authorize, requireRole(["admin"])],
       },
@@ -36,7 +37,7 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
       configure: customers,
     } = await import("@australis/tiny-license-controller-customer");
     const configure = customers({
-      baseUrl: "/api/customers",
+      prefix: `${prefix}/customers`,
       get: {
         before: [authorize, requireRole(["admin"])],
       },
@@ -57,7 +58,7 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
   }
   // ...
   {
-    app.use("/api/licenses", (req, _res, next) => {
+    app.use("/api/license", (req, _res, next) => {
       console.log(req.path);
       next();
     });
@@ -65,7 +66,10 @@ export default () => async <A extends Express | Router>(app: A): Promise<A> => {
       configure: licenses,
     } = await import("@australis/tiny-license-controller-license");
     const configure = licenses({
-      baseUrl: "/api/licenses",
+      issuer: "localhost",
+      secret: process.env.TINY_LICENSEWARE_SECRET,
+      baseUrl: process.env.HOST_BASE,
+      prefix: `${prefix}/license`,
       before: authorize,
       get: {
         before: [requireRole(["admin"])],
