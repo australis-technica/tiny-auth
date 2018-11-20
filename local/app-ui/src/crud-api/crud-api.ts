@@ -21,7 +21,6 @@ function encode(query?: {}) {
  * @param endpoint @description fully resolved
  */
 export default function crudApi(endpoint: string): CrudApiCall {
-
     /**
      * 
      */
@@ -30,6 +29,7 @@ export default function crudApi(endpoint: string): CrudApiCall {
         const request: RequestInit = {
             method,
             headers: {
+                //FIXME
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
         };

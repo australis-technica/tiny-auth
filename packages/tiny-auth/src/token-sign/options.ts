@@ -1,4 +1,3 @@
-import isStringNotEmpty from "./is-string-notempty";
 import { DefaultOptions } from "./types";
 import os from "os";
 
@@ -13,7 +12,6 @@ export const defaultOptions: DefaultOptions = {
     iss: process.env.AUITH_ISS || os.hostname()
 }
 /** */
-export function getSecret (options: DefaultOptions){
-    return isStringNotEmpty(options.secret) ? options.secret : process.env[(options.envKey || ENV_KEY)];
-
+export function getSecret(options: DefaultOptions) {
+    return (options.secret) ? options.secret : process.env[(options.envKey || ENV_KEY)];
 }

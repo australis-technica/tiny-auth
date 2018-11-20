@@ -15,9 +15,9 @@ export type LoginViewProps = {
     image?: any;
     authState: {
         profile?: { id?: string };
-        busy: boolean;
+        busy?: boolean;
         error?: string;
-        authenticated : boolean;
+        authenticated?: boolean;
     };
     auth: {
         login(username: string, password: string): any,

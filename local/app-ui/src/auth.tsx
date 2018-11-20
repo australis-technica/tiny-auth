@@ -18,13 +18,11 @@ const authApi = createAuthApi({
     profileUrl: endPoints.PROFILE,
     refreshUrl: endPoints.REFRESH,
     changePasswordUrl: endPoints.CHANGEPASSWORD
-}, {
-        getToken: () => selector(store.getState()).token
-    });
+});
 /** */
 const authHandler = AuthHandler(() => selector(store.getState()), bindActions(store), authApi);
 /** */
-export const RequireAuth: React.ComponentType<{}> = connect(selector)(AuthRequired);
+export const RequireAuth: React.ComponentType<{ redirectTo: string, renderBusy?(state: {}): any }> = connect(selector)(AuthRequired);
 /** */
 export const Provider = (props: { children: React.ReactNode }) => <AuthProvider auth={authHandler} children={props.children} />
 /** */

@@ -25,11 +25,11 @@
   "workspaces": [                
     "packages/tiny-auth-users",        
     "packages/tiny-auth-token-blacklist",    
+    "packages/tiny-auth" ,
+    "packages/tiny-auth-api",    
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
-    "packages/tiny-auth-api",    
     "packages/tiny-auth-handler",          
-    "packages/tiny-auth" ,
     "local/app",
     "local/app-ui"
   ]

@@ -1,6 +1,5 @@
 import { Middleware, Action } from "redux";
 import crudApi from "./crud-api";
-import { selector as authSelector } from "@australis/tiny-auth-redux";
 import actions from "./actions";
 import actionTypes from "./action-types";
 import { delay, isDev } from "./util";
@@ -20,7 +19,7 @@ export default function (storeKey: string, endpoint: string): Middleware {
      */
     return function (store) {
 
-        const callAPi = crudApi(() => authSelector(store.getState()), endpoint);
+        const callAPi = crudApi(endpoint);
 
         return function (next) {
 

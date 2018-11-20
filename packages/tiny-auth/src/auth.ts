@@ -6,7 +6,7 @@ import { fromRequest } from "./get-token";
 import { authorize, requireRole, tokenBlackListMdw } from "./middleware";
 import passwordChanger from "./password-changer";
 import passwordPolicyEnforcer from "./password-policy-enforcer";
-import tokenBlacklist from "./token-blacklist";
+import tokenBlacklist from "@australis/tiny-auth-token-blacklist";
 import validateCredentials from "./validate-credentials";
 /** */
 export default (secret: string) => {

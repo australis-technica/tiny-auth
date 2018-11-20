@@ -11,14 +11,6 @@ export interface Endpoints {
     refreshUrl: string;
     changePasswordUrl: string;
 }
-/** */
-export interface Options {
-    getToken?: () => string | undefined | null;
-}
-// ...
-const defaultOptions: Options = {
-
-}
 /** 
  * : 
  */
@@ -30,13 +22,9 @@ export interface AuthApi {
     changePassword(password: string, newPassword: string): Promise<any>;
 }
 /** */
-export default function createAuthApi(endpoints: Endpoints, options?: Partial<Options>): AuthApi {
+export default function createAuthApi(endpoints: Endpoints): AuthApi {
 
-    let { getToken } = {
-        ...defaultOptions,
-        ...(options || defaultOptions)
-    }
-    getToken = getToken || (() => localStorage.getItem("token"));
+    const getToken = (() => localStorage.getItem("token"));
     const { loginUrl, logoutUrl, profileUrl, refreshUrl, changePasswordUrl } = endpoints
 
     /**
