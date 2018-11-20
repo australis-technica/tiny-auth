@@ -35,9 +35,9 @@
     "packages/tiny-auth-password-policy-enforcer",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
-    "packages/tiny-auth-api",
-    "packages/tiny-auth-token-payload",
-    "packages/tiny-auth-handler",            
+    "packages/tiny-auth-api",    
+    "packages/tiny-auth-handler",          
+    "packages/tiny-auth" ,
     "local/app",
     "local/app-ui"
   ]
