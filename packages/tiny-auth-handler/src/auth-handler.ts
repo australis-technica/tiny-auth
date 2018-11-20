@@ -1,6 +1,9 @@
 import { AuthState, User, AuthApi } from "@australis/tiny-auth-core";
-import { getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "@australis/tiny-auth-token-payload";
 import { MIN_TIME_TO_REFRESH } from "./constants";
+import isValidToken from "./is-valid-token";
+import isTokenExpired from "./is-token-expired";
+import getTokenPayload from "./get-token-payload";
+import getTokenMillisecondsToExpire from "./get-token-milliseconds-to-expire";
 /** */
 const warn = process.env.NODE_ENV !== 'production' ? console.error.bind(console) : () => { };
 const debug = process.env.NODE_ENV !== 'production' ? console.log.bind(console) : () => { };

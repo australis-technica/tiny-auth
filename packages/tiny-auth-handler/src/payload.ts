@@ -5,4 +5,3 @@ export { default as getTokenMillisecondsToExpire } from "./get-token-millisecond
 export { default as getTokenPayload } from "./get-token-payload";
 export { default as isTokenExpired } from "./is-token-expired";
 export { default as isValidToken } from "./is-valid-token";
-
