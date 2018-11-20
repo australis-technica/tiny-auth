@@ -1,4 +1,4 @@
-import { AuthState, User, AuthApi } from "@australis/tiny-auth-core";
+import { AuthState, User, AuthApi } from "./types";
 import { MIN_TIME_TO_REFRESH } from "./constants";
 import isValidToken from "./is-valid-token";
 import isTokenExpired from "./is-token-expired";
