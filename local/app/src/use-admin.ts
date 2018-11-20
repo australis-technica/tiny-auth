@@ -3,8 +3,8 @@ import { Express, Router } from "express";
  * Configure Admin/Api
  */
 export default () => async <A extends Express | Router>(app: A): Promise<A> => {
-  const { default: auth } = await import("./auth");
-  const { authorize, requireRole } = auth.middleware;
+  const { middleware: auth } = await import("./auth");
+  const { authorize, requireRole } = auth;
   const prefix = "/api";
   // ...
   {

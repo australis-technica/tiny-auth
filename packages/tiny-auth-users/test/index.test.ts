@@ -1,8 +1,7 @@
-import execSql from "@australis/tiny-sql-exec-sql";
+import ExecSql from "@australis/tiny-sql-exec-sql";
 import connect from "@australis/tiny-sql-connect";
 import { Connection, ConnectionConfig } from "tedious";
-import { init as initUsers, add, all, byId, findBy, update } from "../src";
-import { User } from "@australis/tiny-auth-core";
+import { init as initUsers, add, all, byId, findBy, update, User } from "../src";
 import { join } from "path";
 /**
  * expects: '{
@@ -116,7 +115,7 @@ describe("by-id", () => {
     let connection: Connection;
     try {
       connection = await newConnection();
-      const user = await byId(connection, "x");
+      const user = await byId("x")(connection);
       expect(user.id).toBe("x");
     } finally {
       connection && connection.close();

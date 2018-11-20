@@ -2,14 +2,15 @@ import { debugModule } from "@australis/create-debug";
 import newConnection from "@australis/tiny-sql-connection-factory";
 import { Connection } from "tedious";
 import { add, all, byId, findBy, update } from "./";
+import { User } from "./types";
 const debug = debugModule(module);
 /** */
 const users = {
-  add: async (...args: any[]) => {
+  add: async (user: User) => {
     let connection: Connection;
     try {
       connection = await newConnection();
-      const result = await add(connection, args[0]);
+      const result = await add(connection, user);
       return result;
     } catch (error) {
       debug(error);
@@ -31,11 +32,11 @@ const users = {
       connection && connection.close();
     }
   },
-  byId: async (...args: any[]) => {
+  byId: async (id: string) => {
     let connection: Connection;
     try {
       connection = await newConnection();
-      const result = await byId(args[0])(connection);
+      const result = await byId(id)(connection);
       return result;;
     } catch (error) {
       debug(error);
@@ -44,11 +45,11 @@ const users = {
       connection && connection.close();
     }
   },
-  findBy: async (...args: any[]) => {
+  findBy: async (key: keyof User, value: string) => {
     let connection: Connection;
     try {
       connection = await newConnection();
-      const result = await findBy(connection, args[0], args[1]);
+      const result = await findBy(connection, key, value);
       return result;
     } catch (error) {
       debug(error);
@@ -57,11 +58,11 @@ const users = {
       connection && connection.close();
     }
   },
-  update: async (...args: any[]) => {
+  update: async (user: Partial<User> & { id: string }) => {
     let connection: Connection;
     try {
       connection = await newConnection();
-      const result = await update(connection, args[0]);
+      const result = await update(connection, user);
       return result;
     } catch (error) {
       debug(error);
@@ -71,4 +72,4 @@ const users = {
     }
   }
 };
-export default users ;
+export default users;

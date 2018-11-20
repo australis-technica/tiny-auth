@@ -2,7 +2,7 @@ import { FSA } from "flux-standard-action";
 import { isError, setPartial } from "./util";
 import { actionTypes } from "./actions";
 import { defaultState, TOKEN_KEY } from "./constants";
-import { AuthState } from "@australis/tiny-auth-core";
+import { AuthState } from "./types";
 /** */
 const { CLEAR_ERROR, CLEAR_PROFILE, SET_BUSY, SET_ERROR, SET_PROFILE, SET_TOKEN, SET_AUTHENTICATED, SET_PASSWORD_CHANGED, SET_PASSWORD_CHANGING } = actionTypes;
 /** */

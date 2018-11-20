@@ -1,4 +1,3 @@
-import { AuthState } from "@australis/tiny-auth-core";
 import { Card, CardActions, CardContent, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,7 +13,12 @@ import styles from "./styles";
 /** */
 export type LoginViewProps = {
     image?: any;
-    authState: AuthState;
+    authState: {
+        profile?: { id?: string };
+        busy: boolean;
+        error?: string;
+        authenticated : boolean;
+    };
     auth: {
         login(username: string, password: string): any,
         logout(): any,

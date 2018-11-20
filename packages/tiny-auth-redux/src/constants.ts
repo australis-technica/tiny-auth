@@ -1,4 +1,4 @@
-import { AuthState, User } from "@australis/tiny-auth-core";
+import { AuthState, User } from "./types";
 /** */
 export const STORE_KEY = "auth";
 /** */

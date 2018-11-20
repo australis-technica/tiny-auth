@@ -1,4 +1,3 @@
-import { AuthState } from "@australis/tiny-auth-core";
 import { CrudApiCall } from "./types";
 import { log } from "./util";
 log("crud-api");
@@ -21,7 +20,7 @@ function encode(query?: {}) {
 /**
  * @param endpoint @description fully resolved
  */
-export default function crudApi(austhState: () => AuthState, endpoint: string): CrudApiCall {
+export default function crudApi(endpoint: string): CrudApiCall {
 
     /**
      * 
@@ -31,7 +30,7 @@ export default function crudApi(austhState: () => AuthState, endpoint: string): 
         const request: RequestInit = {
             method,
             headers: {
-                "Authorization": `Bearer ${austhState().token}`,
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
         };
         if (method !== "GET") {

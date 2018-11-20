@@ -1,7 +1,7 @@
 import "@australis/load-env";
 import { join } from "path";
 import { getIssuedAt, getTokenExpiration, getTokenExpirationDate, getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "../src/payload";
-import { signToken as sign } from "@australis/tiny-auth-token-sign";
+import { signToken as sign } from "@australis/tiny-auth/lib/token-sign";
 /** */
 function sameDate(date: Date, other: Date) {
     return date.getFullYear() == other.getFullYear()
@@ -32,7 +32,6 @@ describe(require(join(__dirname, "../package.json")).name, () => {
         const exp = getTokenExpiration(token) * 1000;
         const expirationDate = getTokenExpirationDate(token);
         const timeToExpireFromIat = getTokenMillisecondsToExpire(token, /*from:*/ iat);
-        const timeToExpireFromNow = getTokenMillisecondsToExpire(token, /*from:*/ now);
         expect(sameDate(new Date(now), new Date(iat))).toBe(true);
         expect(exp).toBeGreaterThan(now);
         expect(sameDate(new Date(exp), new Date(now))).toBeTruthy();

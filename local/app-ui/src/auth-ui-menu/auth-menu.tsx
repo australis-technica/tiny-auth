@@ -1,18 +1,14 @@
 import { Component } from "react";
 import { IconButton, Icon, Menu, MenuItem, ListItemText } from "@material-ui/core";
 import * as React from "react";
-import {  AuthState } from "@australis/tiny-auth-core";
-/**
- * 
- */
-interface AuthMenuState {
-    isOpen: boolean;
-}
+
 export interface AuthMenuProps {
     auth: {
         logout(): any
     };
-    authState: AuthState;
+    authState: {
+
+    };
     onRequestChangePassword(): any;    
 }
 /**
@@ -20,11 +16,13 @@ export interface AuthMenuProps {
  */
 export default class AuthMenu extends Component<AuthMenuProps> {
     /** */
-    state: Partial<AuthState> & AuthMenuState = {
-        isOpen: false
+    state = {
+        isOpen: false,
+        authenticated: false,
+        busy: false,
     }
     /** */
-    static getDerivedStateFromProps(props: AuthMenuProps, state: Partial<AuthState> & AuthMenuState) {
+    static getDerivedStateFromProps(props: AuthMenuProps, state: {}) {
         return Object.assign(state, props.authState);
     }
     /** */

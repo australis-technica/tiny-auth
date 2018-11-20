@@ -1,1 +1,0 @@
-export type GetToken = (req: {})=> Promise<string>;

@@ -20,7 +20,7 @@ const defaultOptions: Options = {
 
 }
 /** 
- * WARNING: duplicated with tiny-auth-core/AuthApi
+ * : 
  */
 export interface AuthApi {
     login(username: string, password: string): Promise<any>;

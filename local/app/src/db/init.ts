@@ -22,7 +22,7 @@ export default async () => {
     } = await import("@australis/tiny-license-repo-product");
     const {
       init: tokenBlackList,
-    } = await import("../auth/token-blacklist");
+    } = await import("@australis/tiny-auth/lib/token-blacklist");
     await tokenBlackList(connection);
     await users(connection);
     await customers.init();

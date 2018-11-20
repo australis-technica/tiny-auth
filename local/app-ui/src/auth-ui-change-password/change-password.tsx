@@ -1,4 +1,3 @@
-import { AuthState } from "@australis/tiny-auth-core";
 import { Card, CardActions, CardContent, CardHeader, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import withStyles, { ClassNameMap } from "@material-ui/core/styles/withStyles";
@@ -7,29 +6,30 @@ import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { Component, ComponentType } from "react";
 import styles from "./styles";
-const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : ()=> {};
+const log = process.env.NODE_ENV !== "production" ? console.log.bind(console) : () => { };
 log("?")
 /** */
 export interface ChangePasswordProps {
     auth: {
         changePassword(old: string, _new: string): any
     },
-    authState: AuthState;
+    authState: {
+
+    };
     image?: any;
-}
-/** */
-interface ChangePasswordState extends Partial<AuthState> {
-    oldPassword: string;
-    newPassword: string;
 }
 /**
  * 
  */
 class ChangePassword extends Component<ChangePasswordProps & { classes: ClassNameMap; }> {
-   
-    state: ChangePasswordState = {
+    state = {
         oldPassword: "",
         newPassword: "",
+        busy: false,
+        error: undefined,
+        authenticated: false,
+        passwordChanged: false,
+        passwordChanging: false
     };
     /** */
     setMessage = (message: string, timeout: number) => {
@@ -39,7 +39,7 @@ class ChangePassword extends Component<ChangePasswordProps & { classes: ClassNam
         }, timeout)
     }
     /** */
-    static getDerivedStateFromProps(props: ChangePasswordProps, state: ChangePasswordState) {
+    static getDerivedStateFromProps(props: ChangePasswordProps, state: {}) {
         return Object.assign(state, props.authState);
     }
     /** */

@@ -1,5 +1,5 @@
 import { FluxStandardAction } from "flux-standard-action";
-import { User } from "@australis/tiny-auth-core";
+import { User } from "./types";
 import { STORE_KEY } from "./constants";
 /** */
 const CLEAR_ERROR = `${STORE_KEY}/clear-error`;

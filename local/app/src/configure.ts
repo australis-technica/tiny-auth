@@ -25,7 +25,9 @@ export default () => (app: Express) => {
       app.use(helmet());
       {
         const { configure } = await import("./auth");
-        await configure(app);
+        await configure(process.env.TINY_AUTH_SECRET, {
+          prefix: "/api/auth"
+        })(app);
       }
       {
         const { default: admin } = await import("./use-admin");
