@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "@australis/create-debug": "^1.0.2",
-    "@australis/tiny-auth-users": "0.2.0-1",    
+    "@australis/tiny-auth-users": "0.2.0-1",
+    "@australis/tiny-auth-token-blacklist": "0.2.0-1",
     "@australis/tiny-crypto": "^0.1.0-2",
     "@australis/tiny-sql": "1.0.0-18",
     "jsonwebtoken": "8.4.0"

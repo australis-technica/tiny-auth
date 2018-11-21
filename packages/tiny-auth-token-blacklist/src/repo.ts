@@ -13,10 +13,11 @@ const decode = (token: string) => new Promise((resolve, reject) => {
         reject(error)
     }
 });
+export const TABLE_NAME = "token_blacklist";
 /**
  * 
  */
-const { add, isBlackListed, init } = create("token_blacklist", decode);
+const { add, isBlackListed, init } = create(TABLE_NAME, decode);
 /** */
 async function withConnection<R>(callback: (connection: Connection) => Promise<R>) {
     let connection: Connection;
@@ -35,8 +36,5 @@ async function withConnection<R>(callback: (connection: Connection) => Promise<R
 export default {
     add: (token: string) => withConnection(connection => add(connection, token)),
     isBlackListed: (token: string) => withConnection(connection => isBlackListed(connection, token)),
-}
-/** */
-export {
     init
-};
+}
