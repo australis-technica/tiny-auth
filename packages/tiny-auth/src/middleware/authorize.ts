@@ -12,7 +12,7 @@ export default function authorize(getToken: GetToken): RequestHandler {
       const token = await getToken(req);
       const fingerprint = fingerPrint(res);
       const { profile } = validate(token, { fingerprint });
-      req.user = profile;
+      (req as any).user = profile;
       return next();
     } catch (error) {
       debug(error);

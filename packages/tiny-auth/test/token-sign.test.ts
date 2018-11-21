@@ -1,4 +1,4 @@
-import "@australis/load-env";
+
 import { join } from "path";
 import { signSync , signToken as sign } from "../src/token-sign";
 import validate from "../src/token-sign/validate";

@@ -4,7 +4,7 @@ const debug = debugModule(module);
 /** */
 const requireRole: (roles: string[]) => RequestHandler = (roles) => (req, _res, next) => {
     try {
-        const { user } = req;
+        const { user } = req as any;
         for(const role of roles) {
             const userRoles = user && user.roles.split(',');
             if(!userRoles || userRoles.indexOf(role) === -1){

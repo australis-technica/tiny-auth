@@ -2,14 +2,14 @@
   "name": "@australis/tiny-auth-react",
   "version": "0.2.0-1",
   "description": "",
-  "private": true,
+  "private": false,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --env=node --ci",
-    "build": "tsc -p .",
-    "clean": "rimraf lib",
-    "rebuild": "npm run clean && npm run build"
+    "build": "rimraf lib && tsc -p .",
+    "publishit": "npm publish --access public",
+    "watch": "tsc -p . --watch"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
@@ -33,10 +33,9 @@
       "node"
     ]
   },
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@types/react-router": "^4.4.1",
     "jest": "23.6.0",
     "rimraf": "^2.6.2",
     "ts-jest": "23.10.4",

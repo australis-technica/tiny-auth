@@ -2,14 +2,14 @@
   "name": "@australis/tiny-auth",
   "version": "0.2.0-1",
   "description": "",
-  "private": true,
+  "private": false,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --env=node",
-    "build": "tsc -p .",
-    "clean": "rimraf lib",
-    "rebuild": "npm run clean && npm run build"
+    "build": "rimraf lib && tsc -p .",
+    "publishit": "npm publish --access public",
+    "watch": "tsc -p . --watch"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
@@ -35,13 +35,19 @@
   },
   "dependencies": {
     "@australis/create-debug": "^1.0.2",
-    "@australis/tiny-auth-users": "0.2.0-1",
     "@australis/tiny-auth-token-blacklist": "0.2.0-1",
+    "@australis/tiny-auth-users": "0.2.0-1",
     "@australis/tiny-crypto": "^0.1.0-2",
-    "@australis/tiny-sql": "1.0.0-18",
+    "@australis/tiny-sql": "^1.0.0-19",
+    "express": "^4.16.4",
     "jsonwebtoken": "8.4.0"
   },
   "devDependencies": {
+    "@types/debug": "^0.0.31",
+    "@types/jest": "^23.3.9",
+    "@types/jsonwebtoken": "^8.3.0",
+    "@types/node": "^10.12.9",
+    "@types/tedious": "^2.6.1",
     "jest": "23.6.0",
     "rimraf": "^2.6.2",
     "ts-jest": "23.10.4",

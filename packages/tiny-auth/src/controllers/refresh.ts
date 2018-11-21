@@ -23,7 +23,7 @@ export default function refresh(
         return next(new Error("Invalid Token (blacklisted)"));
       }
       const fingerprint = fingerPrint(res);
-      const signed = await signToken({ profile: req.user, fingerprint });
+      const signed = await signToken({ profile: (req as any).user, fingerprint });
       await blacklist.add(token);
       return res.status(200).json(signed);
     } catch (error) {

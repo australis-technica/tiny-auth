@@ -12,22 +12,10 @@ export default async () => {
     connection = await connect();
     const { init: users } = await import("@australis/tiny-auth-users");
     const {
-      default: customers,
-    } = await import("@australis/tiny-license-repo-customer");
-    const {
-      default: licenses,
-    } = await import("@australis/tiny-license-repo-license");
-    const {
-      default: products,
-    } = await import("@australis/tiny-license-repo-product");
-    const {
       default: tokenBlackList,
     } = await import("@australis/tiny-auth-token-blacklist");
     await tokenBlackList.init(connection);
     await users(connection);
-    await customers.init();
-    await products.init();
-    await licenses.init();
     debug("Completed: %s", process.env.DB);
     return Promise.resolve();
   } catch (error) {

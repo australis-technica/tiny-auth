@@ -1,4 +1,3 @@
-import "@australis/load-env";
 import { join } from "path";
 import { getIssuedAt, getTokenExpiration, getTokenExpirationDate, getTokenMillisecondsToExpire, getTokenPayload, isTokenExpired, isValidToken } from "../src/payload";
 import { signToken as sign } from "@australis/tiny-auth/lib/token-sign";

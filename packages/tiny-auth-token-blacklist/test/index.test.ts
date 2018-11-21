@@ -1,9 +1,8 @@
-import "@australis/load-env";
 import execSql from "@australis/tiny-sql-exec-sql";
 import connectToServer from "@australis/tiny-sql-connect-to-server";
 import { join } from "path";
 import { Connection } from "tedious";
-import createTokenBlacklist from "../src";
+import createTokenBlacklist from "../src/create";
 import jsonwebtoken from "jsonwebtoken";
 import connect from "@australis/tiny-sql-connection-factory";
 

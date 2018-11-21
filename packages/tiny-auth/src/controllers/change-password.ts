@@ -1,13 +1,12 @@
-import { RequestHandler } from "express";
-import bodyParser from "body-parser";
+import { RequestHandler , json} from "express";
 /**
  *   POST
  */
 const changePassword: (passwordChanger: (user: string, oldPassword: string, newPassword: string) => any) => RequestHandler[] = (changePassword) => [
-  bodyParser.json(),
+  json(),
   async (req, res, next) => {
     try {
-      const username = req.user.id;
+      const username = (req as any).user && (req as any).user.id;
       const { password, newPassword } = req.body as {
         password: string;
         newPassword: string;

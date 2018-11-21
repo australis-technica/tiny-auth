@@ -17,7 +17,6 @@ import { WithAuth as AuthMenu } from "./auth-ui-menu";
 import { WithAuth as ChangePassword } from "./auth-ui-change-password";
 import { ConnectedRouter as Router } from "react-router-redux";
 import { RouterProps, StaticRouterProps } from "react-router";
-import { View as Validate } from "./api-validate";
 // Hack to avoid editing/extending/adding-new  definition
 const ConnectedRouter: React.ComponentType<RouterProps & StaticRouterProps> = Router;
 const { PUBLIC_URL } = process.env;
@@ -60,17 +59,7 @@ ReactDOM.render(
                     <ChangePassword />
                   </RequireAuth>
                 )}
-              />
-              <Route exact path={`${PUBLIC_URL}/validate/:token?`} render={(props) => {
-                return <RequireAuth
-                  redirectTo={`${PUBLIC_URL}/login`}
-                  renderBusy={() => (
-                    <span>.... Auth busy, please wait </span>
-                  )}
-                >
-                  <Validate />
-                </RequireAuth>
-              }} />
+              />              
             </Switch>
           </ConnectedRouter>
         </App>

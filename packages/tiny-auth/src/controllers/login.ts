@@ -1,7 +1,6 @@
 import { fingerPrint } from "../fingerprint";
 import { signToken } from "../token-sign";
-import bodyParser from "body-parser";
-import { RequestHandler } from "express";
+import { RequestHandler, json } from "express";
 /** */
 function isString(x: any): x is string {
   return typeof x === "string";
@@ -11,7 +10,7 @@ export type ValidateCredentials = (id: string, password: string) => Promise<any>
 const login: (
   validateCredentials: ValidateCredentials
 ) => RequestHandler[] = validate => [
-  bodyParser.json(),
+  json(),
   async (req, res, next) => {
     try {
       const { username, password } = req.body;

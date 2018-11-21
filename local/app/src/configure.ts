@@ -28,11 +28,7 @@ export default () => (app: Express) => {
         await configure(process.env.TINY_AUTH_SECRET, {
           prefix: "/api/auth"
         })(app);
-      }
-      {
-        const { default: admin } = await import("./use-admin");
-        await admin()(app);
-      }
+      }     
       {
         const { default: useUi } = await import("./use-ui");
         const { resolve } = await import("path");
