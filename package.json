@@ -3,7 +3,7 @@
   "version": "0.2.0-1",
   "description": "Token things",
   "private": true,
-  "scripts": {    
+  "scripts": {
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test",
@@ -22,14 +22,15 @@
     "rimraf": "^2.6.2",
     "typescript": "3.1.6"
   },
-  "workspaces": [                
-    "packages/tiny-auth-users",        
-    "packages/tiny-auth-token-blacklist",    
-    "packages/tiny-auth" ,
-    "packages/tiny-auth-api",    
+  "workspaces": [
+    "local/not-a-module",
+    "packages/tiny-auth-users",
+    "packages/tiny-auth-token-blacklist",
+    "packages/tiny-auth",
+    "packages/tiny-auth-api",
     "packages/tiny-auth-redux",
     "packages/tiny-auth-react",
-    "packages/tiny-auth-handler",          
+    "packages/tiny-auth-handler",
     "local/app",
     "local/app-ui"
   ]
