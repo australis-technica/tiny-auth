@@ -9,7 +9,8 @@
     "test": "jest --env=node",
     "build": "rimraf lib &&  tsc -p .",
     "publishit": "npm publish --access public",
-    "watch": "tsc -p . --watch"
+    "watch": "tsc -p . --watch",
+    "packit": "npm pack && cp ./*.tgz ../"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",

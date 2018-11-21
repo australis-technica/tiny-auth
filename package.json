@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {},
   "dependencies": {
     "cross-env": "^5.2.0",

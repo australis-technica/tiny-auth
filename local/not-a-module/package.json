@@ -10,7 +10,7 @@
     "build": "rimraf lib && tsc -p .",    
     "watch": "tsc -p . --watch",
     "publishit": "not-publish --access public",
-    "packit": "npm pack"
+    "packit": "npm pack && cp ./*.tgz ../"
   },
   "keywords": [],
   "author": "daniel@australis-technica.com",
