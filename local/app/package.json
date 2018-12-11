@@ -1,7 +1,7 @@
 {
   "name": "@local/app",
   "private": true,
-  "version": "0.2.0-1",
+  "version": "0.2.0-2",
   "description": "TODO",
   "main": "build/index.js",
   "keywords": [],
