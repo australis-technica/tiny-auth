@@ -1,29 +1,28 @@
 import { debugModule } from "@australis/create-debug";
 import fingerPrint from "./fingerprint";
-import { Express, Router } from "express";
+import { Router } from "express";
 const debug = debugModule(module);
 import Auth from "./auth";
-/** */
-export interface Options {
-    prefix: string
-}
-/**
- * 
- * @param app 
- */
-export default (secret: string, options: Options) => <A extends Express | Router>(app: A): A => {
-    const auth = Auth(secret);
-    const { prefix } = options;
+import { FindUser, UpdateUser } from "./types";
+
+export default (
+    secret: string,
+    findUser: FindUser,
+    updateUser: UpdateUser,
+    isBlackListed: (token: string) => Promise<boolean>,
+    addToBlackList: (toke: string) => Promise<any>,
+) => () => {
+    const router = Router();
+    const auth = Auth(secret, findUser, updateUser, isBlackListed, addToBlackList);
     try {
-        app.use(fingerPrint);
+        router.use(fingerPrint);
         const { authorize, requireRole } = auth.middleware;
         /** Configure Auth */
-        app.post(`${prefix}/login`, auth.controllers.login);
-        app.get(`${prefix}/refresh`, authorize, auth.controllers.refresh)
-        app.get(`${prefix}/profile`, authorize, auth.controllers.getProfile);
-        app.post(`${prefix}/change-password`, authorize, requireRole(['user']), auth.controllers.changePassword);
+        router.post("/login", auth.controllers.login);
+        router.get("/refresh", authorize, auth.controllers.refresh)
+        router.get("/profile", authorize, auth.controllers.getProfile);
+        router.post("/change-password", authorize, requireRole(['user']), auth.controllers.changePassword);
         debug("configured");
-        return app;
     } catch (error) {
         debug(error);
         throw error;

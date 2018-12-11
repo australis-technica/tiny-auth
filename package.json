@@ -23,8 +23,6 @@
   },
   "workspaces": [
     "local/not-a-module",
-    "packages/tiny-auth-users",
-    "packages/tiny-auth-token-blacklist",
     "packages/tiny-auth",
     "packages/tiny-auth-api",
     "packages/tiny-auth-redux",

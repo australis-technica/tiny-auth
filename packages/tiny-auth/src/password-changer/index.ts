@@ -1,22 +1,8 @@
-export declare type User = {
-    id?: string;
-    displayName?: string;
-    email?: string;
-    roles?: string;
-    password?: string;
-    disabled?: boolean;
-};
-
-export interface Users {
-    byId(id: string): Promise<User>;
-    update(user: Partial<User>): Promise<User>;
-}
-
+import { debugModule } from "@australis/create-debug";
+import { User } from "../types";
 export declare type PasswordRulePolicyEnforcer = (password: string) => string[];
 
 export declare type PasswordChanger = (id: string, password: string, newPassword: string) => Promise<{}>;
-
-import { debugModule } from "@australis/create-debug";
 
 export interface ICrypto {
     encrypt(text: string): string;
@@ -30,7 +16,8 @@ const debug = debugModule(module);
  * 
  */
 export default (function passwordChanger(
-    users: Users,
+    findOne: (id: string) => Promise<User>,
+    update: (u: User) => Promise<any>,
     crypto: ICrypto,
     passwordRulePolicyEnforcer: PasswordRulePolicyEnforcer,
 ): PasswordChanger {
@@ -46,7 +33,7 @@ export default (function passwordChanger(
     /** Asume Authenticated */
     return async (id: string, password: string, newPassword: string) => {
         /** */
-        const user = await users.byId(id);
+        const user = await findOne(id);
         if (!user) {
             return Promise.reject(new Error("User not found"));
         }
@@ -65,6 +52,6 @@ export default (function passwordChanger(
         if (errors && errors.length) {
             return Promise.reject(new Error(`invalid password: ` + errors.join(",")));
         }
-        return users.update({ id: user.id, password: crypto.encrypt(newPassword) });
+        return update({ id: user.id, password: crypto.encrypt(newPassword) });
     }
 });

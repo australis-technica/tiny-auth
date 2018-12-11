@@ -5,26 +5,23 @@ import { signToken } from "../token-sign";
 import { RequestHandler } from "express";
 const debug = debugModule(module);
 
-export type GetToken = (req: {})=> Promise<string>;
-export interface TokenBlackList {
-  isBlackListed(token: string): Promise<boolean>;
-  add(token: string):Promise<any>;
-}
+export type GetToken = (req: {}) => Promise<string>;
 /** */
 export default function refresh(
   geToken: GetToken,
-  blacklist: TokenBlackList
+  isBlackListed: (token: string) => Promise<Boolean>,
+  add: (toke: string) => Promise<any>
 ): RequestHandler {
   /** */
   return async (req, res, next) => {
     try {
       const token = await geToken(req);
-      if (await blacklist.isBlackListed(token)) {
+      if (await isBlackListed(token)) {
         return next(new Error("Invalid Token (blacklisted)"));
       }
       const fingerprint = fingerPrint(res);
       const signed = await signToken({ profile: (req as any).user, fingerprint });
-      await blacklist.add(token);
+      await add(token);
       return res.status(200).json(signed);
     } catch (error) {
       debug(error);

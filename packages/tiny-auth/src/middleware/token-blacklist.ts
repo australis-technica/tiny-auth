@@ -1,20 +1,20 @@
 import { RequestHandler } from "express";
-export type GetToken = (req: {})=> Promise<string>;
-export interface TokenBlackList {
-    isBlackListed(token: string): Promise<boolean>;
-    add(token: string):Promise<any>;
-}
+export type GetToken = (req: {}) => Promise<string>;
 /**
  * TODO
  */
-export default function (blacklist: TokenBlackList, getToken: GetToken ): RequestHandler      {
-    return  async (req, _res, next)=>{
-    try {
-        if(blacklist.isBlackListed(await getToken(req))){
-            next(new Error("Token Blacklisted"));
+export default (
+    getToken: GetToken,
+    isBlackListed: (token: string) => Promise<boolean>, 
+    ): RequestHandler => {
+    return async (req, _res, next) => {
+        try {
+            if (await isBlackListed(await getToken(req))) {
+                next(new Error("Token Blacklisted"));
+            }
+            next();
+        } catch (error) {
+            return next(error);
         }
-        next();
-    }catch (error) {
-        return next(error);
     }
-}}
+}

@@ -71,15 +71,14 @@ afterAll(() => {
 });
 /** Fetch Doesnt exists before 'it' */
 function Api() {
+
     return createAuthApi({
         changePasswordUrl: "change-password",
         loginUrl: "login",
         logoutUrl: "logout",
         profileUrl: "profile",
         refreshUrl: "refresh"
-    }, {            
-            getToken: () => "token"
-        })
+    })
 }
 /** */
 describe(require(join(__dirname, "../package.json")).name, () => {

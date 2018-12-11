@@ -24,11 +24,9 @@ export default () => (app: Express) => {
       );
       app.use(helmet());
       {
-        const { configure } = await import("./auth");
-        await configure(process.env.TINY_AUTH_SECRET, {
-          prefix: "/api/auth"
-        })(app);
-      }     
+        const { default: configure } = await import("./auth");
+        app.use("/api/auth", configure())
+      }
       {
         const { default: useUi } = await import("./use-ui");
         const { resolve } = await import("path");
