@@ -10,3 +10,7 @@ export declare type User = {
 export type FindUser = (id: string)=> Promise<User>;
 
 export type UpdateUser = (u: User)=> Promise<any>;
+
+export interface RequestLike {
+    headers?: { [key: string]: any }
+}

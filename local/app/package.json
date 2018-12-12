@@ -13,9 +13,9 @@
     "@types/helmet": "^0.0.42",
     "jest": "23.6.0",
     "rimraf": "^2.6.2",
-    "ts-jest": "23.10.4",
+    "ts-jest": "23.10.5",
     "ts-node": "^7.0.1",
-    "typescript": "3.1.6"
+    "typescript": "3.2.2"
   },
   "dependencies": {
     "@australis/express-plain-text-error-handler": "^0.1.0-1",
@@ -23,7 +23,7 @@
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "debug": "4.1.0",
-    "dotenv": "6.1.0",
+    "dotenv": "6.2.0",
     "express": "^4.16.3",
     "express-jwt": "^5.3.0",
     "helmet": "^3.12.1",
@@ -35,6 +35,7 @@
     "build": "rimraf build && tsc -p .",
     "watch": "tsc -p . --watch",
     "start": "cross-env NODE_ENV=development ENV_PATH=./.env.local DEBUG=@australis*,@d10221*,@local* node build/",
-    "dev": "cross-env NODE_ENV=development ENV_PATH=./.env.local DEBUG=@australis*,@d10221*,@local* node -r ts-node/register src/index.ts"
+    "dev": "cross-env NODE_ENV=development ENV_PATH=./.env.local DEBUG=@australis*,@d10221*,@local* node -r ts-node/register src/index.ts",
+    "debug": "cross-env NODE_ENV=development ENV_PATH=./.env.local DEBUG=@australis*,@d10221*,@local* node --inspect -r ts-node/register src/index.ts"
   }
 }

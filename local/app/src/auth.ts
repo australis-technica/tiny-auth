@@ -1,35 +1,62 @@
 import Auth from "@australis/tiny-auth";
-import fingerPrint from "@australis/tiny-auth/lib/fingerPrint";
-import { Router } from "express";
-import users from "./users";
+import { Router, json } from "express";
 
-const { findUser, updateUser } = users;
+export type User = {
+    id?: string;
+    displayName?: string;
+    email?: string;
+    roles?: string;
+    password?: string;
+    disabled?: boolean;
+};
+
+const users: User[] = [
+    // ...
+];
+
+const findUser = (id: string) => {
+    return Promise.resolve(users.find(u => u.id === id))
+}
+
+const updateUser = (_u: any) => {
+    return Promise.resolve();
+}
+
 const blackList: any[] = [];
 const isBlackListed = (token: string) => Promise.resolve(blackList.indexOf(token) !== -1);
 const addToBlackList = (token: string) => Promise.resolve(blackList.push(token));
 
 const auth = Auth(
     process.env.TINY_AUTH_SECRET,
+    "localhost",
+    "*",
+    60 * 60,
     findUser,
     updateUser,
     isBlackListed,
-    addToBlackList
+    addToBlackList,
 );
-const { middleware, controllers } = auth;
-export {
-    middleware,
-    controllers,
-}
 
+const { authorize, requireRole, changePassword, crypto, getProfile, login, refresh, tokenBlackList } = auth;
+
+users.push({ id: "admin", password: crypto.encrypt("password"), roles: ["admin"].join(",") })
+
+/**
+ * Middleware 
+ */
+export {
+    authorize, requireRole, tokenBlackList
+}
+/**
+ * Auth handlers
+ */
 export default () => {
     const router = Router();
-    const auth = Auth(process.env.TINY_AUTH_SECRET, findUser, updateUser, isBlackListed, addToBlackList);
-    router.use(fingerPrint);
-    const { authorize, requireRole } = auth.middleware;
+    router.use(json());
     /** Configure Auth */
-    router.post("/login", auth.controllers.login);
-    router.get("/refresh", authorize, auth.controllers.refresh)
-    router.get("/profile", authorize, auth.controllers.getProfile);
-    router.post("/change-password", authorize, requireRole(['user']), auth.controllers.changePassword);
+    router.post("/login", login);
+    router.get("/refresh", authorize, refresh)
+    router.get("/profile", authorize, getProfile);
+    router.post("/change-password", authorize, requireRole(['user']), changePassword);
     return router;
 }

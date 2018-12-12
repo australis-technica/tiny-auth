@@ -18,7 +18,7 @@ import { WithAuth as ChangePassword } from "./auth-ui-change-password";
 import { ConnectedRouter as Router } from "react-router-redux";
 import { RouterProps, StaticRouterProps } from "react-router";
 // Hack to avoid editing/extending/adding-new  definition
-const ConnectedRouter: React.ComponentType<RouterProps & StaticRouterProps> = Router;
+const ConnectedRouter: React.ComponentType<RouterProps & StaticRouterProps & { store: any }> = Router as any;
 const { PUBLIC_URL } = process.env;
 /** */
 ReactDOM.render(
@@ -31,7 +31,7 @@ ReactDOM.render(
             <AuthMenu onRequestChangePassword={() => history.push("/change-password")} />
           }
         >
-          <ConnectedRouter history={history} basename={PUBLIC_URL}>
+          <ConnectedRouter history={history} basename={PUBLIC_URL} store={store}>
             <Switch>
               <Route
                 exact
@@ -59,7 +59,7 @@ ReactDOM.render(
                     <ChangePassword />
                   </RequireAuth>
                 )}
-              />              
+              />
             </Switch>
           </ConnectedRouter>
         </App>

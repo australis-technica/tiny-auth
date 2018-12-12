@@ -1,5 +1,5 @@
 import { debugModule } from "@australis/create-debug";
-import { User } from "../types";
+import { User } from "./types";
 export declare type PasswordRulePolicyEnforcer = (password: string) => string[];
 
 export declare type PasswordChanger = (id: string, password: string, newPassword: string) => Promise<{}>;

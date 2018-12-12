@@ -1,7 +1,8 @@
 import cors from "cors";
-import { Express } from "express";
+import { Express, RequestHandler } from "express";
 import helmet from "helmet";
 import { debugModule } from "@australis/create-debug";
+import { authorize, requireRole } from "./auth";
 
 const debug = debugModule(module);
 /** */
@@ -27,6 +28,36 @@ export default () => (app: Express) => {
         const { default: configure } = await import("./auth");
         app.use("/api/auth", configure())
       }
+      app.get("/api/admin", [authorize, requireRole(["admin"]), ((req, res, next) => {
+        try {
+          if (!req) {
+
+          }
+          res.send("ok");
+        } catch (error) {
+          next(error);
+        }
+      }) as RequestHandler]);
+      app.get("/api/bob", [authorize, requireRole(["bob"]), ((req, res, next) => {
+        try {
+          if (!req) {
+
+          }
+          res.send("ok");
+        } catch (error) {
+          next(error);
+        }
+      }) as RequestHandler]);
+      app.get("/api/ok", [authorize, ((req, res, next) => {
+        try {
+          if (!req) {
+
+          }
+          res.send("ok");
+        } catch (error) {
+          next(error);
+        }
+      }) as RequestHandler])
       {
         const { default: useUi } = await import("./use-ui");
         const { resolve } = await import("path");

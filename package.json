@@ -21,8 +21,7 @@
     "rimraf": "^2.6.2",
     "typescript": "3.1.6"
   },
-  "workspaces": [
-    "local/not-a-module",
+  "workspaces": [    
     "packages/tiny-auth",
     "packages/tiny-auth-api",
     "packages/tiny-auth-redux",

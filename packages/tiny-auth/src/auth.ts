@@ -1,35 +1,55 @@
 /** */
 import Crypto from "@australis/tiny-crypto";
-import { changePassword, getProfile, login, refresh } from "./controllers";
-import { fromRequest } from "./get-token";
-import { authorize, requireRole, tokenBlackListMdw } from "./middleware";
+
+import getToken from "./get-token";
 import passwordChanger from "./password-changer";
 import passwordPolicyEnforcer from "./password-policy-enforcer";
-
 import validateCredentials from "./validate-credentials";
 import { FindUser, UpdateUser } from "./types";
+import authorize from "./authorize";
+import requireRole from "./require-role";
+import tokenBlacklist from "./token-blacklist";
+import changePassword from "./change-password";
+import getProfile from "./get-profile";
+import login from "./login";
+import refresh from "./refresh";
+import Sign from "./sign";
 /** */
 export default (
   secret: string,
+  issuer: string | undefined,
+  audience: string | undefined,
+  timeToExpire: number | undefined,
   findUser: FindUser,
   updateUser: UpdateUser,
-  isBlackListed: (token: string) => Promise<boolean>,
-  addToBlackList: (toke: string) => Promise<any>,
+  isBlacklisted: (token: string) => Promise<boolean>,
+  addToBlacklist: (toke: string) => Promise<any>,
 ) => {
   const crypto = new Crypto(secret);
+
+  const sign = Sign(secret,
+    timeToExpire,
+    issuer,
+    audience);
+
   return {
-    controllers: {
-      changePassword: changePassword(
-        passwordChanger(findUser, updateUser, crypto, passwordPolicyEnforcer),
-      ),
-      getProfile: getProfile(findUser),
-      login: login(validateCredentials(crypto, findUser)),
-      refresh: refresh(fromRequest, isBlackListed, addToBlackList)
-    },
-    middleware: {
-      authorize: authorize(fromRequest),
-      requireRole,
-      tokenBlackList: tokenBlackListMdw(fromRequest, isBlackListed),
-    },
+    /** controller */
+    changePassword: changePassword(
+      passwordChanger(findUser, updateUser, crypto, passwordPolicyEnforcer),
+    ),
+    /** controller */
+    getProfile: getProfile(findUser),
+    /** controller */
+    login: login(validateCredentials(crypto, findUser), sign),
+    /** controller */
+    refresh: refresh(getToken, isBlacklisted, addToBlacklist, sign),
+    /** middleware */
+    authorize: authorize(getToken, () => Promise.resolve(secret), issuer),
+    /** middleware */
+    requireRole,
+    /** middleware */
+    tokenBlackList: tokenBlacklist(getToken, isBlacklisted),
+    /** util */
+    crypto
   };
 }
