@@ -1,6 +1,6 @@
 {
   "name": "@australis/tiny-auth-api",
-  "version": "0.2.0-2",
+  "version": "0.2.0-3",
   "description": "tiny-auth rest/client api",
   "private": false,
   "main": "lib/index.js",
