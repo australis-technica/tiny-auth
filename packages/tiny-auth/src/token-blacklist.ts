@@ -1,15 +1,22 @@
 import { RequestHandler } from "express";
-export type GetToken = (req: {}) => Promise<string>;
+import { GetToken, Blacklist } from "./types";
 /**
- * TODO
+ * Creates Middleware
  */
 export default (
     getToken: GetToken,
-    isBlackListed: (token: string) => Promise<boolean>, 
-    ): RequestHandler => {
+    blacklist: Blacklist | undefined,
+): RequestHandler => {
+    /**
+     * Middleware
+     */
     return async (req, _res, next) => {
         try {
-            if (await isBlackListed(await getToken(req))) {
+            if (!blacklist) {
+                return next();
+            }
+            const x = await blacklist.findOne(await getToken(req));
+            if (x) {
                 next(new Error("Token Blacklisted"));
             }
             next();

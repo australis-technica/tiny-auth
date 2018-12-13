@@ -1,55 +1,41 @@
 /** */
-import Crypto from "@australis/tiny-crypto";
-
-import getToken from "./get-token";
-import passwordChanger from "./password-changer";
-import passwordPolicyEnforcer from "./password-policy-enforcer";
-import validateCredentials from "./validate-credentials";
-import { FindUser, UpdateUser } from "./types";
 import authorize from "./authorize";
-import requireRole from "./require-role";
-import tokenBlacklist from "./token-blacklist";
 import changePassword from "./change-password";
 import getProfile from "./get-profile";
+import getToken from "./get-token";
 import login from "./login";
 import refresh from "./refresh";
+import requireRole from "./require-role";
 import Sign from "./sign";
+import tokenBlacklist from "./token-blacklist";
+import { Users, Blacklist } from "./types";
 /** */
 export default (
   secret: string,
   issuer: string | undefined,
   audience: string | undefined,
   timeToExpire: number | undefined,
-  findUser: FindUser,
-  updateUser: UpdateUser,
-  isBlacklisted: (token: string) => Promise<boolean>,
-  addToBlacklist: (toke: string) => Promise<any>,
+  users: Users,
+  blacklist: Blacklist,
 ) => {
-  const crypto = new Crypto(secret);
-
   const sign = Sign(secret,
     timeToExpire,
     issuer,
-    audience);
-
+    audience);  
   return {
     /** controller */
-    changePassword: changePassword(
-      passwordChanger(findUser, updateUser, crypto, passwordPolicyEnforcer),
-    ),
+    changePassword: changePassword(users),
     /** controller */
-    getProfile: getProfile(findUser),
+    getProfile: getProfile(users),
     /** controller */
-    login: login(validateCredentials(crypto, findUser), sign),
+    login: login(users, sign),
     /** controller */
-    refresh: refresh(getToken, isBlacklisted, addToBlacklist, sign),
+    refresh: refresh(getToken,  sign, blacklist),
     /** middleware */
     authorize: authorize(getToken, () => Promise.resolve(secret), issuer),
     /** middleware */
     requireRole,
     /** middleware */
-    tokenBlackList: tokenBlacklist(getToken, isBlacklisted),
-    /** util */
-    crypto
+    tokenBlackList: tokenBlacklist(getToken,blacklist),    
   };
 }

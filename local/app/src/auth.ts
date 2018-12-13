@@ -1,45 +1,18 @@
 import Auth from "@australis/tiny-auth";
 import { Router, json } from "express";
-
-export type User = {
-    id?: string;
-    displayName?: string;
-    email?: string;
-    roles?: string;
-    password?: string;
-    disabled?: boolean;
-};
-
-const users: User[] = [
-    // ...
-];
-
-const findUser = (id: string) => {
-    return Promise.resolve(users.find(u => u.id === id))
-}
-
-const updateUser = (_u: any) => {
-    return Promise.resolve();
-}
-
-const blackList: any[] = [];
-const isBlackListed = (token: string) => Promise.resolve(blackList.indexOf(token) !== -1);
-const addToBlackList = (token: string) => Promise.resolve(blackList.push(token));
+import users from "./users";
+import blackList from "./blacklist";
 
 const auth = Auth(
     process.env.TINY_AUTH_SECRET,
     "localhost",
     "*",
     60 * 60,
-    findUser,
-    updateUser,
-    isBlackListed,
-    addToBlackList,
+    users,
+    blackList
 );
 
-const { authorize, requireRole, changePassword, crypto, getProfile, login, refresh, tokenBlackList } = auth;
-
-users.push({ id: "admin", password: crypto.encrypt("password"), roles: ["admin"].join(",") })
+const { authorize, requireRole, changePassword, getProfile, login, refresh, tokenBlackList } = auth;
 
 /**
  * Middleware 

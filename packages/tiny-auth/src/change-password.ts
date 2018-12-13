@@ -1,9 +1,9 @@
-import { RequestHandler , json} from "express";
+import { RequestHandler } from "express";
+import { Users } from "./types";
 /**
  *   POST
  */
-const changePassword: (passwordChanger: (user: string, oldPassword: string, newPassword: string) => any) => RequestHandler[] = (changePassword) => [
-  json(),
+const changePassword = (users: Users): RequestHandler =>
   async (req, res, next) => {
     try {
       const username = (req as any).user && (req as any).user.id;
@@ -11,7 +11,7 @@ const changePassword: (passwordChanger: (user: string, oldPassword: string, newP
         password: string;
         newPassword: string;
       };
-      const x = await changePassword(
+      const x = await users.changePassword(
         username,
         password,
         newPassword
@@ -22,6 +22,5 @@ const changePassword: (passwordChanger: (user: string, oldPassword: string, newP
       return next(error);
     }
   }
-];
 /** */
 export default changePassword;
